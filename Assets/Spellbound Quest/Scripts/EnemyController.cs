@@ -12,7 +12,6 @@ public class EnemyController : MonoBehaviour
     public float rockSpeed = 20f; 
     private Transform player;
     private Rigidbody2D rb;
-    //private Animator animator;
     private bool isFacingRight = false;
     private float nextAttackTime = 0f;
 
@@ -20,7 +19,6 @@ public class EnemyController : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
-        //animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -71,30 +69,18 @@ public class EnemyController : MonoBehaviour
     {
         rb.velocity = new Vector2(0, rb.velocity.y);
 
-        /*// Update animator
-        if (animator != null)
-        {
-            animator.SetBool("IsMoving", false);
-        }*/
     }
 
     void Attack()
     {
-        // Stop moving to attack
         StopMoving();
 
-        // Throw a rock
         GameObject rock = Instantiate(rockPrefab, throwPoint.position, Quaternion.identity);
         Rigidbody2D rockRb = rock.GetComponent<Rigidbody2D>();
 
         Vector2 direction = (player.position - throwPoint.position).normalized;
         rockRb.velocity = direction * rockSpeed;
-
-        /*// Update animator
-        if (animator != null)
-        {
-            animator.SetTrigger("Attack");
-        }*/
+        
     }
 
     void Flip()

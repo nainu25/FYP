@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     private bool isMovingRight = false;
 
     private Rigidbody2D rb;
-    //private Animator animator;
     private SpriteRenderer spriteRenderer;
     public LayerMask groundLayer;
     public Transform groundCheck;
@@ -21,7 +20,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        //animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -46,9 +44,6 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = false;
         else if (moveInput < 0)
             spriteRenderer.flipX = true;
-
-        // Update animator
-        //animator.SetFloat("Speed", Mathf.Abs(moveInput));
     }
 
     void HandleJump()
@@ -60,9 +55,6 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isJumping = false;
         }
-
-        // Update animator
-        //animator.SetBool("IsJumping", !isGrounded);
     }
 
     public void MoveLeftDown() { isMovingLeft = true; }
