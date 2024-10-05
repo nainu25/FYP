@@ -374,19 +374,5 @@ public class SnakeController : MonoBehaviour
             }*/
             gm.LoseLife();
         }
-        else if (other.gameObject.CompareTag("Food"))
-        {
-            if (lt.letter == pronunciationManager.CurrentLetter) // Use the current letter pronounced
-            {
-                // Handle correct selection
-                Destroy(gameObject);
-                pronunciationManager.CorrectSelection();
-            }
-            else
-            {
-                // Handle incorrect selection if necessary
-                Destroy(gameObject);
-            }
-        }
     }
 }
