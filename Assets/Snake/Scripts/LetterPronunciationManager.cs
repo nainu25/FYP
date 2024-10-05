@@ -32,6 +32,7 @@ public class LetterPronunciationManager : MonoBehaviour
             PlayAudio();
             ClearExistingTiles();
             SpawnLetterTiles();
+            SpawnLetterTiles();
             yield return new WaitForSeconds(2f);
             yield return new WaitUntil(() => HasMadeSelection);
             
