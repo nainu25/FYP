@@ -5,6 +5,8 @@ public class Food : MonoBehaviour
     private LetterTile lt;
     private LetterPronunciationManager pronunciationManager;
 
+    
+
     void Start()
     {
         if (lt == null)

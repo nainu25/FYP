@@ -220,10 +220,7 @@ public class SnakeController : MonoBehaviour
 
     public GameManager gm;
     public LetterTile lt;
-    private LetterPronunciationManager pronunciationManager;
 
-    // New flag to check if a selection has been made
-    public bool HasMadeSelection { get; private set; } = false;
 
     private void Start()
     {
@@ -264,7 +261,7 @@ public class SnakeController : MonoBehaviour
         int y = Mathf.RoundToInt(transform.position.y) + direction.y * speed;
         transform.position = new Vector2(x, y);
 
-        nextUpdate = Time.time + 0.112f + Time.deltaTime;
+        nextUpdate = Time.time + 0.5f + Time.deltaTime;
     }
 
     private void InputHandler()
@@ -364,14 +361,6 @@ public class SnakeController : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Wall"))
         {
-            /*if (moveThroughWalls)
-            {
-                Traverse(other.transform);
-            }
-            else
-            {
-                gm.LoseLife();
-            }*/
             gm.LoseLife();
         }
     }

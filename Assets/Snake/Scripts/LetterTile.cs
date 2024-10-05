@@ -3,7 +3,7 @@ using UnityEngine;
 public class LetterTile : MonoBehaviour
 {
     public string letter;
-    private LetterPronunciationManager pronunciationManager;
+    public LetterPronunciationManager pronunciationManager;
 
     public void Setup(string letter, LetterPronunciationManager pronunciationManager)
     {
