@@ -24,7 +24,6 @@ public class LetterPronunciationManager : MonoBehaviour
         {
             PlayAudio();
             SpawnLetterTiles();
-            SpawnLetterTiles();
             yield return new WaitForSeconds(2f);
             yield return new WaitUntil(() => snakeController.HasMadeSelection);
         }
