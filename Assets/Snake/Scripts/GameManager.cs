@@ -7,12 +7,12 @@ public class GameManager : MonoBehaviour
     public int lives = 5;
     private float timeRemaining;
 
-    public SnakeController sc;   
+    public SnakeController sc;
 
 
     public TMP_Text timerText;
     public TMP_Text livesText;
-    
+
 
     private bool gameEnded = false;
 
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
         Timer();
     }
 
-    void EndGame()
+    public void EndGame()
     {
         gameEnded = true;
         Debug.Log("Time's up! Game Over!");
@@ -72,3 +72,5 @@ public class GameManager : MonoBehaviour
         }
     }
 }
+
+
