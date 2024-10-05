@@ -10,11 +10,14 @@ public class SnakeController : MonoBehaviour
     public float speedMultiplier = 1f;
     public int initialSize = 4;
     public bool moveThroughWalls = false;
+    
 
     private readonly List<Transform> segments = new List<Transform>();
     private Vector2Int input;
     private float nextUpdate;
     private Transform snakeHead;
+
+    public GameManager gm;
 
     private void Start()
     {
@@ -55,7 +58,7 @@ public class SnakeController : MonoBehaviour
         int y = Mathf.RoundToInt(transform.position.y) + direction.y * speed;
         transform.position = new Vector2(x, y);
 
-        nextUpdate = Time.time + 0.1f;
+        nextUpdate = Time.time + 0.112f + Time.deltaTime;
     }
 
     private void InputHandler()
@@ -149,11 +152,7 @@ public class SnakeController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Food"))
-        {
-            Grow();
-        }
-        else if (other.gameObject.CompareTag("Obstacle"))
+        if (other.gameObject.CompareTag("Obstacle"))
         {
             ResetState();
         }
@@ -165,10 +164,11 @@ public class SnakeController : MonoBehaviour
             }
             else
             {
-                ResetState();
+                gm.LoseLife();
             }
         }
     }
+    
 
     private void Traverse(Transform wall)
     {
@@ -185,4 +185,12 @@ public class SnakeController : MonoBehaviour
 
         transform.position = position;
     }
+
+    private void GameOver()
+    {
+        Debug.Log("Game Over!");
+        // Optionally stop the game
+        Time.timeScale = 0f;
+    }
+
 }
