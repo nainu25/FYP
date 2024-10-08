@@ -35,4 +35,10 @@ public class SceneController : MonoBehaviour
     {
         SceneManager.LoadScene(2);
     }
+
+    public void Back()
+    {
+        SceneManager.LoadScene(1);
+    }
+
 }
