@@ -3,57 +3,63 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public float gameDuration = 120f;
-    public int lives = 5;
+    public float gameDuration = 10f;
     private float timeRemaining;
 
-    public SnakeController sc;
-
-
+    public int lives = 5;
     public TMP_Text timerText;
     public TMP_Text livesText;
-
-
+    
     private bool gameEnded = false;
+    private bool timerRunning = false;
 
     void Start()
     {
-        timeRemaining = gameDuration;
-        gameEnded = false;
-        livesText.text = "Lives: " + lives;
+        ResetGame();
     }
 
-    void Update()
+    private void Update()
     {
         Timer();
     }
 
-    public void EndGame()
+    public void StartTimer()
     {
-        gameEnded = true;
-        Debug.Log("Time's up! Game Over!");
-
-
-        Time.timeScale = 0f;
+        timerRunning = true;
+        timeRemaining = gameDuration;
+        UpdateTimerUI();
     }
 
-    void Timer()
+    public void ResetTimer()
     {
-        if (gameEnded)
+        timeRemaining = gameDuration;
+        timerRunning = false;
+        UpdateTimerUI();
+    }
+
+    public void Timer()
+    {
+        if (gameEnded || !timerRunning)
         {
             return;
         }
+
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
-            if (timerText != null)
-            {
-                timerText.text = "Time: " + Mathf.Ceil(timeRemaining).ToString() + "s";
-            }
+            UpdateTimerUI();
         }
         else
         {
-            EndGame();
+            LoseLife();
+        }
+    }
+
+    private void UpdateTimerUI()
+    {
+        if (timerText != null)
+        {
+            timerText.text = "Time: " + Mathf.Ceil(timeRemaining).ToString() + "s";
         }
     }
 
@@ -62,15 +68,27 @@ public class GameManager : MonoBehaviour
         lives--;
         livesText.text = "Lives: " + lives;
 
-        if (lives > 0)
-        {
-            sc.ResetState();
-        }
-        else
+        if (lives <= 0)
         {
             EndGame();
         }
     }
-}
 
+    public void EndGame()
+    {
+        gameEnded = true;
+        timerRunning = false;
+        Debug.Log("Game Over!");
+        Time.timeScale = 0f;
+    }
+
+    public void ResetGame()
+    {
+        lives = 5;
+        livesText.text = "Lives: " + lives;
+        ResetTimer();
+        gameEnded = false;
+        Time.timeScale = 1f;
+    }
+}
 

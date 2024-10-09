@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class LetterPronunciationManager : MonoBehaviour
@@ -13,6 +14,8 @@ public class LetterPronunciationManager : MonoBehaviour
     private List<GameObject> activeTiles = new List<GameObject>();
 
     public bool HasMadeSelection { get; private set; } = false;
+
+    public GameManager gm;
 
     private void Start()
     {
@@ -32,12 +35,17 @@ public class LetterPronunciationManager : MonoBehaviour
             PlayAudio();
             ClearExistingTiles();
             SpawnLetterTiles();
-            yield return new WaitForSeconds(2f);
+
+            gm.ResetTimer();
+            gm.StartTimer();
+
+            yield return new WaitForSeconds(1f);
             yield return new WaitUntil(() => HasMadeSelection);
             
         }
 
         Debug.Log("All pronunciations completed!");
+        Time.timeScale = 0;
     }
 
     private void PlayAudio()
