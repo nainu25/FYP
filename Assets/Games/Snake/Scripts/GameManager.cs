@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     public float gameDuration = 10f;
     private float timeRemaining;
 
-    public int lives = 5;
+    public int lives;
     public TMP_Text timerText;
     public TMP_Text livesText;
     
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        lives = 5;
+        //lives = 5;
         livesText.text = "Lives: " + lives;
         ResetTimer();
         gameEnded = false;

@@ -89,12 +89,12 @@ public class SnakeController : MonoBehaviour
         int y = Mathf.RoundToInt(transform.position.y) + direction.y * speed;
         transform.position = new Vector2(x, y);
 
-        nextUpdate = Time.time + 0.15f;
+        nextUpdate = Time.time + 0.2f;
     }
 
     private void InputHandler()
     {
-        if (direction.x != 0f)
+        /*if (direction.x != 0f)
         {
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
@@ -115,7 +115,7 @@ public class SnakeController : MonoBehaviour
             {
                 input = Vector2Int.left;
             }
-        }
+        }*/
     }
 
     private void SetDirection(Vector2Int newDirection)
