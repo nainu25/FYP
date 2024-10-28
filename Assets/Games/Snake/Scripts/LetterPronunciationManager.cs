@@ -196,6 +196,10 @@ public class LetterPronunciationManager : MonoBehaviour
         {
             gm.score += 15;
         }
+        else if(gm.level==3)
+        {
+            gm.score += 20;
+        }
        
         if (currentPronunciationIndex >= letterAudioClips.Length)
         {
