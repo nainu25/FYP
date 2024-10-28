@@ -10,8 +10,8 @@ public class SnakeController : MonoBehaviour
 {
     public Transform segmentPrefab;
     public Vector2Int direction = Vector2Int.right;
-    public int speed = 20;
-    public float speedMultiplier = 1f;
+    int speed = 1;
+    public float speeder = 0.5f;
     public int initialSize = 4;
 
     private readonly List<Transform> segments = new List<Transform>();
@@ -20,7 +20,6 @@ public class SnakeController : MonoBehaviour
     private Transform snakeHead;
 
     public GameManager gm;
-    public LetterTile lt;
 
     private bool canMove = false;
 
@@ -89,7 +88,7 @@ public class SnakeController : MonoBehaviour
         int y = Mathf.RoundToInt(transform.position.y) + direction.y * speed;
         transform.position = new Vector2(x, y);
 
-        nextUpdate = Time.time + 0.2f;
+        nextUpdate = Time.time + speeder;
     }
 
     private void InputHandler()
