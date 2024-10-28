@@ -185,8 +185,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d6952a408499c946a2827f97cb193bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  letterAudioClips: []
-  letterTilePrefabs: []
+  letterAudioClips:
+  - {fileID: 8300000, guid: b63bb8b48abacaa4c89ebc1926ef3eb3, type: 3}
+  - {fileID: 8300000, guid: 5fc1e7538af872e449884f3879aa4000, type: 3}
+  - {fileID: 8300000, guid: 0c62663aba7abeb408dde2a13f5e6099, type: 3}
+  - {fileID: 8300000, guid: ee8d6a04cf050da43a5cd9f494100f12, type: 3}
+  - {fileID: 8300000, guid: 027eee6561cee0145962ce447a90c8fb, type: 3}
+  - {fileID: 8300000, guid: 17e79fa3eb4c81f4a8dac4e7e1f68acb, type: 3}
+  - {fileID: 8300000, guid: b144e8e63229d264da8d6692694be883, type: 3}
+  letterTilePrefabs:
+  - {fileID: 4601606885632734822, guid: edad5ae93f8aa7945a1f128a6eeeb3ff, type: 3}
+  - {fileID: 2528813857925966584, guid: c7e14754d3d240e4a8f051d16873a7f3, type: 3}
+  - {fileID: 641140156471951665, guid: 4d84b0546fcc893498a9122d38030d23, type: 3}
+  - {fileID: 3398533834101189217, guid: 0ae5578ef5109f846943a58149a5c2db, type: 3}
+  - {fileID: 9066622273642395140, guid: 5b07792653a4e78498b065ee1f85ab32, type: 3}
+  - {fileID: 6750875963340259667, guid: cca27ef72ce26964e98edbb66234e364, type: 3}
+  - {fileID: 6673271006614763693, guid: 7d6eef7ece90d454d80dca671a3842e7, type: 3}
   gm: {fileID: 30461323}
 --- !u!1 &48435910
 GameObject:
