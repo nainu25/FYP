@@ -152,10 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2ddfe2a6eba4040aad03fd4e376148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameDuration: 1000
-  lives: 5000
+  gameDuration: 120
+  lives: 5
   timerText: {fileID: 1249293597}
   livesText: {fileID: 516921707}
+  level: 1
 --- !u!4 &30461324
 Transform:
   m_ObjectHideFlags: 0

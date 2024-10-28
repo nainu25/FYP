@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class LetterPronunciationManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class LetterPronunciationManager : MonoBehaviour
     public bool HasMadeSelection { get; private set; } = false;
 
     public GameManager gm;
+
 
     private void Start()
     {
@@ -59,10 +61,48 @@ public class LetterPronunciationManager : MonoBehaviour
         string correctLetter = letterAudioClips[currentPronunciationIndex].name;
         GameObject correctTilePrefab = GetTilePrefabByLetter(correctLetter);
 
-        List<string> incorrectLetters = new List<string> { "A", "B", "C", "D", "E", "F", "G" };
-        incorrectLetters.Remove(correctLetter);
-        string incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-        GameObject incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
+        if(gm.level==1)
+        {
+            List<string> incorrectLetters = new List<string> { "A", "B", "C", "D", "E", "F", "G" };
+            incorrectLetters.Remove(correctLetter);
+            string incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
+            GameObject incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
+            if (incorrectTilePrefab != null)
+            {
+                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-5f, 5f), Random.Range(-3f, 3f)));
+            }
+            else
+            {
+                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
+            }
+        }
+        else if(gm.level==2) 
+        {
+            List<string> incorrectLetters = new List<string> { "H", "I", "J", "K", "L", "M", "N" };
+            incorrectLetters.Remove(correctLetter);
+            string incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
+            GameObject incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
+            if (incorrectTilePrefab != null)
+            {
+                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-5f, 5f), Random.Range(-3f, 3f)));
+            }
+            else
+            {
+                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
+            }
+            incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
+            incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
+            if (incorrectTilePrefab != null)
+            {
+                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-5f, 5f), Random.Range(-3f, 3f)));
+            }
+            else
+            {
+                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
+            }
+        }
+        
+        
 
         if (correctTilePrefab != null)
         {
@@ -73,14 +113,7 @@ public class LetterPronunciationManager : MonoBehaviour
             Debug.LogWarning($"No prefab found for correct letter: {correctLetter}");
         }
 
-        if (incorrectTilePrefab != null)
-        {
-            InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-5f, 5f), Random.Range(-3f, 3f)));
-        }
-        else
-        {
-            Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-        }
+        
         HasMadeSelection = false;
     }
 
@@ -120,6 +153,14 @@ public class LetterPronunciationManager : MonoBehaviour
         Debug.Log($"Correct selection for: {CurrentLetter}");
         currentPronunciationIndex++;
         HasMadeSelection = true;
+        if(gm.level==1)
+        {
+            gm.score += 10;
+        }
+        else if(gm.level==2) 
+        {
+            gm.score += 15;
+        }
        
         if (currentPronunciationIndex >= letterAudioClips.Length)
         {

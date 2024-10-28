@@ -156,7 +156,8 @@ MonoBehaviour:
   lives: 5
   timerText: {fileID: 1249293597}
   livesText: {fileID: 516921707}
-  level: 2
+  level: 3
+  score: 0
 --- !u!4 &30461324
 Transform:
   m_ObjectHideFlags: 0
@@ -184,22 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d6952a408499c946a2827f97cb193bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  letterAudioClips:
-  - {fileID: 8300000, guid: 46e16288572576d47b8a2023d5d98505, type: 3}
-  - {fileID: 8300000, guid: 15217ba7ba9a1ab4fb909abcda77af7d, type: 3}
-  - {fileID: 8300000, guid: 33862c386b333164ebd5cf2b513a1e75, type: 3}
-  - {fileID: 8300000, guid: 6073daca7039e8e4d9958ef5737cce13, type: 3}
-  - {fileID: 8300000, guid: 0f182427f3d99444e9de8dfe4071b532, type: 3}
-  - {fileID: 8300000, guid: c11c6500785ed8a4f89462b7fc96e1e7, type: 3}
-  - {fileID: 8300000, guid: f06ebe20810ce0f4fb2ba666c16569ab, type: 3}
-  letterTilePrefabs:
-  - {fileID: 1332648963121925653, guid: fb6d54cda42c390439265b9f1fee14e4, type: 3}
-  - {fileID: 6507415457295512011, guid: 5c1ae24adb28d6e49aea839b5c721e4c, type: 3}
-  - {fileID: 3692098256222867365, guid: ca2299a29efbd0b4d9a0a5f130b47523, type: 3}
-  - {fileID: 3538479050510627140, guid: 37b0661b9dce08842ba5200a3fe3fa43, type: 3}
-  - {fileID: 5543244182161771713, guid: 2118b67301469c1419b15da25dc069fc, type: 3}
-  - {fileID: 6570720993330354185, guid: 20f6ac0cd7a169c4eb60994599f70fe1, type: 3}
-  - {fileID: 8554314818765846056, guid: f9fb5b20bc141ba45b5a3749b9ca1a80, type: 3}
+  letterAudioClips: []
+  letterTilePrefabs: []
   gm: {fileID: 30461323}
 --- !u!1 &48435910
 GameObject:
@@ -1451,7 +1438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segmentPrefab: {fileID: 4024010829504085519, guid: fa9c2139f7c4fe44bb631571d1e55216, type: 3}
   direction: {x: 1, y: 0}
-  speeder: 0.4
+  speeder: 0.3
   initialSize: 1
   gm: {fileID: 30461323}
   upButton: {fileID: 1253121702}

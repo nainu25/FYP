@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     
     private bool gameEnded = false;
     private bool timerRunning = false;
+    public int level;
+    public int score;
 
     void Start()
     {
