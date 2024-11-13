@@ -157,6 +157,7 @@ MonoBehaviour:
   timerText: {fileID: 1249293597}
   livesText: {fileID: 516921707}
   level: 1
+  score: 0
 --- !u!4 &30461324
 Transform:
   m_ObjectHideFlags: 0
@@ -166,7 +167,7 @@ Transform:
   m_GameObject: {fileID: 30461322}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.73, y: 3.08, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -185,13 +186,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   letterAudioClips:
-  - {fileID: 8300000, guid: fd4284b0f012be843b48f58123ead900, type: 3}
-  - {fileID: 8300000, guid: bf292f10eb44ddc4aa702d496b00efaf, type: 3}
-  - {fileID: 8300000, guid: 60bb02cb60d09494cb66396fc3bf421f, type: 3}
-  - {fileID: 8300000, guid: 0f28ae7726e79fc4b92f9b0292afd64b, type: 3}
-  - {fileID: 8300000, guid: 9447d48e53721134bb524ed300083a1b, type: 3}
-  - {fileID: 8300000, guid: 687321af930be4940a2fda59eb29ec28, type: 3}
-  - {fileID: 8300000, guid: 7d8795912ac5a0e48ba52e8a9a55d2e4, type: 3}
+  - {fileID: 8300000, guid: 5ee50612513586342b0b9073e94e972d, type: 3}
+  - {fileID: 8300000, guid: 261771190ea78184eaecf847e458dd8a, type: 3}
+  - {fileID: 8300000, guid: 357e62eaf73302149ba86b2d90eb0c54, type: 3}
+  - {fileID: 8300000, guid: 470adc71092e35d4a9a0b0b6f44786a6, type: 3}
+  - {fileID: 8300000, guid: eed8118bec4ce29488ca98c57ad807c0, type: 3}
+  - {fileID: 8300000, guid: 1da05905d3388714fb9e5b4683e6ec7b, type: 3}
+  - {fileID: 8300000, guid: e8b5557037e81ab41b180866ff2a093a, type: 3}
   letterTilePrefabs:
   - {fileID: 6209325795141025852, guid: 58a7c2a744550174b9b64f6f1478af01, type: 3}
   - {fileID: 951155260423761009, guid: 3f34870455a8c6942addbea6ecb63376, type: 3}

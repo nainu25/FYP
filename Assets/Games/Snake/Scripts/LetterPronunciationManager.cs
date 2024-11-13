@@ -34,8 +34,10 @@ public class LetterPronunciationManager : MonoBehaviour
     {
         while (currentPronunciationIndex < letterAudioClips.Length)
         {
-            PlayAudio();
+            
             ClearExistingTiles();
+            yield return new WaitForSeconds(2f);
+            PlayAudio();
             SpawnLetterTiles();
 
             gm.ResetTimer();

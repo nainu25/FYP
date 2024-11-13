@@ -157,6 +157,7 @@ MonoBehaviour:
   timerText: {fileID: 1249293597}
   livesText: {fileID: 516921707}
   level: 2
+  score: 0
 --- !u!4 &30461324
 Transform:
   m_ObjectHideFlags: 0
@@ -185,13 +186,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   letterAudioClips:
-  - {fileID: 8300000, guid: 46e16288572576d47b8a2023d5d98505, type: 3}
-  - {fileID: 8300000, guid: 15217ba7ba9a1ab4fb909abcda77af7d, type: 3}
-  - {fileID: 8300000, guid: 33862c386b333164ebd5cf2b513a1e75, type: 3}
-  - {fileID: 8300000, guid: 6073daca7039e8e4d9958ef5737cce13, type: 3}
-  - {fileID: 8300000, guid: 0f182427f3d99444e9de8dfe4071b532, type: 3}
-  - {fileID: 8300000, guid: c11c6500785ed8a4f89462b7fc96e1e7, type: 3}
-  - {fileID: 8300000, guid: f06ebe20810ce0f4fb2ba666c16569ab, type: 3}
+  - {fileID: 8300000, guid: a98d2f53a563f4842a8c1b609a2f17a3, type: 3}
+  - {fileID: 8300000, guid: d5997d4b20e8bd846888c36c131c58d4, type: 3}
+  - {fileID: 8300000, guid: f87e2336ae4fe1d468f078d0ea8fff55, type: 3}
+  - {fileID: 8300000, guid: e1777d7516eeae94e9bfbf7d507d6535, type: 3}
+  - {fileID: 8300000, guid: a4d485fd6da57c5419217a9e7f63abea, type: 3}
+  - {fileID: 8300000, guid: a8212921fe4b4ff4c911610212046b2f, type: 3}
+  - {fileID: 8300000, guid: 628a27d245e147242ba580f166725163, type: 3}
   letterTilePrefabs:
   - {fileID: 1332648963121925653, guid: fb6d54cda42c390439265b9f1fee14e4, type: 3}
   - {fileID: 6507415457295512011, guid: 5c1ae24adb28d6e49aea839b5c721e4c, type: 3}

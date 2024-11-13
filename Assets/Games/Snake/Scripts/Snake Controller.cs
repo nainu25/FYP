@@ -88,12 +88,22 @@ public class SnakeController : MonoBehaviour
         int y = Mathf.RoundToInt(transform.position.y) + direction.y * speed;
         transform.position = new Vector2(x, y);
 
+        if (gm.level == 3)
+        {
+            if (CheckSelfCollision())
+            {
+                gm.LoseLife();
+                ResetState();
+
+            }
+        }
+
         nextUpdate = Time.time + speeder;
     }
 
     private void InputHandler()
     {
-        /*if (direction.x != 0f)
+        if (direction.x != 0f)
         {
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
@@ -114,7 +124,7 @@ public class SnakeController : MonoBehaviour
             {
                 input = Vector2Int.left;
             }
-        }*/
+        }
     }
 
     private void SetDirection(Vector2Int newDirection)
@@ -188,10 +198,24 @@ public class SnakeController : MonoBehaviour
         return false;
     }
 
+    private bool CheckSelfCollision()
+    {
+        for (int i = 1; i < segments.Count; i++)
+        {
+            if (snakeHead.position == segments[i].position)
+            {
+                Debug.Log("Self-collision detected!");
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Obstacle"))
         {
+            gm.LoseLife();
             ResetState();
         }
         else if (other.gameObject.CompareTag("Wall"))

@@ -3,31 +3,19 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MovingWall : MonoBehaviour
 {
-    public Vector2 moveDirection;
-    public float moveDistance = 3f;
+    public Transform waypointA;
+    public Transform waypointB;
     public float moveSpeed = 2f;
-    public bool moveAlongX;
 
-    private Vector2 startPosition;
-    private Vector2 targetPosition;
-    private bool movingForward = true;
+    private Transform currentTarget;
+    private bool movingToWaypointA = false;
 
     private void Start()
     {
-        if (moveAlongX)
-        {
-            moveDirection = Vector2.right;
-        }
-        else
-        {
-            moveDirection = Vector2.up;
-        }
-        startPosition = transform.position;
-        targetPosition = startPosition + moveDirection.normalized * moveDistance;
-
-        // Ensure Rigidbody2D is set to Kinematic
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
+
+        currentTarget = waypointA;
     }
 
     private void Update()
@@ -37,20 +25,21 @@ public class MovingWall : MonoBehaviour
 
     private void MoveWall()
     {
-        Vector2 currentTarget = movingForward ? targetPosition : startPosition;
+        transform.position = Vector2.MoveTowards(transform.position, currentTarget.position, moveSpeed * Time.deltaTime);
 
-        transform.position = Vector2.MoveTowards(transform.position, currentTarget, moveSpeed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, currentTarget) < 0.01f)
+        if (Vector2.Distance(transform.position, currentTarget.position) < 0.01f)
         {
-            movingForward = !movingForward;
+            movingToWaypointA = !movingToWaypointA;
+            currentTarget = movingToWaypointA ? waypointA : waypointB;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall")||collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Obstacle"))
         {
-            movingForward = !movingForward;
+            movingToWaypointA = !movingToWaypointA;
+            currentTarget = movingToWaypointA ? waypointA : waypointB;
         }
     }
 }
