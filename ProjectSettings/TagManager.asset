@@ -7,6 +7,8 @@ TagManager:
   - Wall
   - Obstacle
   - Food
+  - Coin
+  - Rock
   layers:
   - Default
   - TransparentFX

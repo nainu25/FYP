@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
     public float detectionRange = 15f;
     public float stoppingDistance = 7f;
     public float attackRange = 10f;
-    public float attackCooldown = 2f;
+    public float attackCooldown = 5f;
     public GameObject rockPrefab;
     public Transform throwPoint;  
     public float rockSpeed = 20f; 
@@ -15,17 +15,28 @@ public class EnemyController : MonoBehaviour
     private bool isFacingRight = false;
     private float nextAttackTime = 0f;
 
+    SBQGameManager SBQGm;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
+        SBQGm = FindObjectOfType<SBQGameManager>();
     }
 
     void Update()
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-
-        if (distanceToPlayer <= detectionRange)
+        if(distanceToPlayer<=detectionRange)
+        {
+            if(Time.time >= nextAttackTime)
+            {
+                Attack();
+                nextAttackTime = (Time.time + attackCooldown);
+                SBQGm.OpenBook();
+            }
+        }
+        /*if (distanceToPlayer <= detectionRange)
         {
             if (distanceToPlayer > stoppingDistance && distanceToPlayer > attackRange)
             {
@@ -45,7 +56,7 @@ public class EnemyController : MonoBehaviour
         else
         {
             StopMoving();
-        }
+        }*/
     }
 
     void MoveTowardsPlayer()
@@ -57,12 +68,6 @@ public class EnemyController : MonoBehaviour
         {
             Flip();
         }
-
-        /*// Update animator
-        if (animator != null)
-        {
-            animator.SetBool("IsMoving", true);
-        }*/
     }
 
     void StopMoving()

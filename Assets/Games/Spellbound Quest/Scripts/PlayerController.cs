@@ -17,10 +17,14 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
 
+    SBQGameManager SBQGm;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        SBQGm = FindObjectOfType<SBQGameManager>();
+        SBQGm.coins = 0;
     }
 
     void Update()
@@ -33,6 +37,10 @@ public class PlayerController : MonoBehaviour
     {
         float moveInput = 0f;
 
+        // PC Input
+        moveInput = Input.GetAxisRaw("Horizontal");
+
+        // Override with touch input if applicable
         if (isMovingLeft)
             moveInput = -1f;
         else if (isMovingRight)
@@ -50,16 +58,29 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        if (isGrounded && isJumping)
+        // PC Jump input
+        if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || isJumping))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            isJumping = false;
+            isJumping = false; // Reset after jump for touch input
         }
     }
+
 
     public void MoveLeftDown() { isMovingLeft = true; }
     public void MoveLeftUp() { isMovingLeft = false; }
     public void MoveRightDown() { isMovingRight = true; }
     public void MoveRightUp() { isMovingRight = false; }
     public void JumpButtonDown() { if (isGrounded) isJumping = true; }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Coin"))
+        {
+            SBQGm.coins++;
+            SBQGm.UpdateCoinsText();
+            Destroy(collision.gameObject);
+            Debug.Log("Coins: " + SBQGm.coins);
+        }
+    }
 }
