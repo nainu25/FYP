@@ -1567,7 +1567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segmentPrefab: {fileID: 4024010829504085519, guid: fa9c2139f7c4fe44bb631571d1e55216, type: 3}
   direction: {x: 1, y: 0}
-  speeder: 0.2
+  speeder: 0.3
   initialSize: 1
   gm: {fileID: 30461323}
   upButton: {fileID: 1253121702}
