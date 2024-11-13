@@ -29,12 +29,12 @@ public class EnemyController : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         if(distanceToPlayer<=detectionRange)
         {
-            if(Time.time >= nextAttackTime)
+            SBQGm.OpenBook();
+            /*if (Time.time >= nextAttackTime)
             {
-                Attack();
-                nextAttackTime = (Time.time + attackCooldown);
-                SBQGm.OpenBook();
-            }
+                *//*Attack();
+                nextAttackTime = (Time.time + attackCooldown);*//*
+            }*/
         }
         /*if (distanceToPlayer <= detectionRange)
         {

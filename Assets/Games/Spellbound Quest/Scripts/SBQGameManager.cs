@@ -25,12 +25,15 @@ public class SBQGameManager : MonoBehaviour
     public TMP_Text coinsText;
     public int coins;
 
+    private bool isOpen;
+
     void Start()
     {
         bookPanel.SetActive(false);
         pausePanel.SetActive(false);
         StartTimer();
         UpdateLivesText();
+        isOpen = false;
     }
 
     private void Update()
@@ -106,16 +109,28 @@ public class SBQGameManager : MonoBehaviour
         }
     }
 
-    public void OpenBook()
+    public void ToggleBook()
     {
-        if (bookPanel.activeSelf)
+        if(isOpen)
         {
-            bookPanel.SetActive(false);
+            CloseBook();
         }
         else
         {
-            bookPanel.SetActive(true);
+            OpenBook();
         }
+    }
+
+    public void OpenBook()
+    {
+        bookPanel.SetActive(true);
+        isOpen = true;
+    }
+
+    public void CloseBook()
+    {
+        bookPanel.SetActive(false);
+        isOpen = false;
     }
 
     private void PauseGame()
