@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Games/Snake/Scenes/Snake Game Lv 1.unity
     guid: 84a111f0a0eee9b4f8755fb78f335a29
+  - enabled: 1
+    path: Assets/Games/Snake/Scenes/Snake Game Lv 2.unity
+    guid: 10d24205e4810564495a804c2969b06d
+  - enabled: 1
+    path: Assets/Games/Snake/Scenes/Snake Game Lv 3.unity
+    guid: c323b5626e6a21b47ba5d62e71ed1041
   m_configObjects: {}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class LetterPronunciationManager : MonoBehaviour
@@ -138,8 +139,44 @@ public class LetterPronunciationManager : MonoBehaviour
                 Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
             }
         }
-        
-        
+        else if (gm.level == 4)
+        {
+            List<string> incorrectLetters = new List<string> { "V", "W", "X", "Y", "Z", "A", "B" };
+            incorrectLetters.Remove(correctLetter);
+            string incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
+            GameObject incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
+            if (incorrectTilePrefab != null)
+            {
+                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-5f, 5f), Random.Range(-3f, 3f)));
+            }
+            else
+            {
+                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
+            }
+            incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
+            incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
+            if (incorrectTilePrefab != null)
+            {
+                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-5f, 5f), Random.Range(-3f, 3f)));
+            }
+            else
+            {
+                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
+            }
+            incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
+            incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
+            if (incorrectTilePrefab != null)
+            {
+                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-5f, 5f), Random.Range(-3f, 3f)));
+            }
+            else
+            {
+                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
+            }
+
+        }
+
+
 
         if (correctTilePrefab != null)
         {
@@ -202,10 +239,25 @@ public class LetterPronunciationManager : MonoBehaviour
         {
             gm.score += 20;
         }
+        else if(gm.level==4)
+        {
+            gm.score += 25;
+        }
        
         if (currentPronunciationIndex >= letterAudioClips.Length)
         {
             Debug.Log("All letters completed!");
+            // Load the next scene in the build index or by scene name
+            int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+            if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+            {
+                SceneManager.LoadScene(nextSceneIndex);
+            }
+            else
+            {
+                Debug.Log("No more scenes to load. Game complete!");
+                // Optionally, you can reload the current scene or go to a main menu.
+            }
         }
     }
 }
