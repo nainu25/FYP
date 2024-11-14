@@ -11,6 +11,8 @@ public class SpellBookManager : MonoBehaviour
     public Button[] optionButtons;
 
     string[] r1_opts = { "Cat", "Kat", "Cet" };
+    string[] r2_opts = { "Son", "Sun", "San" };
+    string[] r3_opts = { "Red", "Reb", "Rad" };
 
     int correctOptionIndex;
     int round;
@@ -56,10 +58,13 @@ public class SpellBookManager : MonoBehaviour
             //Instantiate(playerAttackEffect, transform.position, Quaternion.identity);
             // Trigger attack animation/effects from the player
             SBQGm.CloseBook();
+            round++;
         }
         else
         {
             Debug.Log("Incorrect choice! Enemy attacks.");
+            SBQGm.CloseBook();
+            Destroy(optionButtons[chosenIndex]);
             //Instantiate(enemyAttackEffect, transform.position, Quaternion.identity);
             // Trigger attack animation/effects from the enemy
         }

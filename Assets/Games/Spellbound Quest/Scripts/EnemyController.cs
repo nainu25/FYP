@@ -15,6 +15,8 @@ public class EnemyController : MonoBehaviour
     private bool isFacingRight = false;
     private float nextAttackTime = 0f;
 
+    bool inRange;
+
     SBQGameManager SBQGm;
 
     void Start()
@@ -22,6 +24,7 @@ public class EnemyController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
         SBQGm = FindObjectOfType<SBQGameManager>();
+        inRange = false;
     }
 
     void Update()
@@ -29,12 +32,21 @@ public class EnemyController : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         if(distanceToPlayer<=detectionRange)
         {
-            SBQGm.OpenBook();
+            inRange = true;
+            while(inRange)
+            {
+                SBQGm.OpenBook();
+                inRange = !inRange;
+            }
             /*if (Time.time >= nextAttackTime)
             {
                 *//*Attack();
                 nextAttackTime = (Time.time + attackCooldown);*//*
             }*/
+        }
+        else
+        {
+            inRange = false;
         }
         /*if (distanceToPlayer <= detectionRange)
         {
@@ -57,6 +69,10 @@ public class EnemyController : MonoBehaviour
         {
             StopMoving();
         }*/
+
+
+
+
     }
 
     void MoveTowardsPlayer()
@@ -74,6 +90,20 @@ public class EnemyController : MonoBehaviour
     {
         rb.velocity = new Vector2(0, rb.velocity.y);
 
+    }
+
+    public bool CheckRange()
+    {
+
+        if (inRange)
+        {
+            SBQGm.OpenBook();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     void Attack()
