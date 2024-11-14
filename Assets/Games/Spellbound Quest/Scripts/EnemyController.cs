@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -33,11 +34,13 @@ public class EnemyController : MonoBehaviour
         if(distanceToPlayer<=detectionRange)
         {
             inRange = true;
-            while(inRange)
+            while(CheckRange())
             {
                 SBQGm.OpenBook();
                 inRange = !inRange;
             }
+
+            
             /*if (Time.time >= nextAttackTime)
             {
                 *//*Attack();
