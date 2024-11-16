@@ -9,6 +9,7 @@ TagManager:
   - Food
   - Coin
   - Rock
+  - Enemy
   layers:
   - Default
   - TransparentFX

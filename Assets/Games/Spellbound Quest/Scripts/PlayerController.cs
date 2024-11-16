@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
+using System;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
 
-    SBQGameManager SBQGm;
+    public event Action OnAttackCompleted;
+    private SBQGameManager SBQGm;
 
     void Start()
     {
@@ -37,10 +38,8 @@ public class PlayerController : MonoBehaviour
     {
         float moveInput = 0f;
 
-        // PC Input
         moveInput = Input.GetAxisRaw("Horizontal");
 
-        // Override with touch input if applicable
         if (isMovingLeft)
             moveInput = -1f;
         else if (isMovingRight)
@@ -58,14 +57,26 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        // PC Jump input
         if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || isJumping))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            isJumping = false; // Reset after jump for touch input
+            isJumping = false;
         }
     }
 
+    public void Attack()
+    {
+        Debug.Log("Player Attacked");
+        StartCoroutine(AttackRoutine());
+    }
+
+    private IEnumerator AttackRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+
+        Debug.Log("Player attack completed.");
+        OnAttackCompleted?.Invoke();
+    }
 
     public void MoveLeftDown() { isMovingLeft = true; }
     public void MoveLeftUp() { isMovingLeft = false; }
@@ -75,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Coin"))
+        if (collision.gameObject.CompareTag("Coin"))
         {
             SBQGm.coins++;
             SBQGm.UpdateCoinsText();

@@ -1,5 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
+using System.Collections;
 
 public class EnemyController : MonoBehaviour
 {
@@ -9,21 +11,21 @@ public class EnemyController : MonoBehaviour
     public float attackRange = 10f;
     public float attackCooldown = 5f;
     public GameObject rockPrefab;
-    public Transform throwPoint;  
-    public float rockSpeed = 20f; 
+    public Transform throwPoint;
+    public float rockSpeed = 20f;
     private Transform player;
-    private Rigidbody2D rb;
-    private bool isFacingRight = false;
-    private float nextAttackTime = 0f;
 
     bool inRange;
+    bool bookOpened = false;
+
+    public event Action OnAttackCompleted;
 
     SBQGameManager SBQGm;
+    public int enemyLives = 3;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        rb = GetComponent<Rigidbody2D>();
         SBQGm = FindObjectOfType<SBQGameManager>();
         inRange = false;
     }
@@ -31,101 +33,49 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        if(distanceToPlayer<=detectionRange)
+
+        if (distanceToPlayer <= detectionRange && !bookOpened)
         {
             inRange = true;
-            while(CheckRange())
+            if (CheckRange())
             {
                 SBQGm.OpenBook();
-                inRange = !inRange;
+                bookOpened = true;
             }
-
-            
-            /*if (Time.time >= nextAttackTime)
-            {
-                *//*Attack();
-                nextAttackTime = (Time.time + attackCooldown);*//*
-            }*/
         }
-        else
+        else if (distanceToPlayer > detectionRange)
         {
             inRange = false;
+            bookOpened = false;
         }
-        /*if (distanceToPlayer <= detectionRange)
-        {
-            if (distanceToPlayer > stoppingDistance && distanceToPlayer > attackRange)
-            {
-                MoveTowardsPlayer();
-            }
-            else
-            {
-                StopMoving();
-
-                if (distanceToPlayer <= attackRange && Time.time >= nextAttackTime)
-                {
-                    Attack();
-                    nextAttackTime = Time.time + attackCooldown;
-                }
-            }
-        }
-        else
-        {
-            StopMoving();
-        }*/
-
-
-
-
-    }
-
-    void MoveTowardsPlayer()
-    {
-        Vector2 direction = (player.position - transform.position).normalized;
-        rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
-
-        if ((direction.x > 0 && !isFacingRight) || (direction.x < 0 && isFacingRight))
-        {
-            Flip();
-        }
-    }
-
-    void StopMoving()
-    {
-        rb.velocity = new Vector2(0, rb.velocity.y);
-
     }
 
     public bool CheckRange()
     {
-
-        if (inRange)
-        {
-            SBQGm.OpenBook();
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return inRange;
     }
 
-    void Attack()
+    public void Attack()
     {
-        StopMoving();
-
         GameObject rock = Instantiate(rockPrefab, throwPoint.position, Quaternion.identity);
         Rigidbody2D rockRb = rock.GetComponent<Rigidbody2D>();
 
         Vector2 direction = (player.position - throwPoint.position).normalized;
         rockRb.velocity = direction * rockSpeed;
-        
+
+        StartCoroutine(AttackRoutine());
     }
 
-    void Flip()
+    private IEnumerator AttackRoutine()
     {
-        isFacingRight = !isFacingRight;
-        Vector3 scaler = transform.localScale;
-        scaler.x *= -1;
-        transform.localScale = scaler;
+        yield return new WaitForSeconds(2f);
+
+        Debug.Log("Enemy attack completed.");
+        OnAttackCompleted?.Invoke();
+    }
+
+    public void ResetBookFlag()
+    {
+        bookOpened = false;
     }
 }

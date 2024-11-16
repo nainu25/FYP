@@ -214,3 +214,4 @@ MonoBehaviour:
   rockPrefab: {fileID: 2399130152338438731, guid: d4e3854943d97b448a3599ae138d87a3, type: 3}
   throwPoint: {fileID: 5756244049380954520}
   rockSpeed: 20
+  enemyLives: 3
