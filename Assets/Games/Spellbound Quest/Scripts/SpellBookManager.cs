@@ -89,6 +89,15 @@ public class SpellBookManager : MonoBehaviour
 
     void OnOptionSelected(int chosenIndex)
     {
+        if (optionButtons == null || optionButtons.Length == 0)
+        {
+            Debug.LogError("optionButtons array is not assigned or empty.");
+        }
+
+        if (SBQGm == null)
+        {
+            Debug.LogError("SBQGameManager is not assigned.");
+        }
         if (chosenIndex == correctOptionIndex)
         {
             Debug.Log("Round: " + SBQGm.round);

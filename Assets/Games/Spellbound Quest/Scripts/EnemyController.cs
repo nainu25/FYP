@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
     public event Action OnAttackCompleted;
 
     SBQGameManager SBQGm;
-    public int enemyLives = 3;
+    public int enemyLives = 2;
 
     void Start()
     {

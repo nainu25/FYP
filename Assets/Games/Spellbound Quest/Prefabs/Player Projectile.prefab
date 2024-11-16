@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 8115445786892565320}
   - component: {fileID: 7262313785369452707}
   - component: {fileID: 2168588843894155552}
-  - component: {fileID: 8068074742093573451}
+  - component: {fileID: 227241299120226184}
   m_Layer: 0
-  m_Name: Rock
+  m_Name: Player Projectile
   m_TagString: Rock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -137,7 +137,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -149,7 +149,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8068074742093573451
+--- !u!114 &227241299120226184
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2399130152338438731}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 379a1f4b5cd2b4745a51d2ab03bb6bcb, type: 3}
+  m_Script: {fileID: 11500000, guid: abe9e6f5f21e26243a8a7e9d5bb6cfad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 2

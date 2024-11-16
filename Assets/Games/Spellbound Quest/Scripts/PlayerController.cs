@@ -17,6 +17,11 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
 
+    public GameObject rockPrefab;
+    public Transform throwPoint;
+    public float rockSpeed = 20f;
+    private Transform enemy;
+
     public event Action OnAttackCompleted;
     private SBQGameManager SBQGm;
 
@@ -26,6 +31,9 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         SBQGm = FindObjectOfType<SBQGameManager>();
         SBQGm.coins = 0;
+
+
+        enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
     }
 
     void Update()
@@ -66,7 +74,11 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
-        Debug.Log("Player Attacked");
+        GameObject rock = Instantiate(rockPrefab, throwPoint.position, Quaternion.identity);
+        Rigidbody2D rockRb = rock.GetComponent<Rigidbody2D>();
+
+        Vector2 direction = (enemy.position - throwPoint.position).normalized;
+        rockRb.velocity = direction * rockSpeed;
         StartCoroutine(AttackRoutine());
     }
 

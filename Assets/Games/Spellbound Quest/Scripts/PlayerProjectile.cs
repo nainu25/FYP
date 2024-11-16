@@ -16,12 +16,14 @@ public class PlayerProjectile : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log("hitt");
             Destroy(gameObject);
             if(ec.enemyLives>0) 
             {
                 ec.enemyLives--;
+                Debug.Log("EL: " + ec.enemyLives);
             }
-            else
+            if(ec.enemyLives==0)
             {
                 Destroy(collision.gameObject);
             }
