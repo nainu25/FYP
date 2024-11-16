@@ -5,13 +5,11 @@ public class EnemyProjectile : MonoBehaviour
 {
     public float lifetime = 2f;
     SBQGameManager SBQGm;
-    EnemyController ec;
 
     void Start()
     {
         Destroy(gameObject, lifetime);
         SBQGm = FindObjectOfType<SBQGameManager>();
-        ec = FindObjectOfType<EnemyController>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -28,18 +26,6 @@ public class EnemyProjectile : MonoBehaviour
             {
                 Destroy(collision.gameObject);
                 SBQGm.EndGame();
-            }
-        }
-        if(collision.gameObject.CompareTag("Enemy"))
-        {
-            Destroy(gameObject);
-            if(ec.enemyLives>0) 
-            {
-                ec.enemyLives--;
-            }
-            else
-            {
-                Destroy(collision.gameObject);
             }
         }
     }
