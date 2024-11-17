@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         ResetGame();
+        score = PlayerPrefs.GetInt("Score", 0);
+        UpdateScoreText();
     }
 
     private void Update()

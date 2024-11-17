@@ -64,7 +64,7 @@ public class SnakeController : MonoBehaviour
         canMove = true;
 
     }
-
+    public float segmentOffset = 0.5f;
     private void Move()
     {
         if (Time.time < nextUpdate)
@@ -83,12 +83,26 @@ public class SnakeController : MonoBehaviour
         {
             segments[i].position = segments[i - 1].position;
         }
+        // Move each segment starting from the last to the first
+        /*for (int i = segments.Count - 1; i > 0; i--)
+        {
+            Vector3 targetPosition = segments[i - 1].position;
+
+            // Apply offset by moving the segment towards the target position with a given distance
+            float distance = Vector3.Distance(segments[i].position, targetPosition);
+            if (distance > segmentOffset)
+            {
+                segments[i].position = Vector3.MoveTowards(segments[i].position, targetPosition, segmentOffset);
+            }
+        }*/
 
         int x = Mathf.RoundToInt(transform.position.x) + direction.x * speed;
         int y = Mathf.RoundToInt(transform.position.y) + direction.y * speed;
+        /*float x = transform.position.x + direction.x * speed;
+        float y = transform.position.y + direction.y * speed;*/
         transform.position = new Vector2(x, y);
 
-        if (gm.level == 3)
+        if (gm.level >= 3)
         {
             if (CheckSelfCollision())
             {
@@ -98,7 +112,7 @@ public class SnakeController : MonoBehaviour
             }
         }
 
-        nextUpdate = Time.time + speeder;
+        nextUpdate = Time.time+speeder;
     }
 
     private void InputHandler()
@@ -164,10 +178,25 @@ public class SnakeController : MonoBehaviour
         segment.position = segments[segments.Count - 1].position;
         segments.Add(segment);
     }
+    /*public void Grow()
+    {
+        Transform lastSegment = segments[segments.Count - 1];
+
+        // Calculate an offset in the opposite direction of the snake's current movement
+        Vector3 offset = -new Vector3(direction.x, direction.y, 0);
+        Transform segment = Instantiate(segmentPrefab);
+
+        // Place the new segment at the correct position behind the last segment
+        segment.position = lastSegment.position + offset;
+        segments.Add(segment);
+    }*/
+
 
     public void ResetState()
     {
         direction = Vector2Int.right;
+        RotateHead();
+        SetDirection(direction);
         transform.position = Vector3.zero;
 
         for (int i = 1; i < segments.Count; i++)

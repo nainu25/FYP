@@ -3,43 +3,41 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MovingWall : MonoBehaviour
 {
-    public Transform waypointA;
-    public Transform waypointB;
+    public Vector2 moveDirection = Vector2.right; // Initial movement direction
     public float moveSpeed = 2f;
+    public float moveDistance = 5f; // The distance to move before reversing
 
-    private Transform currentTarget;
-    private bool movingToWaypointA = false;
+    private Vector2 startPosition;
+    private float movedDistance;
 
     private void Start()
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.isKinematic = true;
-
-        currentTarget = waypointA;
+        startPosition = transform.position; // Record the initial position
     }
 
     private void Update()
     {
         MoveWall();
+        CheckDistanceAndReverse();
     }
 
     private void MoveWall()
     {
-        transform.position = Vector2.MoveTowards(transform.position, currentTarget.position, moveSpeed * Time.deltaTime);
-
-        if (Vector2.Distance(transform.position, currentTarget.position) < 0.01f)
-        {
-            movingToWaypointA = !movingToWaypointA;
-            currentTarget = movingToWaypointA ? waypointA : waypointB;
-        }
+        // Move the wall in the current direction
+        transform.position += (Vector3)(moveDirection * moveSpeed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void CheckDistanceAndReverse()
     {
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Obstacle"))
+        // Calculate how far the wall has moved from its starting point
+        movedDistance = Vector2.Distance(startPosition, transform.position);
+
+        // Reverse direction if the wall has moved the specified distance
+        if (movedDistance >= moveDistance)
         {
-            movingToWaypointA = !movingToWaypointA;
-            currentTarget = movingToWaypointA ? waypointA : waypointB;
+            moveDirection = -moveDirection; // Reverse the direction
+            startPosition = transform.position; // Reset the start position
         }
     }
 }
+

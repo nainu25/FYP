@@ -53,15 +53,24 @@ public class LetterPronunciationManager : MonoBehaviour
         audioSource.Play();
     }
 
-    IEnumerator PlayAudioAfterDelay()
+    private IEnumerator PlayAudioAfterDelay()
     {
-        while(HasMadeSelection==false)
+        while (!HasMadeSelection)
         {
-            PlayAudio();
-            yield return new WaitForSeconds(2f);
+            if (!audioSource.isPlaying)
+            {
+                PlayAudio();
+                yield return new WaitForSeconds(audioSource.clip.length + 1f);
+            }
+            else
+            {
+                yield return null;
+            }
         }
-        
+        yield break;
     }
+
+
 
     private void SpawnLetterTiles()
     {
@@ -254,10 +263,32 @@ public class LetterPronunciationManager : MonoBehaviour
 
     private void InstantiateLetterTile(GameObject tilePrefab, Vector2 position)
     {
-        GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity);
-        tile.GetComponent<LetterTile>().Setup(tilePrefab.name, this);
-        activeTiles.Add(tile);
+        int maxAttempts = 10;
+        bool validPosition = false;
+
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            if (!Physics2D.OverlapCircle(position, 0.75f, LayerMask.GetMask("Obstacle")) && !Physics2D.OverlapCircle(position, 0.75f, LayerMask.GetMask("UI2")) && !Physics2D.OverlapCircle(position, 0.75f, LayerMask.GetMask("Tile")))
+            {
+                validPosition = true;
+                break;
+            }
+
+            position = new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f));
+        }
+
+        if (validPosition)
+        {
+            GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity);
+            tile.GetComponent<LetterTile>().Setup(tilePrefab.name, this);
+            activeTiles.Add(tile);
+        }
+        else
+        {
+            Debug.LogWarning("Failed to find a valid position for the tile.");
+        }
     }
+
 
     private void ClearExistingTiles()
     {
@@ -266,7 +297,10 @@ public class LetterPronunciationManager : MonoBehaviour
             Destroy(tile);
         }
         activeTiles.Clear();
-        StopCoroutine(PlayAudioAfterDelay());
+        if (HasMadeSelection)
+        {
+            StopCoroutine(PlayAudioAfterDelay());
+        }
     }
 
     public string CurrentLetter => letterAudioClips[currentPronunciationIndex].name;
@@ -280,32 +314,41 @@ public class LetterPronunciationManager : MonoBehaviour
         {
             gm.score += 10;
             gm.UpdateScoreText();
+            PlayerPrefs.SetInt("PlayerScore", gm.score);
+            PlayerPrefs.Save();
         }
         else if(gm.level==2) 
         {
             gm.score += 15;
             gm.UpdateScoreText();
+            PlayerPrefs.SetInt("PlayerScore", gm.score);
+            PlayerPrefs.Save(); 
         }
         else if(gm.level==3)
         {
             gm.score += 20;
             gm.UpdateScoreText();
+            PlayerPrefs.SetInt("PlayerScore", gm.score);
+            PlayerPrefs.Save();
         }
         else if(gm.level==4)
         {
             gm.score += 25;
             gm.UpdateScoreText();
+            PlayerPrefs.SetInt("PlayerScore", gm.score);
+            PlayerPrefs.Save();
         }
         else if(gm.level==5)
         {
             gm.score += 30;
             gm.UpdateScoreText();
+            PlayerPrefs.SetInt("PlayerScore", gm.score);
+            PlayerPrefs.Save();
         }
        
         if (currentPronunciationIndex >= letterAudioClips.Length)
         {
             Debug.Log("All letters completed!");
-            // Load the next scene in the build index or by scene name
             int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
             if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
             {
@@ -314,7 +357,6 @@ public class LetterPronunciationManager : MonoBehaviour
             else
             {
                 Debug.Log("No more scenes to load. Game complete!");
-                // Optionally, you can reload the current scene or go to a main menu.
             }
         }
     }

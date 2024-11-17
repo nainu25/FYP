@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8917772129704521193}
   - component: {fileID: -642368000569599071}
   - component: {fileID: -6921089046969134893}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: V
   m_TagString: Food
   m_Icon: {fileID: 0}
@@ -120,18 +120,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.50092167, y: 0.49624014}
+  m_Offset: {x: -0.4047721, y: 0.39443463}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.0083334, y: 2.0083334}
+    oldSize: {x: 1.6066667, y: 1.6066667}
     newSize: {x: 2.41, y: 2.41}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0064901, y: 1.0158532}
+  m_Size: {x: 0.814191, y: 0.81224215}
   m_EdgeRadius: 0
 --- !u!50 &8917772129704521193
 Rigidbody2D:
