@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int lives;
     public TMP_Text timerText;
     public TMP_Text livesText;
+    public TMP_Text scoreText;
     
     private bool gameEnded = false;
     private bool timerRunning = false;
@@ -61,14 +62,22 @@ public class GameManager : MonoBehaviour
     {
         if (timerText != null)
         {
-            timerText.text = "Time: " + Mathf.Ceil(timeRemaining).ToString() + "s";
+            timerText.text = Mathf.Ceil(timeRemaining).ToString() + "s";
+        }
+    }
+
+    public void UpdateScoreText()
+    {
+       if(scoreText!=null)
+        {
+            scoreText.text = score.ToString();
         }
     }
 
     public void LoseLife()
     {
         lives--;
-        livesText.text = "Lives: " + lives;
+        livesText.text = lives.ToString();
 
         if (lives <= 0)
         {
@@ -87,7 +96,7 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         //lives = 5;
-        livesText.text = "Lives: " + lives;
+        livesText.text = lives.ToString();
         ResetTimer();
         gameEnded = false;
         Time.timeScale = 1f;

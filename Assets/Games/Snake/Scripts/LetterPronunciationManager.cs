@@ -23,11 +23,13 @@ public class LetterPronunciationManager : MonoBehaviour
     private void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.loop = true;
+        audioSource.loop = false;
         if(food == null)
         {
             food = FindObjectOfType<Food>();
         }
+        gm.ResetTimer();
+        gm.StartTimer();
         StartCoroutine(PlayLetterPronunciations());
     }
 
@@ -35,18 +37,10 @@ public class LetterPronunciationManager : MonoBehaviour
     {
         while (currentPronunciationIndex < letterAudioClips.Length)
         {
-            
             ClearExistingTiles();
-            yield return new WaitForSeconds(2f);
-            PlayAudio();
-            SpawnLetterTiles();
-
-            gm.ResetTimer();
-            gm.StartTimer();
-
             yield return new WaitForSeconds(1f);
+            SpawnLetterTiles();
             yield return new WaitUntil(() => HasMadeSelection);
-            
         }
 
         Debug.Log("All pronunciations completed!");
@@ -59,8 +53,20 @@ public class LetterPronunciationManager : MonoBehaviour
         audioSource.Play();
     }
 
+    IEnumerator PlayAudioAfterDelay()
+    {
+        while(HasMadeSelection==false)
+        {
+            PlayAudio();
+            yield return new WaitForSeconds(2f);
+        }
+        
+    }
+
     private void SpawnLetterTiles()
     {
+        HasMadeSelection = false;
+        StartCoroutine(PlayAudioAfterDelay());
         string correctLetter = letterAudioClips[currentPronunciationIndex].name;
         GameObject correctTilePrefab = GetTilePrefabByLetter(correctLetter);
 
@@ -232,9 +238,6 @@ public class LetterPronunciationManager : MonoBehaviour
         {
             Debug.LogWarning($"No prefab found for correct letter: {correctLetter}");
         }
-
-        
-        HasMadeSelection = false;
     }
 
     private GameObject GetTilePrefabByLetter(string letter)
@@ -263,35 +266,40 @@ public class LetterPronunciationManager : MonoBehaviour
             Destroy(tile);
         }
         activeTiles.Clear();
+        StopCoroutine(PlayAudioAfterDelay());
     }
 
     public string CurrentLetter => letterAudioClips[currentPronunciationIndex].name;
 
     public void CorrectSelection()
     {
-        audioSource.Stop();
         Debug.Log($"Correct selection for: {CurrentLetter}");
         currentPronunciationIndex++;
         HasMadeSelection = true;
         if(gm.level==1)
         {
             gm.score += 10;
+            gm.UpdateScoreText();
         }
         else if(gm.level==2) 
         {
             gm.score += 15;
+            gm.UpdateScoreText();
         }
         else if(gm.level==3)
         {
             gm.score += 20;
+            gm.UpdateScoreText();
         }
         else if(gm.level==4)
         {
             gm.score += 25;
+            gm.UpdateScoreText();
         }
         else if(gm.level==5)
         {
             gm.score += 30;
+            gm.UpdateScoreText();
         }
        
         if (currentPronunciationIndex >= letterAudioClips.Length)
