@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 407a4a3bfdfcb2641992895510f9ed65
+guid: 0d01d18a6cac7634ab835c1e2e0bdcfb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 250
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,133 +121,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Jumping Sheet_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 5
-        width: 215
-        height: 481
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 04b491b2aa7718b4c842fc94e3164421
-      internalID: -1610167128
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Jumping Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 246
-        y: 4
-        width: 222
-        height: 479
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ce8a091897c5e3e41b86eee47fcbde29
-      internalID: -480919609
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Jumping Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 508
-        y: 0
-        width: 218
-        height: 456
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4d9d8388ce4592a42a573a261c915522
-      internalID: -132015005
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Jumping Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 757
-        y: 51
-        width: 212
-        height: 464
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8210f9fdb2dddf742b25201263dd8859
-      internalID: 896734407
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Jumping Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 1010
-        y: 5
-        width: 213
-        height: 457
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ce5d20c56f2d7dd42a4df5bd00ee82b2
-      internalID: -2071893344
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Jumping Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 1261
-        y: 7
-        width: 212
-        height: 485
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f56dd0020a231ab4688b0a2f3742c35b
-      internalID: 540253422
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -258,13 +132,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Jumping Sheet_0: -1610167128
-      Jumping Sheet_1: -480919609
-      Jumping Sheet_2: -132015005
-      Jumping Sheet_3: 896734407
-      Jumping Sheet_4: -2071893344
-      Jumping Sheet_5: 540253422
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

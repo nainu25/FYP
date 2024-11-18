@@ -5,11 +5,21 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public Transform[] spawnPoints;
+    public bool isSpawned;
+
 
     void Start()
     {
         SpawnEnemy();
     }
+
+    /*private void Update()
+    {
+        if(isSpawned==false)
+        {
+            SpawnEnemy();
+        }
+    }*/
 
     private void SpawnEnemy()
     {
@@ -23,5 +33,6 @@ public class EnemySpawner : MonoBehaviour
         Transform spawnPoint = spawnPoints[randomIndex];
 
         Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        isSpawned = true;
     }
 }

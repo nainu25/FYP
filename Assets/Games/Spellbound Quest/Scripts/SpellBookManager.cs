@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class SpellBookManager : MonoBehaviour
 {
     SBQGameManager SBQGm;
-    public Image[] imgs;
+    public GameObject[] imgs;
     public Button[] optionButtons;
 
     EnemyController ec;
