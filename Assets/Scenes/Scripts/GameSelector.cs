@@ -51,11 +51,11 @@ public class GameSelector : MonoBehaviour
     {
         if(index == 0)
         {
-            SceneManager.LoadScene("Game1");
+            SceneManager.LoadScene("SBQ Level 1");
         }
         else if (index == 1)
         {
-            SceneManager.LoadScene("Snake Game");
+            SceneManager.LoadScene("Snake Game Lv 1");
         }
         else if (index == 2)
         {

@@ -1979,7 +1979,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game 1
+  m_text: Spellbound Quest
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2786c2cea61e1274b8476e501d65af42, type: 2}
   m_sharedMaterial: {fileID: 3794821059779841757, guid: 2786c2cea61e1274b8476e501d65af42, type: 2}

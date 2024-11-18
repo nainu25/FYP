@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Games/Spellbound Quest/Scenes/Level 1.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Splash Screen.unity
     guid: a707397fd3688d94fb48ef428f432d74
@@ -32,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Games/Snake/Scenes/Snake Game Lv 5.unity
     guid: 7456e165c366aac4bb1864c4de7cb8b8
+  - enabled: 1
+    path: Assets/Games/Spellbound Quest/Scenes/SBQ Level 1.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

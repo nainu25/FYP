@@ -59,13 +59,13 @@ public class SpellBookManager : MonoBehaviour
         switch (SBQGm.round)
         {
             case 1:
-                imgs[0].gameObject.SetActive(true);
+                imgs[0].SetActive(true);
                 break;
             case 2:
-                imgs[1].gameObject.SetActive(true);
+                imgs[1].SetActive(true);
                 break;
             case 3:
-                imgs[2].gameObject.SetActive(true);
+                imgs[2].SetActive(true);
                 break;
             default:
                 Debug.LogWarning("No image available for this round. Ensure that imgs array has enough images.");
@@ -117,9 +117,9 @@ public class SpellBookManager : MonoBehaviour
 
     void CloseAllImages()
     {
-        foreach (Image img in imgs)
+        foreach (GameObject img in imgs)
         {
-            img.gameObject.SetActive(false);
+            img.SetActive(false);
         }
     }
 
