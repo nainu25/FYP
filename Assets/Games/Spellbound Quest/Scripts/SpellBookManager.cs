@@ -103,7 +103,6 @@ public class SpellBookManager : MonoBehaviour
             Debug.Log("Round: " + SBQGm.round);
             Debug.Log("Correct choice! Player attacks.");
             SBQGm.round++;
-            SBQGm.UpdateRoundsText();
             pc.Attack();
         }
         else

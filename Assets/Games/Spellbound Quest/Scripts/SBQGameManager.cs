@@ -25,8 +25,6 @@ public class SBQGameManager : MonoBehaviour
     public TMP_Text coinsText;
     public int coins;
 
-    [Header("Rounds")]
-    public TMP_Text roundsText;
     public int round;
 
     private bool isOpen;
@@ -98,14 +96,6 @@ public class SBQGameManager : MonoBehaviour
         if(coinsText!=null)
         {
             coinsText.text = coins.ToString();
-        }
-    }
-
-    public void UpdateRoundsText()
-    {
-        if(roundsText!=null)
-        {
-            roundsText.text = round.ToString();
         }
     }
 
