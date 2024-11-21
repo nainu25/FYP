@@ -27,10 +27,14 @@ public class SBQGameManager : MonoBehaviour
 
     public int round;
 
+    SpellBookManager sbm;
+
+
     private bool isOpen;
 
     void Start()
     {
+        sbm = gameObject.GetComponent<SpellBookManager>();
         bookPanel.SetActive(false);
         pausePanel.SetActive(false);
         StartTimer();
@@ -157,7 +161,15 @@ public class SBQGameManager : MonoBehaviour
     {
         gameEnded = true;
         timerRunning = false;
+        SavePlayerPrefs();
         Debug.Log("Game Over!");
         Time.timeScale = 0f;
+
+    }
+    void SavePlayerPrefs()
+    {
+        PlayerPrefs.SetInt("Coins", coins);
+        PlayerPrefs.SetInt("Lives", lives);
+        PlayerPrefs.Save();
     }
 }

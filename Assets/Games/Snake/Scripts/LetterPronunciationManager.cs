@@ -30,6 +30,7 @@ public class LetterPronunciationManager : MonoBehaviour
         }
         gm.ResetTimer();
         gm.StartTimer();
+        ResetPlayerPrefs();
         StartCoroutine(PlayLetterPronunciations());
     }
 
@@ -314,35 +315,35 @@ public class LetterPronunciationManager : MonoBehaviour
         {
             gm.score += 10;
             gm.UpdateScoreText();
-            PlayerPrefs.SetInt("PlayerScore", gm.score);
+            PlayerPrefs.SetInt("PlayerScore Lv1", gm.score);
             PlayerPrefs.Save();
         }
         else if(gm.level==2) 
         {
             gm.score += 15;
             gm.UpdateScoreText();
-            PlayerPrefs.SetInt("PlayerScore", gm.score);
+            PlayerPrefs.SetInt("PlayerScore Lv2", gm.score);
             PlayerPrefs.Save(); 
         }
         else if(gm.level==3)
         {
             gm.score += 20;
             gm.UpdateScoreText();
-            PlayerPrefs.SetInt("PlayerScore", gm.score);
+            PlayerPrefs.SetInt("PlayerScore Lv3", gm.score);
             PlayerPrefs.Save();
         }
         else if(gm.level==4)
         {
             gm.score += 25;
             gm.UpdateScoreText();
-            PlayerPrefs.SetInt("PlayerScore", gm.score);
+            PlayerPrefs.SetInt("PlayerScore Lv4", gm.score);
             PlayerPrefs.Save();
         }
         else if(gm.level==5)
         {
             gm.score += 30;
             gm.UpdateScoreText();
-            PlayerPrefs.SetInt("PlayerScore", gm.score);
+            PlayerPrefs.SetInt("PlayerScore Lv5", gm.score);
             PlayerPrefs.Save();
         }
        
@@ -359,5 +360,30 @@ public class LetterPronunciationManager : MonoBehaviour
                 Debug.Log("No more scenes to load. Game complete!");
             }
         }
+    }
+
+    void ResetPlayerPrefs()
+    {
+        if (gm.level == 1)
+        {
+            PlayerPrefs.SetInt("PlayerScore Lv1", 0);
+        }
+        else if (gm.level == 2)
+        {
+            PlayerPrefs.SetInt("PlayerScore Lv2", 0);
+        }
+        else if (gm.level == 3)
+        {
+            PlayerPrefs.SetInt("PlayerScore Lv3", 0);
+        }
+        else if (gm.level == 4)
+        {
+            PlayerPrefs.SetInt("PlayerScore Lv4", 0);
+        }
+        else if (gm.level == 5)
+        {
+            PlayerPrefs.SetInt("PlayerScore Lv5", 0);
+        }
+        PlayerPrefs.Save();
     }
 }

@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
-    private Animator animator; // Add this line
+    private Animator animator;
     public LayerMask groundLayer;
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>(); // Initialize Animator
+        animator = GetComponent<Animator>();
         SBQGm = FindObjectOfType<SBQGameManager>();
         SBQGm.coins = 0;
 
@@ -41,14 +41,14 @@ public class PlayerController : MonoBehaviour
     {
         HandleMovement();
         HandleJump();
-        UpdateAnimations(); // Update animation state logic
+        UpdateAnimations();
     }
 
     void HandleMovement()
     {
         float moveInput = 0f;
 
-        moveInput = Input.GetAxisRaw("Horizontal"); // Detects movement input
+        moveInput = Input.GetAxisRaw("Horizontal");
 
         if (isMovingLeft)
             moveInput = -1f;
@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
-        // Set animator parameter based on input
         if (Mathf.Abs(moveInput) > 0)
         {
             animator.SetBool("IsWalking", true);
@@ -67,7 +66,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsWalking", false);
         }
 
-        // Flip sprite based on movement direction
         if (moveInput > 0)
             spriteRenderer.flipX = false;
         else if (moveInput < 0)
@@ -77,19 +75,18 @@ public class PlayerController : MonoBehaviour
     void HandleJump()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        animator.SetBool("IsJumping", !isGrounded); // Set jumping state
+        animator.SetBool("IsJumping", !isGrounded);
 
         if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || isJumping))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isJumping = false;
-            animator.SetTrigger("Jump"); // Trigger the jump animation
+            animator.SetTrigger("Jump");
         }
     }
 
     void UpdateAnimations()
     {
-        // Ensure `IsJumping` parameter is updated based on grounded status
         if (isGrounded)
         {
             animator.SetBool("IsJumping", false);
