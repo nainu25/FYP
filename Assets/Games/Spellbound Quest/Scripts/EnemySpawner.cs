@@ -3,36 +3,26 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefab;
     public Transform[] spawnPoints;
     public bool isSpawned;
 
 
     void Start()
     {
-        SpawnEnemy();
+        SpawnEnemy(0);
     }
 
-    /*private void Update()
+    private void SpawnEnemy(int spawnIndex)
     {
-        if(isSpawned==false)
-        {
-            SpawnEnemy();
-        }
-    }*/
-
-    private void SpawnEnemy()
-    {
-        if (spawnPoints.Length == 0 || enemyPrefab == null)
+        if (spawnPoints.Length == 0 || enemyPrefab.Length == null)
         {
             Debug.LogWarning("No spawn points or enemy prefab assigned.");
             return;
         }
+        Transform spawnPoint = spawnPoints[spawnIndex];
 
-        int randomIndex = Random.Range(0, spawnPoints.Length);
-        Transform spawnPoint = spawnPoints[randomIndex];
-
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        Instantiate(enemyPrefab[spawnIndex], spawnPoint.position, spawnPoint.rotation);
         isSpawned = true;
     }
 }

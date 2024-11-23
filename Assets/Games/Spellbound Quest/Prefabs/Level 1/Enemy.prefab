@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 8957936955045118734}
   - component: {fileID: 8810934371538901686}
   - component: {fileID: 3164717622807229576}
-  - component: {fileID: 454002689742186986}
   - component: {fileID: 1288786211297495383}
   m_Layer: 0
   m_Name: Enemy
@@ -146,27 +145,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &454002689742186986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3569330103380755068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40f69982222a9ed4899e8aede946c6cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  detectionRange: 10
-  stoppingDistance: 7
-  attackRange: 7
-  attackCooldown: 1
-  rockPrefab: {fileID: 2399130152338438731, guid: d4e3854943d97b448a3599ae138d87a3, type: 3}
-  throwPoint: {fileID: 5756244049380954520}
-  rockSpeed: 20
-  enemyLives: 3
 --- !u!60 &1288786211297495383
 PolygonCollider2D:
   m_ObjectHideFlags: 0

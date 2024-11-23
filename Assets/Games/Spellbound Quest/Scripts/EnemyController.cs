@@ -34,28 +34,31 @@ public class EnemyController : MonoBehaviour
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        if (distanceToPlayer <= detectionRange && !bookOpened)
+        if (distanceToPlayer <= detectionRange && !inRange) // Player has just entered the range
         {
-            inRange = true;
-            if (CheckRange())
+            inRange = true; // Set inRange to true only when the player enters the range
+            if (!bookOpened && CheckRange())
             {
+                Debug.Log("Player entered detection range. Opening book...");
                 SBQGm.OpenBook();
                 bookOpened = true;
             }
         }
-        else if (distanceToPlayer > detectionRange)
+        else if (distanceToPlayer > detectionRange && inRange) // Player has just exited the range
         {
-            inRange = false;
+            inRange = false; // Reset inRange when the player exits the range
+            Debug.Log("Player exited detection range.");
             bookOpened = false;
         }
     }
+
 
     public bool CheckRange()
     {
         return inRange;
     }
 
-    public void Attack()
+    /*public void Attack()
     {
         GameObject rock = Instantiate(rockPrefab, throwPoint.position, Quaternion.identity);
         Rigidbody2D rockRb = rock.GetComponent<Rigidbody2D>();
@@ -64,7 +67,21 @@ public class EnemyController : MonoBehaviour
         rockRb.velocity = direction * rockSpeed;
 
         StartCoroutine(AttackRoutine());
+    }*/
+    public void Attack()
+    {
+        GameObject rock = Instantiate(rockPrefab, throwPoint.position, Quaternion.identity);
+        Rigidbody2D rockRb = rock.GetComponent<Rigidbody2D>();
+
+        // Determine the direction based on the enemy's facing direction
+        Vector2 direction = transform.localScale.x < 0 ? Vector2.right : Vector2.left;
+
+        // Set the velocity of the rock
+        rockRb.velocity = direction * rockSpeed;
+
+        StartCoroutine(AttackRoutine());
     }
+
 
     private IEnumerator AttackRoutine()
     {
