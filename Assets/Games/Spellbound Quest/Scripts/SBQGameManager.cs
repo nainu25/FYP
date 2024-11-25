@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Add this if you use TextMeshPro
+using TMPro;
+using UnityEngine.SceneManagement; // Add this if you use TextMeshPro
 
 public class SBQGameManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class SBQGameManager : MonoBehaviour
     [Header("Panels")]
     public GameObject bookPanel;
     public GameObject pausePanel;
+    public GameObject endPanel;
 
     [Header("Timer")]
     public TMP_Text timerText;
@@ -26,6 +28,9 @@ public class SBQGameManager : MonoBehaviour
     public int coins;
 
     public int round;
+    public int level;
+
+    public TMP_Text scoreText;
 
     SpellBookManager sbm;
 
@@ -37,9 +42,11 @@ public class SBQGameManager : MonoBehaviour
         sbm = gameObject.GetComponent<SpellBookManager>();
         bookPanel.SetActive(false);
         pausePanel.SetActive(false);
+        endPanel.SetActive(false);
         StartTimer();
         UpdateLivesText();
         isOpen = false;
+        Time.timeScale = 1;
     }
 
     private void Update()
@@ -127,6 +134,43 @@ public class SBQGameManager : MonoBehaviour
         }
     }
 
+    public void Retry()
+    {
+        if(level == 1)
+        {
+            SceneManager.LoadScene("SBQ Level 1");
+        }
+        else if (level == 2)
+        {
+            SceneManager.LoadScene("SBQ Level 2");
+        }
+        else if (level == 3)
+        {
+            SceneManager.LoadScene("SBQ Level 3");
+        }
+        else if (level == 4)
+        {
+            SceneManager.LoadScene("SBQ Level 4");
+        }
+        else if (level == 5)
+        {
+            SceneManager.LoadScene("SBQ Level 5");
+        }
+    }
+
+    public void NextLevel()
+    {
+        if(level==1)
+        {
+            SceneManager.LoadScene("SBQ Level 2");
+        }
+    }
+
+    public void Home()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
     public void OpenBook()
     {
         bookPanel.SetActive(true);
@@ -164,12 +208,42 @@ public class SBQGameManager : MonoBehaviour
         SavePlayerPrefs();
         Debug.Log("Game Over!");
         Time.timeScale = 0f;
+        endPanel.SetActive(true);
+        scoreText.text = (PlayerPrefs.GetInt("SBQ Lv1 Coins") * 100).ToString();
 
     }
+    
     void SavePlayerPrefs()
     {
-        PlayerPrefs.SetInt("Coins", coins);
-        PlayerPrefs.SetInt("Lives", lives);
-        PlayerPrefs.Save();
+        if(level==1)
+        {
+            PlayerPrefs.SetInt("SBQ Lv1 Coins", coins);
+            PlayerPrefs.SetInt("SBQ Lv1 Lives", lives);
+            PlayerPrefs.Save();
+        }
+        else if(level == 2)
+        {
+            PlayerPrefs.SetInt("SBQ Lv2 Coins", coins);
+            PlayerPrefs.SetInt("SBQ Lv2 Lives", lives);
+            PlayerPrefs.Save();
+        }
+        else if(level == 3)
+        {
+            PlayerPrefs.SetInt("SBQ Lv3 Coins", coins);
+            PlayerPrefs.SetInt("SBQ Lv3 Lives", lives);
+            PlayerPrefs.Save();
+        }
+        else if(level == 4)
+        {
+            PlayerPrefs.SetInt("SBQ Lv4 Coins", coins);
+            PlayerPrefs.SetInt("SBQ Lv4 Lives", lives);
+            PlayerPrefs.Save();
+        }
+        else if(level == 5) 
+        {
+            PlayerPrefs.SetInt("SBQ Lv5 Coins", coins);
+            PlayerPrefs.SetInt("SBQ Lv5 Lives", lives);
+            PlayerPrefs.Save();
+        }
     }
 }

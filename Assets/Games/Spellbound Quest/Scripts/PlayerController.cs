@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     public GameObject rockPrefab;
     public Transform throwPoint;
     public float rockSpeed = 20f;
-    private Transform enemy;
 
     public event Action OnAttackCompleted;
     private SBQGameManager SBQGm;
