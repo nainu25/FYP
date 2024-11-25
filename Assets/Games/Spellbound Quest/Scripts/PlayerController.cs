@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     public event Action OnAttackCompleted;
     private SBQGameManager SBQGm;
+    bool isPunching;
 
     void Start()
     {
@@ -33,8 +34,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         SBQGm = FindObjectOfType<SBQGameManager>();
         SBQGm.coins = 0;
-
-        
+        isPunching = false;
     }
 
     void Update()
@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(moveInput) > 0)
         {
             animator.SetBool("IsWalking", true);
+            
+
         }
         else
         {
@@ -70,6 +72,14 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = false;
         else if (moveInput < 0)
             spriteRenderer.flipX = true;
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            if(!isPunching)
+            {
+                Punch();
+            }
+        }
     }
 
     void HandleJump()
@@ -84,6 +94,24 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("Jump");
         }
     }
+
+    void Punch()
+    {
+        isPunching = true;
+        animator.SetBool("IsPunching", true);
+        Debug.Log("Punch triggered!");
+        StartCoroutine(ResetPunch());
+    }
+
+    private IEnumerator ResetPunch()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        isPunching = false;
+        animator.SetBool("IsPunching", false);
+        Debug.Log("Punch reset!");
+    }
+
 
     void UpdateAnimations()
     {
@@ -150,6 +178,16 @@ public class PlayerController : MonoBehaviour
             SBQGm.UpdateCoinsText();
             Destroy(collision.gameObject);
             Debug.Log("Coins: " + SBQGm.coins);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy2"))
+        {
+            if (isPunching)
+            {
+                Destroy(collision.gameObject);
+            }
         }
     }
 }

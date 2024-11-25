@@ -10,6 +10,7 @@ TagManager:
   - Coin
   - Rock
   - Enemy
+  - Enemy2
   layers:
   - Default
   - TransparentFX

@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         SpawnEnemy(0);
+        SpawnEnemy(1);
     }
 
     private void SpawnEnemy(int spawnIndex)

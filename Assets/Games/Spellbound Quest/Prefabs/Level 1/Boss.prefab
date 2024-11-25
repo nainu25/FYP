@@ -42,9 +42,9 @@ GameObject:
   - component: {fileID: 8957936955045118734}
   - component: {fileID: 8810934371538901686}
   - component: {fileID: 3164717622807229576}
-  - component: {fileID: 761432970200405785}
   - component: {fileID: 5907995832376243831}
-  - component: {fileID: 986532167733691216}
+  - component: {fileID: 7810084407939022554}
+  - component: {fileID: 3206295694400940418}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Enemy
@@ -147,8 +147,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!60 &761432970200405785
-PolygonCollider2D:
+--- !u!114 &5907995832376243831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3569330103380755068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40f69982222a9ed4899e8aede946c6cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  detectionRange: 5
+  stoppingDistance: 7
+  attackRange: 10
+  attackCooldown: 5
+  rockPrefab: {fileID: 2399130152338438731, guid: d4e3854943d97b448a3599ae138d87a3, type: 3}
+  throwPoint: {fileID: 5756244049380954520}
+  rockSpeed: 20
+  enemyLives: 3
+--- !u!61 &7810084407939022554
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -183,56 +204,16 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.544762, y: 3.34}
+    oldSize: {x: 1.6965079, y: 2.2266667}
     newSize: {x: 2.544762, y: 3.34}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.4175, y: -0.8051785}
-      - {x: 0.5666071, y: -0.8051785}
-      - {x: 1.1630356, y: -0.17892857}
-      - {x: 1.1630356, y: 1.0437499}
-      - {x: 0.8648214, y: 1.610357}
-      - {x: 0.62624997, y: 1.6401786}
-      - {x: -0.8051785, y: 1.6401786}
-      - {x: -0.98410714, y: 1.5507143}
-      - {x: -1.2823213, y: 1.1928571}
-      - {x: -1.2823213, y: 0.89464283}
-      - {x: -1.1630356, y: 0.7455357}
-      - {x: -1.2823213, y: 0.50696427}
-      - {x: -1.2823213, y: -0.23857142}
-      - {x: -0.89464283, y: -0.8051785}
-      - {x: -0.5964286, y: -0.8051785}
-      - {x: -0.38767856, y: -0.5964286}
-      - {x: -0.14910714, y: -0.7753571}
-      - {x: -0.029821428, y: -0.8051785}
-      - {x: 0.14910714, y: -0.47714284}
-  m_UseDelaunayMesh: 0
---- !u!114 &5907995832376243831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3569330103380755068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40f69982222a9ed4899e8aede946c6cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  detectionRange: 5
-  stoppingDistance: 7
-  attackRange: 10
-  attackCooldown: 5
-  rockPrefab: {fileID: 2399130152338438731, guid: d4e3854943d97b448a3599ae138d87a3, type: 3}
-  throwPoint: {fileID: 5756244049380954520}
-  rockSpeed: 20
-  enemyLives: 3
---- !u!95 &986532167733691216
+  serializedVersion: 2
+  m_Size: {x: 1.6965079, y: 2.2266667}
+  m_EdgeRadius: 0
+--- !u!95 &3206295694400940418
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
