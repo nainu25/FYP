@@ -23,7 +23,7 @@ public class EnemyController : MonoBehaviour
     public event Action OnAttackCompleted;
 
     private SBQGameManager sBQGm;
-    [SerializeField] private int enemyLives = 2;
+    [SerializeField] public int enemyLives = 2;
 
     private void Start()
     {
