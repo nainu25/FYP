@@ -164,6 +164,10 @@ public class SBQGameManager : MonoBehaviour
         {
             SceneManager.LoadScene("SBQ Level 2");
         }
+        if(level==2)
+        {
+            SceneManager.LoadScene("SBQ Level 3");
+        }
     }
 
     public void Home()
@@ -209,7 +213,14 @@ public class SBQGameManager : MonoBehaviour
         Debug.Log("Game Over!");
         Time.timeScale = 0f;
         endPanel.SetActive(true);
-        scoreText.text = (PlayerPrefs.GetInt("SBQ Lv1 Coins") * 100).ToString();
+        if(level==1)
+        {
+            scoreText.text = (PlayerPrefs.GetInt("SBQ Lv1 Coins") * 100).ToString();
+        }
+        if(level==2)
+        {
+            scoreText.text = (PlayerPrefs.GetInt("SBQ Lv2 Coins") * 100).ToString();
+        }
 
     }
     
@@ -221,25 +232,25 @@ public class SBQGameManager : MonoBehaviour
             PlayerPrefs.SetInt("SBQ Lv1 Lives", lives);
             PlayerPrefs.Save();
         }
-        else if(level == 2)
+        if(level == 2)
         {
             PlayerPrefs.SetInt("SBQ Lv2 Coins", coins);
             PlayerPrefs.SetInt("SBQ Lv2 Lives", lives);
             PlayerPrefs.Save();
         }
-        else if(level == 3)
+        if(level == 3)
         {
             PlayerPrefs.SetInt("SBQ Lv3 Coins", coins);
             PlayerPrefs.SetInt("SBQ Lv3 Lives", lives);
             PlayerPrefs.Save();
         }
-        else if(level == 4)
+        if(level == 4)
         {
             PlayerPrefs.SetInt("SBQ Lv4 Coins", coins);
             PlayerPrefs.SetInt("SBQ Lv4 Lives", lives);
             PlayerPrefs.Save();
         }
-        else if(level == 5) 
+        if(level == 5) 
         {
             PlayerPrefs.SetInt("SBQ Lv5 Coins", coins);
             PlayerPrefs.SetInt("SBQ Lv5 Lives", lives);

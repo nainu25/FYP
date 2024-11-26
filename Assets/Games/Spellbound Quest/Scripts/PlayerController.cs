@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     public event Action OnAttackCompleted;
     private SBQGameManager SBQGm;
+    Vector3 initialPosition;
     bool isPunching;
 
     void Start()
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         SBQGm = FindObjectOfType<SBQGameManager>();
         SBQGm.coins = 0;
+        initialPosition = gameObject.transform.position;
         isPunching = false;
     }
 
@@ -177,6 +179,20 @@ public class PlayerController : MonoBehaviour
             SBQGm.UpdateCoinsText();
             Destroy(collision.gameObject);
             Debug.Log("Coins: " + SBQGm.coins);
+        }
+        if(collision.gameObject.CompareTag("Obstacle"))
+        {
+            if (SBQGm.lives > 0)
+            {
+                SBQGm.lives--;
+                SBQGm.UpdateLivesText();
+                transform.position = initialPosition;
+            }
+            else
+            {
+                Destroy(gameObject);
+                SBQGm.EndGame();
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
