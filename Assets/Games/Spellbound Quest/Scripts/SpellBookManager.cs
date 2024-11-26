@@ -1,123 +1,117 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Data.Common;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SpellBookManager : MonoBehaviour
 {
-    SBQGameManager SBQGm;
-    public GameObject[] imgs;
+    private SBQGameManager sbqGameManager;
+    private EnemyController enemyController;
+    private PlayerController playerController;
+
+    [Header("UI Elements")]
+    public GameObject[] images;
     public Button[] optionButtons;
 
-    EnemyController ec;
-    PlayerController pc;
+    [Header("Round Data")]
+    private readonly string[][] roundOptions =
+    {
+        new string[] { "Cat", "Kat", "Cet" },
+        new string[] { "Son", "Sun", "San" },
+        new string[] { "Red", "Reb", "Rad" }
+    };
 
-    string[] r1_opts = { "Cat", "Kat", "Cet" };
-    string[] r2_opts = { "Son", "Sun", "San" };
-    string[] r3_opts = { "Red", "Reb", "Rad" };
+    private readonly int[] correctOptionIndices = { 0, 1, 0 }; // Correct answers for rounds
 
-    int correctOptionIndex;
-    
+    private int correctOptionIndex;
 
     private void Start()
     {
-        SBQGm = gameObject.GetComponent<SBQGameManager>();
-        SBQGm.round = 1;
-        ShowQuestion(GetOptionsForCurrentRound(), GetCorrectIndexForCurrentRound());
-        ec = FindObjectOfType<EnemyController>();
-        pc = FindObjectOfType<PlayerController>();
+        sbqGameManager = GetComponent<SBQGameManager>();
+        enemyController = FindObjectOfType<EnemyController>();
+        playerController = FindObjectOfType<PlayerController>();
 
-        if (ec != null)
+        if (sbqGameManager != null)
         {
-            ec.OnAttackCompleted += HandleEnemyAttackCompleted;
+            sbqGameManager.round = 1;
+            DisplayQuestionForCurrentRound();
         }
-        if (pc != null)
+
+        if (enemyController != null)
         {
-            pc.OnAttackCompleted += HandlePlayerAttackCompleted;
+            enemyController.OnAttackCompleted += HandleEnemyAttackCompleted;
+        }
+
+        if (playerController != null)
+        {
+            playerController.OnAttackCompleted += HandlePlayerAttackCompleted;
         }
     }
 
     private void OnDestroy()
     {
-        if (ec != null)
+        if (enemyController != null)
         {
-            ec.OnAttackCompleted -= HandleEnemyAttackCompleted;
+            enemyController.OnAttackCompleted -= HandleEnemyAttackCompleted;
         }
-        if(pc!=null)
+
+        if (playerController != null)
         {
-            pc.OnAttackCompleted -= HandlePlayerAttackCompleted;
+            playerController.OnAttackCompleted -= HandlePlayerAttackCompleted;
         }
     }
 
-    public void ShowQuestion(string[] options, int correctIndex)
+    private void DisplayQuestionForCurrentRound()
     {
-        Debug.Log("Showing question for round: " + SBQGm.round);
-        CloseAllImages();
-
-        switch (SBQGm.round)
+        if (sbqGameManager.round > roundOptions.Length || sbqGameManager.round > images.Length)
         {
-            case 1:
-                imgs[0].SetActive(true);
-                break;
-            case 2:
-                imgs[1].SetActive(true);
-                break;
-            case 3:
-                imgs[2].SetActive(true);
-                break;
-            default:
-                Debug.LogWarning("No image available for this round. Ensure that imgs array has enough images.");
-                break;
+            Debug.LogWarning("Invalid round setup. Ensure all rounds and images are configured.");
+            sbqGameManager.EndGame();
+            return;
         }
 
-        correctOptionIndex = correctIndex;
-        Debug.Log("Setting options for round: " + SBQGm.round);
+        Debug.Log($"Displaying question for round: {sbqGameManager.round}");
+        CloseAllImages();
 
+        // Activate the corresponding image for the current round
+        images[sbqGameManager.round - 1].SetActive(true);
+
+        // Get options and correct index for the current round
+        string[] options = roundOptions[sbqGameManager.round - 1];
+        correctOptionIndex = correctOptionIndices[sbqGameManager.round - 1];
+
+        // Set up option buttons
         for (int i = 0; i < optionButtons.Length; i++)
         {
-            optionButtons[i].gameObject.SetActive(true);
+            optionButtons[i].gameObject.SetActive(i < options.Length);
             optionButtons[i].GetComponentInChildren<TMP_Text>().text = options[i];
             int index = i;
-
             optionButtons[i].onClick.RemoveAllListeners();
             optionButtons[i].onClick.AddListener(() => OnOptionSelected(index));
         }
     }
 
-
-    void OnOptionSelected(int chosenIndex)
+    private void OnOptionSelected(int chosenIndex)
     {
-        if (optionButtons == null || optionButtons.Length == 0)
-        {
-            Debug.LogError("optionButtons array is not assigned or empty.");
-        }
-
-        if (SBQGm == null)
-        {
-            Debug.LogError("SBQGameManager is not assigned.");
-        }
         if (chosenIndex == correctOptionIndex)
         {
-            Debug.Log("Round: " + SBQGm.round);
-            Debug.Log("Correct choice! Player attacks.");
-            SBQGm.round++;
-            pc.Attack();
+            Debug.Log($"Correct choice! Round: {sbqGameManager.round}");
+            sbqGameManager.round++;
+            playerController.Attack();
         }
         else
         {
-            Debug.Log("Incorrect choice! Enemy attacks.");
-            ec.Attack();
+            Debug.Log($"Incorrect choice! Enemy attacks.");
+            enemyController.Attack();
             optionButtons[chosenIndex].gameObject.SetActive(false);
         }
 
-        SBQGm.CloseBook();
+        sbqGameManager.CloseBook();
     }
 
-    void CloseAllImages()
+    private void CloseAllImages()
     {
-        foreach (GameObject img in imgs)
+        foreach (GameObject img in images)
         {
             img.SetActive(false);
         }
@@ -126,47 +120,21 @@ public class SpellBookManager : MonoBehaviour
     private void HandleEnemyAttackCompleted()
     {
         Debug.Log("Enemy attack completed. Reopening the book.");
-        SBQGm.OpenBook();
+        sbqGameManager.OpenBook();
     }
+
     private void HandlePlayerAttackCompleted()
     {
         Debug.Log("Player attack completed. Preparing for the next round.");
-        if (SBQGm.round <= imgs.Length)
+        if (sbqGameManager.round <= images.Length)
         {
-            ShowQuestion(GetOptionsForCurrentRound(), GetCorrectIndexForCurrentRound());
-            SBQGm.OpenBook();
+            DisplayQuestionForCurrentRound();
+            sbqGameManager.OpenBook();
         }
         else
         {
-            SBQGm.EndGame();
+            Debug.Log("All rounds completed. Ending the game.");
+            sbqGameManager.EndGame();
         }
     }
-
-    private string[] GetOptionsForCurrentRound()
-    {
-        switch (SBQGm.round)
-        {
-            case 1: return r1_opts;
-            case 2: return r2_opts;
-            case 3: return r3_opts;
-            default:
-                Debug.LogWarning("No options found for the current round. Ensure all rounds are defined.");
-                return new string[] { };
-        }
-    }
-
-    private int GetCorrectIndexForCurrentRound()
-    {
-        switch (SBQGm.round)
-        {
-            case 1: return 0;
-            case 2: return 1;
-            case 3: return 0;
-            default:
-                Debug.LogWarning("No correct index found for the current round. Ensure all rounds are defined.");
-                return 0;
-        }
-    }
-
-
 }
