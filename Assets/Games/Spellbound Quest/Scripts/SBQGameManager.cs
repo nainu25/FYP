@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement; // Add this if you use TextMeshPro
+using UnityEngine.SceneManagement;
 
 public class SBQGameManager : MonoBehaviour
 {
     private bool isPaused = false;
+    private bool gameEnded = false;
+    private bool isOpen = false;
 
     [Header("Panels")]
     public GameObject bookPanel;
@@ -17,41 +19,44 @@ public class SBQGameManager : MonoBehaviour
     public float gameDuration = 10f;
     private float timeRemaining;
     private bool timerRunning = false;
-    private bool gameEnded = false;
 
     [Header("Lives")]
     public TMP_Text livesText;
     public int lives;
 
-    [Header("Coins")]    
+    [Header("Coins")]
     public TMP_Text coinsText;
     public int coins;
 
+    [Header("Game Info")]
     public int round;
     public int level;
-
     public TMP_Text scoreText;
 
-    SpellBookManager sbm;
+    private SpellBookManager sbm;
 
-
-    private bool isOpen;
-
-    void Start()
+    private void Start()
     {
-        sbm = gameObject.GetComponent<SpellBookManager>();
-        bookPanel.SetActive(false);
-        pausePanel.SetActive(false);
-        endPanel.SetActive(false);
-        StartTimer();
-        UpdateLivesText();
-        isOpen = false;
-        Time.timeScale = 1;
+        sbm = GetComponent<SpellBookManager>();
+        InitializeGame();
     }
 
     private void Update()
     {
-        Timer();
+        HandleTimer();
+    }
+
+    private void InitializeGame()
+    {
+        SetPanelActive(bookPanel, false);
+        SetPanelActive(pausePanel, false);
+        SetPanelActive(endPanel, false);
+
+        StartTimer();
+        UpdateLivesText();
+        UpdateCoinsText();
+
+        Time.timeScale = 1;
     }
 
     public void StartTimer()
@@ -68,12 +73,9 @@ public class SBQGameManager : MonoBehaviour
         UpdateTimerUI();
     }
 
-    private void Timer()
+    private void HandleTimer()
     {
-        if (gameEnded || !timerRunning || isPaused)
-        {
-            return;
-        }
+        if (gameEnded || !timerRunning || isPaused) return;
 
         if (timeRemaining > 0)
         {
@@ -90,13 +92,13 @@ public class SBQGameManager : MonoBehaviour
     {
         if (timerText != null)
         {
-            timerText.text = "" + Mathf.Ceil(timeRemaining).ToString() + "s";
+            timerText.text = $"{Mathf.Ceil(timeRemaining)}s";
         }
     }
 
     public void UpdateLivesText()
     {
-        if(livesText!=null)
+        if (livesText != null)
         {
             livesText.text = lives.ToString();
         }
@@ -104,7 +106,7 @@ public class SBQGameManager : MonoBehaviour
 
     public void UpdateCoinsText()
     {
-        if(coinsText!=null)
+        if (coinsText != null)
         {
             coinsText.text = coins.ToString();
         }
@@ -113,77 +115,47 @@ public class SBQGameManager : MonoBehaviour
     public void TogglePause()
     {
         if (isPaused)
-        {
             ResumeGame();
-        }
         else
-        {
             PauseGame();
-        }
     }
 
     public void ToggleBook()
     {
-        if(isOpen)
-        {
+        if (isOpen)
             CloseBook();
-        }
         else
-        {
             OpenBook();
-        }
     }
 
     public void Retry()
     {
-        if(level == 1)
-        {
-            SceneManager.LoadScene("SBQ Level 1");
-        }
-        else if (level == 2)
-        {
-            SceneManager.LoadScene("SBQ Level 2");
-        }
-        else if (level == 3)
-        {
-            SceneManager.LoadScene("SBQ Level 3");
-        }
-        else if (level == 4)
-        {
-            SceneManager.LoadScene("SBQ Level 4");
-        }
-        else if (level == 5)
-        {
-            SceneManager.LoadScene("SBQ Level 5");
-        }
+        LoadScene($"SBQ Level {level}");
     }
 
     public void NextLevel()
     {
-        if(level==1)
+        int nextLevel = level + 1;
+        if (nextLevel <= 5)
         {
-            SceneManager.LoadScene("SBQ Level 2");
-        }
-        if(level==2)
-        {
-            SceneManager.LoadScene("SBQ Level 3");
+            LoadScene($"SBQ Level {nextLevel}");
         }
     }
 
     public void Home()
     {
-        SceneManager.LoadScene("Main Menu");
+        LoadScene("Main Menu");
     }
 
     public void OpenBook()
     {
-        bookPanel.SetActive(true);
+        SetPanelActive(bookPanel, true);
         isOpen = true;
     }
 
     public void CloseBook()
     {
-        bookPanel.SetActive(false);
+        SetPanelActive(bookPanel, false);
         isOpen = false;
     }
 
@@ -192,8 +164,9 @@ public class SBQGameManager : MonoBehaviour
         Time.timeScale = 0f;
         isPaused = true;
         timerRunning = false;
+
         Debug.Log("Game Paused");
-        pausePanel.SetActive(true);
+        SetPanelActive(pausePanel, true);
     }
 
     private void ResumeGame()
@@ -201,60 +174,53 @@ public class SBQGameManager : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
         timerRunning = true;
+
         Debug.Log("Game Resumed");
-        pausePanel.SetActive(false);
+        SetPanelActive(pausePanel, false);
     }
 
     public void EndGame()
     {
         gameEnded = true;
         timerRunning = false;
-        SavePlayerPrefs();
-        Debug.Log("Game Over!");
         Time.timeScale = 0f;
-        endPanel.SetActive(true);
-        if(level==1)
-        {
-            scoreText.text = (PlayerPrefs.GetInt("SBQ Lv1 Coins") * 100).ToString();
-        }
-        if(level==2)
-        {
-            scoreText.text = (PlayerPrefs.GetInt("SBQ Lv2 Coins") * 100).ToString();
-        }
 
+        Debug.Log("Game Over!");
+        SetPanelActive(endPanel, true);
+
+        SavePlayerPrefs();
+        DisplayScore();
     }
-    
-    void SavePlayerPrefs()
+
+    private void DisplayScore()
     {
-        if(level==1)
+        if (scoreText != null)
         {
-            PlayerPrefs.SetInt("SBQ Lv1 Coins", coins);
-            PlayerPrefs.SetInt("SBQ Lv1 Lives", lives);
-            PlayerPrefs.Save();
+            int levelCoins = PlayerPrefs.GetInt($"SBQ Lv{level} Coins", 0);
+            scoreText.text = (levelCoins * 100).ToString();
         }
-        if(level == 2)
+    }
+
+    private void SavePlayerPrefs()
+    {
+        string coinsKey = $"SBQ Lv{level} Coins";
+        string livesKey = $"SBQ Lv{level} Lives";
+
+        PlayerPrefs.SetInt(coinsKey, coins);
+        PlayerPrefs.SetInt(livesKey, lives);
+        PlayerPrefs.Save();
+    }
+
+    private void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private void SetPanelActive(GameObject panel, bool isActive)
+    {
+        if (panel != null)
         {
-            PlayerPrefs.SetInt("SBQ Lv2 Coins", coins);
-            PlayerPrefs.SetInt("SBQ Lv2 Lives", lives);
-            PlayerPrefs.Save();
-        }
-        if(level == 3)
-        {
-            PlayerPrefs.SetInt("SBQ Lv3 Coins", coins);
-            PlayerPrefs.SetInt("SBQ Lv3 Lives", lives);
-            PlayerPrefs.Save();
-        }
-        if(level == 4)
-        {
-            PlayerPrefs.SetInt("SBQ Lv4 Coins", coins);
-            PlayerPrefs.SetInt("SBQ Lv4 Lives", lives);
-            PlayerPrefs.Save();
-        }
-        if(level == 5) 
-        {
-            PlayerPrefs.SetInt("SBQ Lv5 Coins", coins);
-            PlayerPrefs.SetInt("SBQ Lv5 Lives", lives);
-            PlayerPrefs.Save();
+            panel.SetActive(isActive);
         }
     }
 }
