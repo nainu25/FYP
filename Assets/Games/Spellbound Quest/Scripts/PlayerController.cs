@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         else if (isMovingRight)
             moveInput = 1f;
 
-        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
         if (Mathf.Abs(moveInput) > 0)
         {
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || isJumping))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isJumping = false;
             animator.SetTrigger("Jump");
         }
@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
             direction = Vector2.right;
         }
 
-        rockRb.velocity = direction * rockSpeed;
+        rockRb.linearVelocity = direction * rockSpeed;
 
         StartCoroutine(AttackRoutine());
     }

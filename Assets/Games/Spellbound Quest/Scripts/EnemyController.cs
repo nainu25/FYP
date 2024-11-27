@@ -67,7 +67,7 @@ public class EnemyController : MonoBehaviour
         if (rock.TryGetComponent(out Rigidbody2D rockRb))
         {
             Vector2 direction = transform.localScale.x < 0 ? Vector2.right : Vector2.left;
-            rockRb.velocity = direction * rockSpeed;
+            rockRb.linearVelocity = direction * rockSpeed;
         }
         StartCoroutine(AttackRoutine());
     }
