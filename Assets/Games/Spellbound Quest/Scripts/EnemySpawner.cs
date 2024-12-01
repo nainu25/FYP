@@ -4,84 +4,71 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Enemy Spawner Settings")]
-    [Tooltip("Array of enemy prefabs to spawn.")]
-    public GameObject[] enemyPrefabs;
+    [Tooltip("Enemy prefab to spawn.")]
+    public GameObject enemyPrefab;
 
     [Tooltip("Array of spawn points where enemies can appear.")]
     public Transform[] spawnPoints;
 
-    [Tooltip("Tracks if any enemy has been spawned.")]
-    public bool isSpawned;
-
     [Header("Respawn Settings")]
-    [Tooltip("Delay before respawning the enemy of type 0.")]
+    [Tooltip("Delay before respawning the enemy.")]
     public float respawnDelay = 2f;
 
-    private GameObject currentEnemyType0;
+    // Reference to the currently spawned enemy
+    private GameObject currentEnemy;
+
+    // Flag to track if a respawn is in progress
+    private bool isRespawning = false;
 
     private void Start()
     {
-        // Spawn initial enemies
-        SpawnEnemy(0, 0); // Spawn first enemy at first spawn point
-        SpawnEnemy(1, 1); // Spawn second type of enemy at second spawn point
-        SpawnEnemy(2, 1); // Spawn another enemy of type 1 at third spawn point
+        // Spawn the first enemy at a random spawn point
+        SpawnEnemyAtRandomPoint();
     }
 
     private void Update()
     {
-        // Check if the enemy of type 0 is destroyed and respawn if needed
-        if (currentEnemyType0 == null && isSpawned)
+        // Check if the enemy is destroyed and no respawn is currently in progress
+        if (currentEnemy == null && !isRespawning)
         {
-            isSpawned = false; // Prevent multiple respawn attempts
-            StartCoroutine(RespawnEnemyType0());
+            StartCoroutine(RespawnEnemyWithDelay());
         }
     }
 
-    private void SpawnEnemy(int spawnIndex, int enemyIndex)
+    private void SpawnEnemyAtRandomPoint()
     {
-        // Validate spawn point and enemy prefab arrays
+        // Ensure there are valid spawn points
         if (spawnPoints == null || spawnPoints.Length == 0)
         {
-            Debug.LogWarning("Spawn points array is empty or not assigned.");
+            Debug.LogWarning("No spawn points assigned.");
             return;
         }
 
-        if (enemyPrefabs == null || enemyPrefabs.Length == 0)
+        if (enemyPrefab == null)
         {
-            Debug.LogWarning("Enemy prefabs array is empty or not assigned.");
+            Debug.LogError("Enemy prefab is not assigned.");
             return;
         }
 
-        // Validate indices
-        if (spawnIndex < 0 || spawnIndex >= spawnPoints.Length)
-        {
-            Debug.LogError($"Spawn index {spawnIndex} is out of bounds. Ensure it is within the range of spawn points array.");
-            return;
-        }
+        // Select a random spawn point
+        int randomIndex = Random.Range(0, spawnPoints.Length);
+        Transform spawnPoint = spawnPoints[randomIndex];
 
-        if (enemyIndex < 0 || enemyIndex >= enemyPrefabs.Length)
-        {
-            Debug.LogError($"Enemy index {enemyIndex} is out of bounds. Ensure it is within the range of enemy prefabs array.");
-            return;
-        }
-
-        // Get spawn point and instantiate the enemy
-        Transform spawnPoint = spawnPoints[spawnIndex];
-        GameObject spawnedEnemy = Instantiate(enemyPrefabs[enemyIndex], spawnPoint.position, spawnPoint.rotation);
-
-        if (enemyIndex == 0)
-        {
-            currentEnemyType0 = spawnedEnemy; // Track the spawned enemy of type 0
-        }
-
-        isSpawned = true;
-        Debug.Log($"Enemy of type {enemyIndex} spawned at spawn point {spawnIndex}.");
+        // Spawn the enemy and track it
+        currentEnemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        Debug.Log($"Enemy spawned at {spawnPoint.name}.");
     }
 
-    private IEnumerator RespawnEnemyType0()
+    private IEnumerator RespawnEnemyWithDelay()
     {
-        Debug.Log($"Enemy of type 0 destroyed. Respawning after {respawnDelay} seconds.");
+        isRespawning = true; // Set the flag to prevent multiple respawn attempts
+        Debug.Log($"Enemy destroyed. Respawning after {respawnDelay} seconds.");
+
         yield return new WaitForSeconds(respawnDelay);
-        SpawnEnemy(0, 0); // Respawn enemy of type 0 at spawn point 0
+
+        // Spawn the enemy at a new random location
+        SpawnEnemyAtRandomPoint();
+
+        isRespawning = false; // Reset the flag after respawning
     }
 }

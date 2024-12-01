@@ -204,5 +204,12 @@ public class PlayerController : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+            SBQGm.coins++;
+            SBQGm.UpdateCoinsText();
+            Destroy(collision.gameObject);
+            Debug.Log("Coins: " + SBQGm.coins);
+        }
     }
 }
