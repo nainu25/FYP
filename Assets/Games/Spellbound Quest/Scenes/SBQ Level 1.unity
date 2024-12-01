@@ -557,7 +557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  jumpForce: 10
+  jumpForce: 8
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -1199,9 +1199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a54c6bf7cdb6e044db90350d88585965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab:
-  - {fileID: 3569330103380755068, guid: a9b03818dbbf9d741b453b613b2f556f, type: 3}
-  - {fileID: 3569330103380755068, guid: 193d9a3bf514609489f6927034473201, type: 3}
+  enemyPrefabs: []
   spawnPoints:
   - {fileID: 261839562}
   - {fileID: 12771156}

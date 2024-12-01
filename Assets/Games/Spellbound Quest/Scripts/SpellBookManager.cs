@@ -129,7 +129,7 @@ public class SpellBookManager : MonoBehaviour
         if (sbqGameManager.round <= images.Length)
         {
             DisplayQuestionForCurrentRound();
-            sbqGameManager.OpenBook();
+            //sbqGameManager.OpenBook();
         }
         else
         {

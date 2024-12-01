@@ -176,9 +176,10 @@ GameObject:
   - component: {fileID: 15704845}
   - component: {fileID: 15704846}
   - component: {fileID: 15704847}
+  - component: {fileID: 15704848}
   m_Layer: 0
   m_Name: Obstacle (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -192,7 +193,7 @@ Transform:
   m_GameObject: {fileID: 15704844}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.57, y: -2.44, z: 0}
+  m_LocalPosition: {x: -16.09, y: 2.61, z: 0}
   m_LocalScale: {x: 0.74367, y: 0.74367, z: 0.74367}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -307,6 +308,20 @@ PolygonCollider2D:
       - {x: 0.60499996, y: -0.53499997}
       - {x: 0.035, y: 0.575}
   m_UseDelaunayMesh: 0
+--- !u!114 &15704848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15704844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83bc533556bb89b4399b7a81fdfeea78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorType: 2
+  anchorOffset: {x: -2.5, y: 2.61, z: 0}
 --- !u!1 &33055130
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,7 +956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  jumpForce: 10
+  jumpForce: 8
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -1732,14 +1747,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a54c6bf7cdb6e044db90350d88585965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab:
-  - {fileID: 3569330103380755068, guid: 2fd8b752144373341856ab82c64795df, type: 3}
-  - {fileID: 3569330103380755068, guid: d0791060b1170d24388735e2bf7e91f3, type: 3}
+  enemyPrefabs:
+  - {fileID: 3569330103380755068, guid: 29f29fea038c36e4baa0e1281750d2f3, type: 3}
+  - {fileID: 3569330103380755068, guid: 8d8b3850c1db7cb4fb15bd28394680a5, type: 3}
   spawnPoints:
   - {fileID: 261839562}
   - {fileID: 12771156}
   - {fileID: 270031836}
   isSpawned: 0
+  respawnDelay: 5
 --- !u!4 &261839562
 Transform:
   m_ObjectHideFlags: 0
@@ -3661,7 +3677,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 685023833}
-  - component: {fileID: 685023832}
   m_Layer: 0
   m_Name: Obstacles
   m_TagString: Untagged
@@ -3669,20 +3684,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &685023832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685023831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83bc533556bb89b4399b7a81fdfeea78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anchorType: 4
-  anchorOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &685023833
 Transform:
   m_ObjectHideFlags: 0
@@ -3692,7 +3693,7 @@ Transform:
   m_GameObject: {fileID: 685023831}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 22.59, y: -5.0625, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4773,9 +4774,10 @@ GameObject:
   - component: {fileID: 1167331583}
   - component: {fileID: 1167331584}
   - component: {fileID: 1167331585}
+  - component: {fileID: 1167331586}
   m_Layer: 0
   m_Name: Obstacle (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4789,7 +4791,7 @@ Transform:
   m_GameObject: {fileID: 1167331582}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.370001, y: -2.44, z: 0}
+  m_LocalPosition: {x: -14.29, y: 2.61, z: 0}
   m_LocalScale: {x: 0.74367, y: 0.74367, z: 0.74367}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4904,6 +4906,20 @@ PolygonCollider2D:
       - {x: 0.60499996, y: -0.53499997}
       - {x: 0.035, y: 0.575}
   m_UseDelaunayMesh: 0
+--- !u!114 &1167331586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167331582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83bc533556bb89b4399b7a81fdfeea78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorType: 2
+  anchorOffset: {x: -0.7, y: 2.61, z: 0}
 --- !u!1 &1212502204
 GameObject:
   m_ObjectHideFlags: 0
@@ -9017,9 +9033,10 @@ GameObject:
   - component: {fileID: 2082114706}
   - component: {fileID: 2082114707}
   - component: {fileID: 2082114708}
+  - component: {fileID: 2082114709}
   m_Layer: 0
   m_Name: Obstacle (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9033,7 +9050,7 @@ Transform:
   m_GameObject: {fileID: 2082114705}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.46, y: -2.44, z: 0}
+  m_LocalPosition: {x: -15.190001, y: 2.61, z: 0}
   m_LocalScale: {x: 0.74367, y: 0.74367, z: 0.74367}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9148,6 +9165,20 @@ PolygonCollider2D:
       - {x: 0.60499996, y: -0.53499997}
       - {x: 0.035, y: 0.575}
   m_UseDelaunayMesh: 0
+--- !u!114 &2082114709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082114705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83bc533556bb89b4399b7a81fdfeea78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorType: 2
+  anchorOffset: {x: -1.6, y: 2.61, z: 0}
 --- !u!1 &2087744475
 GameObject:
   m_ObjectHideFlags: 0
