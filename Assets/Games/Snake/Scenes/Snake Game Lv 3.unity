@@ -1011,7 +1011,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.88, y: 0.69}
+    oldSize: {x: 0.73333335, y: 0.575}
     newSize: {x: 0.4, y: 0.4}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1890,7 +1890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segmentPrefab: {fileID: 4024010829504085519, guid: 2d807a888039d6245b946420e5e613ea, type: 3}
   direction: {x: 1, y: 0}
-  speed: 7
+  speed: 6
   speedMultiplier: 1
   initialSize: 1
   gm: {fileID: 30461323}

@@ -135,12 +135,16 @@ public class SBQGameManager : MonoBehaviour
 
     public void NextLevel()
     {
-        int nextLevel = level + 1;
-        if (nextLevel <= 5)
+        if (level == 5)
         {
-            LoadScene($"SBQ Level {nextLevel}");
+            LoadScene("Game Selector");
+        }
+        else if (level >= 0 && level < 5) // Ensure valid level range
+        {
+            LoadScene($"SBQ Level {level + 1}");
         }
     }
+
 
     public void Home()
     {

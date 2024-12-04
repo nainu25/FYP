@@ -35,4 +35,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Games/Spellbound Quest/Scenes/SBQ Level 2.unity
     guid: a1433cddaf6cadf48ba1fb360df4e327
+  - enabled: 1
+    path: Assets/Games/Spellbound Quest/Scenes/SBQ Level 3.unity
+    guid: 64f367a909668b44fb3c65cb11b11318
+  - enabled: 1
+    path: Assets/Games/Spellbound Quest/Scenes/SBQ Level 4.unity
+    guid: 832851f96c5443544bd6aeac7f434a17
+  - enabled: 1
+    path: Assets/Games/Spellbound Quest/Scenes/SBQ Level 5.unity
+    guid: 33646b62a8c3eb946b24dafcd1e81d2b
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
