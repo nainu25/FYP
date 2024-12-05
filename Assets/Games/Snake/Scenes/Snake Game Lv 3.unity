@@ -150,12 +150,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameDuration: 120
-  lives: 5
+  initialLives: 5
   timerText: {fileID: 665485679}
   livesText: {fileID: 1656378084}
   scoreText: {fileID: 1949964863}
-  level: 3
   score: 0
+  level: 3
 --- !u!4 &30461324
 Transform:
   m_ObjectHideFlags: 0
@@ -1889,16 +1889,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   segmentPrefab: {fileID: 4024010829504085519, guid: 2d807a888039d6245b946420e5e613ea, type: 3}
-  direction: {x: 1, y: 0}
+  initialSize: 0
   speed: 6
   speedMultiplier: 1
-  initialSize: 1
-  gm: {fileID: 30461323}
+  segmentOffset: 0.5
   upButton: {fileID: 1717955178}
   rightButton: {fileID: 677177239}
   downButton: {fileID: 886715165}
   leftButton: {fileID: 1245380496}
-  segmentOffset: 0.5
+  gm: {fileID: 30461323}
 --- !u!61 &1230195208
 BoxCollider2D:
   m_ObjectHideFlags: 0

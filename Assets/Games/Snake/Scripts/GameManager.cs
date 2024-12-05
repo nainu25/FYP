@@ -3,29 +3,50 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Game Settings")]
     public float gameDuration = 10f;
-    private float timeRemaining;
-
-    public int lives;
+    public int initialLives = 5;
+    
+    [Header("UI References")]
     public TMP_Text timerText;
     public TMP_Text livesText;
     public TMP_Text scoreText;
-    
-    private bool gameEnded = false;
-    private bool timerRunning = false;
-    public int level;
-    public int score;
 
-    void Start()
+    private float timeRemaining;
+    private bool timerRunning = false;
+    private bool gameEnded = false;
+
+    private int lives;
+    public int score;
+    public int level;
+
+    private void Start()
     {
-        ResetGame();
-        score = PlayerPrefs.GetInt("Score", 0);
-        UpdateScoreText();
+        InitializeGame();
     }
 
     private void Update()
     {
-        Timer();
+        if (!gameEnded && timerRunning)
+        {
+            UpdateTimer();
+        }
+    }
+
+    private void InitializeGame()
+    {
+        // Initialize lives and score
+        lives = initialLives;
+        score = PlayerPrefs.GetInt("Score", 0);
+
+        // Update UI
+        UpdateLivesUI();
+        UpdateScoreText();
+        ResetTimer();
+
+        // Resume game
+        gameEnded = false;
+        Time.timeScale = 1f;
     }
 
     public void StartTimer()
@@ -42,13 +63,8 @@ public class GameManager : MonoBehaviour
         UpdateTimerUI();
     }
 
-    public void Timer()
+    private void UpdateTimer()
     {
-        if (gameEnded || !timerRunning)
-        {
-            return;
-        }
-
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
@@ -68,9 +84,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void UpdateLivesUI()
+    {
+        if (livesText != null)
+        {
+            livesText.text = lives.ToString();
+        }
+    }
+
     public void UpdateScoreText()
     {
-       if(scoreText!=null)
+        if (scoreText != null)
         {
             scoreText.text = score.ToString();
         }
@@ -79,11 +103,15 @@ public class GameManager : MonoBehaviour
     public void LoseLife()
     {
         lives--;
-        livesText.text = lives.ToString();
+        UpdateLivesUI();
 
         if (lives <= 0)
         {
             EndGame();
+        }
+        else
+        {
+            ResetTimer();
         }
     }
 
@@ -91,17 +119,13 @@ public class GameManager : MonoBehaviour
     {
         gameEnded = true;
         timerRunning = false;
+
         Debug.Log("Game Over!");
         Time.timeScale = 0f;
     }
 
     public void ResetGame()
     {
-        //lives = 5;
-        livesText.text = lives.ToString();
-        ResetTimer();
-        gameEnded = false;
-        Time.timeScale = 1f;
+        InitializeGame();
     }
 }
-

@@ -24,7 +24,7 @@ public class LetterPronunciationManager : MonoBehaviour
     {
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.loop = false;
-        if(food == null)
+        if (food == null)
         {
             food = FindObjectOfType<Food>();
         }
@@ -77,14 +77,31 @@ public class LetterPronunciationManager : MonoBehaviour
     {
         HasMadeSelection = false;
         StartCoroutine(PlayAudioAfterDelay());
+
         string correctLetter = letterAudioClips[currentPronunciationIndex].name;
         GameObject correctTilePrefab = GetTilePrefabByLetter(correctLetter);
 
-        if(gm.level==1)
+        // Define incorrect letters for each level
+        List<string> incorrectLetters = GetIncorrectLettersForLevel(gm.level);
+
+        // Spawn a random number of incorrect tiles based on the level
+        int numberOfIncorrectTiles = gm.level; // L1 -> 1, L2 -> 2, ..., L5 -> 5
+        List<string> selectedIncorrectLetters = new List<string>();
+
+        // Randomly select incorrect letters without repeating
+        for (int i = 0; i < numberOfIncorrectTiles; i++)
         {
-            List<string> incorrectLetters = new List<string> { "A", "B", "C", "D", "E", "F", "G" };
-            incorrectLetters.Remove(correctLetter);
-            string incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
+            if (incorrectLetters.Count > 0)
+            {
+                string incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
+                incorrectLetters.Remove(incorrectLetter); // Remove the selected letter to prevent repetition
+                selectedIncorrectLetters.Add(incorrectLetter);
+            }
+        }
+
+        // Spawn the selected incorrect tiles
+        foreach (var incorrectLetter in selectedIncorrectLetters)
+        {
             GameObject incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
             if (incorrectTilePrefab != null)
             {
@@ -95,151 +112,8 @@ public class LetterPronunciationManager : MonoBehaviour
                 Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
             }
         }
-        else if(gm.level==2) 
-        {
-            List<string> incorrectLetters = new List<string> { "H", "I", "J", "K", "L", "M", "N" };
-            incorrectLetters.Remove(correctLetter);
-            string incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            GameObject incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
-            incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
-        }
-        else if(gm.level==3)
-        {
-            List<string> incorrectLetters = new List<string> { "O", "P", "Q", "R", "S", "T", "U" };
-            incorrectLetters.Remove(correctLetter);
-            string incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            GameObject incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
-            incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
-            incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
-        }
-        else if (gm.level == 4)
-        {
-            List<string> incorrectLetters = new List<string> { "V", "W", "X", "Y", "Z", "A", "B" };
-            incorrectLetters.Remove(correctLetter);
-            string incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            GameObject incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
-            incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
-            incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
 
-        }
-        else if (gm.level == 5)
-        {
-            List<string> incorrectLetters = new List<string> { "C", "D", "E", "F", "G", "H", "I" };
-            incorrectLetters.Remove(correctLetter);
-            string incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            GameObject incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
-            incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
-            incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
-            incorrectLetter = incorrectLetters[Random.Range(0, incorrectLetters.Count)];
-            incorrectTilePrefab = GetTilePrefabByLetter(incorrectLetter);
-            if (incorrectTilePrefab != null)
-            {
-                InstantiateLetterTile(incorrectTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
-            }
-            else
-            {
-                Debug.LogWarning($"No prefab found for incorrect letter: {incorrectLetter}");
-            }
-
-        }
-
-
-
+        // Spawn the correct tile
         if (correctTilePrefab != null)
         {
             InstantiateLetterTile(correctTilePrefab, new Vector2(Random.Range(-7f, 7f), Random.Range(-4f, 4f)));
@@ -249,6 +123,38 @@ public class LetterPronunciationManager : MonoBehaviour
             Debug.LogWarning($"No prefab found for correct letter: {correctLetter}");
         }
     }
+
+
+    private List<string> GetIncorrectLettersForLevel(int level)
+    {
+        List<string> incorrectLetters = new List<string>();
+
+        switch (level)
+        {
+            case 1:
+                incorrectLetters.AddRange(new string[] { "A", "B", "C", "D", "E", "F", "G" });
+                break;
+            case 2:
+                incorrectLetters.AddRange(new string[] { "H", "I", "J", "K", "L", "M", "N" });
+                break;
+            case 3:
+                incorrectLetters.AddRange(new string[] { "O", "P", "Q", "R", "S", "T", "U" });
+                break;
+            case 4:
+                incorrectLetters.AddRange(new string[] { "V", "W", "X", "Y", "Z", "A", "B" });
+                break;
+            case 5:
+                incorrectLetters.AddRange(new string[] { "C", "D", "E", "F", "G", "H", "I" });
+                break;
+            default:
+                Debug.LogWarning("Invalid level");
+                break;
+        }
+
+        incorrectLetters.Remove(letterAudioClips[currentPronunciationIndex].name); // Remove correct letter
+        return incorrectLetters;
+    }
+
 
     private GameObject GetTilePrefabByLetter(string letter)
     {
@@ -311,79 +217,67 @@ public class LetterPronunciationManager : MonoBehaviour
         Debug.Log($"Correct selection for: {CurrentLetter}");
         currentPronunciationIndex++;
         HasMadeSelection = true;
-        if(gm.level==1)
+
+        // Define the score increment for each level
+        int scoreIncrement = GetScoreIncrementForLevel(gm.level);
+
+        if (scoreIncrement > 0)
         {
-            gm.score += 10;
+            gm.score += scoreIncrement;
             gm.UpdateScoreText();
-            PlayerPrefs.SetInt("PlayerScore Lv1", gm.score);
-            PlayerPrefs.Save();
+            SaveScoreForLevel(gm.level, gm.score);
         }
-        else if(gm.level==2) 
-        {
-            gm.score += 15;
-            gm.UpdateScoreText();
-            PlayerPrefs.SetInt("PlayerScore Lv2", gm.score);
-            PlayerPrefs.Save(); 
-        }
-        else if(gm.level==3)
-        {
-            gm.score += 20;
-            gm.UpdateScoreText();
-            PlayerPrefs.SetInt("PlayerScore Lv3", gm.score);
-            PlayerPrefs.Save();
-        }
-        else if(gm.level==4)
-        {
-            gm.score += 25;
-            gm.UpdateScoreText();
-            PlayerPrefs.SetInt("PlayerScore Lv4", gm.score);
-            PlayerPrefs.Save();
-        }
-        else if(gm.level==5)
-        {
-            gm.score += 30;
-            gm.UpdateScoreText();
-            PlayerPrefs.SetInt("PlayerScore Lv5", gm.score);
-            PlayerPrefs.Save();
-        }
-       
+
+        // Check if all letters are completed
         if (currentPronunciationIndex >= letterAudioClips.Length)
         {
             Debug.Log("All letters completed!");
-            int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-            if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-            {
-                SceneManager.LoadScene(nextSceneIndex);
-            }
-            else
-            {
-                Debug.Log("No more scenes to load. Game complete!");
-            }
+            LoadNextScene();
         }
     }
 
-    void ResetPlayerPrefs()
+    private int GetScoreIncrementForLevel(int level)
     {
-        if (gm.level == 1)
+        switch (level)
         {
-            PlayerPrefs.SetInt("PlayerScore Lv1", 0);
+            case 1: return 10;
+            case 2: return 15;
+            case 3: return 20;
+            case 4: return 25;
+            case 5: return 30;
+            default: return 0;
         }
-        else if (gm.level == 2)
-        {
-            PlayerPrefs.SetInt("PlayerScore Lv2", 0);
-        }
-        else if (gm.level == 3)
-        {
-            PlayerPrefs.SetInt("PlayerScore Lv3", 0);
-        }
-        else if (gm.level == 4)
-        {
-            PlayerPrefs.SetInt("PlayerScore Lv4", 0);
-        }
-        else if (gm.level == 5)
-        {
-            PlayerPrefs.SetInt("PlayerScore Lv5", 0);
-        }
+    }
+
+    private void SaveScoreForLevel(int level, int score)
+    {
+        string scoreKey = $"PlayerScore Lv{level}";
+        PlayerPrefs.SetInt(scoreKey, score);
         PlayerPrefs.Save();
     }
+
+    private void LoadNextScene()
+    {
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(nextSceneIndex);
+        }
+        else
+        {
+            Debug.Log("No more scenes to load. Game complete!");
+        }
+    }
+
+
+    void ResetPlayerPrefs()
+    {
+        int level = gm.level;
+        if (level >= 1 && level <= 5)
+        {
+            PlayerPrefs.SetInt($"PlayerScore Lv{level}", 0);
+            PlayerPrefs.Save();
+        }
+    }
+
 }

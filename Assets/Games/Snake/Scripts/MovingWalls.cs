@@ -3,41 +3,46 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MovingWall : MonoBehaviour
 {
-    public Vector2 moveDirection = Vector2.right; // Initial movement direction
-    public float moveSpeed = 2f;
-    public float moveDistance = 5f; // The distance to move before reversing
+    [Header("Movement Settings")]
+    [SerializeField] private Vector2 moveDirection = Vector2.right; // Initial movement direction
+    [SerializeField] private float moveSpeed = 2f;                  // Speed of movement
+    [SerializeField] private float moveDistance = 5f;              // Distance before reversing
 
     private Vector2 startPosition;
-    private float movedDistance;
+    private Rigidbody2D rb;
 
     private void Start()
     {
-        startPosition = transform.position; // Record the initial position
+        // Cache components and initial position
+        startPosition = transform.position;
+        rb = GetComponent<Rigidbody2D>();
+        rb.isKinematic = true; // Ensure the Rigidbody doesn't interfere with physics
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         MoveWall();
-        CheckDistanceAndReverse();
+        CheckAndReverseDirection();
     }
 
+    /// <summary>
+    /// Moves the wall in the current direction.
+    /// </summary>
     private void MoveWall()
     {
-        // Move the wall in the current direction
-        transform.position += (Vector3)(moveDirection * moveSpeed * Time.deltaTime);
+        Vector2 movement = moveDirection * moveSpeed * Time.fixedDeltaTime;
+        rb.MovePosition(rb.position + movement);
     }
 
-    private void CheckDistanceAndReverse()
+    /// <summary>
+    /// Checks if the wall has moved the specified distance and reverses its direction if necessary.
+    /// </summary>
+    private void CheckAndReverseDirection()
     {
-        // Calculate how far the wall has moved from its starting point
-        movedDistance = Vector2.Distance(startPosition, transform.position);
-
-        // Reverse direction if the wall has moved the specified distance
-        if (movedDistance >= moveDistance)
+        if (Vector2.Distance(startPosition, transform.position) >= moveDistance)
         {
-            moveDirection = -moveDirection; // Reverse the direction
-            startPosition = transform.position; // Reset the start position
+            moveDirection = -moveDirection; // Reverse direction
+            startPosition = transform.position; // Update starting position
         }
     }
 }
-

@@ -1,205 +1,129 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class SnakeController : MonoBehaviour
 {
+    [Header("Snake Settings")]
     public Transform segmentPrefab;
-    public Vector2Int direction = Vector2Int.right;
+    public int initialSize = 4;
     public float speed = 20f;
     public float speedMultiplier = 1f;
-    public int initialSize = 4;
+    public float segmentOffset = 0.5f;
 
-    private readonly List<Transform> segments = new List<Transform>();
-    private Vector2Int input;
-    private float nextUpdate;
-    private Transform snakeHead;
-
-    public GameManager gm;
-
-    private bool canMove = false;
-
+    [Header("UI Controls")]
     public Button upButton;
     public Button rightButton;
     public Button downButton;
     public Button leftButton;
 
+    [Header("Game Manager")]
+    public GameManager gm;
+
+    private List<Transform> segments = new List<Transform>();
+    private Vector2Int direction = Vector2Int.right;
+    private Vector2Int input = Vector2Int.right;
+    private float nextUpdate;
+    private Transform snakeHead;
+    private bool canMove = false;
+
     private void Awake()
     {
-        Time.timeScale = 0;
+        Time.timeScale = 0f; // Paused initially
     }
+
     private void Start()
     {
-        snakeHead = transform.GetChild(0);
-        ResetState();
-        StartCoroutine(WaitBeforeMove(2f));
-
-        upButton.onClick.AddListener(() => SetDirection(Vector2Int.up));
-        rightButton.onClick.AddListener(() => SetDirection(Vector2Int.right));
-        downButton.onClick.AddListener(() => SetDirection(Vector2Int.down));
-        leftButton.onClick.AddListener(() => SetDirection(Vector2Int.left));
+        InitializeSnake();
+        RegisterButtonListeners();
+        StartCoroutine(EnableMovementAfterDelay(2f));
     }
 
     private void Update()
     {
-        InputHandler();
+        HandleKeyboardInput();
     }
 
     private void FixedUpdate()
     {
-        if(canMove)
+        if (canMove)
         {
             Time.timeScale = 1f;
-            Move();
+            MoveSnake();
         }
     }
 
-    private IEnumerator WaitBeforeMove(float delay)
+    private void InitializeSnake()
+    {
+        snakeHead = transform.GetChild(0);
+        ResetState();
+    }
+
+    private void RegisterButtonListeners()
+    {
+        if (upButton) upButton.onClick.AddListener(() => SetDirection(Vector2Int.up));
+        if (rightButton) rightButton.onClick.AddListener(() => SetDirection(Vector2Int.right));
+        if (downButton) downButton.onClick.AddListener(() => SetDirection(Vector2Int.down));
+        if (leftButton) leftButton.onClick.AddListener(() => SetDirection(Vector2Int.left));
+    }
+
+    private IEnumerator EnableMovementAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         canMove = true;
-
     }
-    public float segmentOffset = 0.5f;
-    private void Move()
-    {
-        if (Time.time < nextUpdate)
-        {
-            return;
-        }
 
-        if (input != Vector2Int.zero)
+    private void HandleKeyboardInput()
+    {
+        if (direction.x != 0)
+        {
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) input = Vector2Int.up;
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) input = Vector2Int.down;
+        }
+        else if (direction.y != 0)
+        {
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) input = Vector2Int.right;
+            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) input = Vector2Int.left;
+        }
+    }
+
+    private void MoveSnake()
+    {
+        if (Time.time < nextUpdate) return;
+
+        if (input != Vector2Int.zero && input != -direction)
         {
             direction = input;
         }
 
-        RotateHead();
+        RotateSnakeHead();
 
         for (int i = segments.Count - 1; i > 0; i--)
         {
             segments[i].position = segments[i - 1].position;
         }
 
-        int x = Mathf.RoundToInt(transform.position.x) + direction.x;
-        int y = Mathf.RoundToInt(transform.position.y) + direction.y;
-        transform.position = new Vector2(x, y);
+        Vector2 newPosition = (Vector2)transform.position + (Vector2)direction;
+        transform.position = newPosition;
 
-        transform.position = new Vector2(x, y);
-
-        if (gm.level >= 3)
+        if (gm.level >= 3 && CheckSelfCollision())
         {
-            if (CheckSelfCollision())
-            {
-                gm.LoseLife();
-                ResetState();
-
-            }
+            gm.LoseLife();
+            ResetState();
         }
 
         nextUpdate = Time.time + (1f / (speed * speedMultiplier));
     }
 
-    private void InputHandler()
+    private void RotateSnakeHead()
     {
-        if (direction.x != 0f)
-        {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                input = Vector2Int.up;
-            }
-            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                input = Vector2Int.down;
-            }
-        }
-        else if (direction.y != 0f)
-        {
-            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                input = Vector2Int.right;
-            }
-            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                input = Vector2Int.left;
-            }
-        }
-    }
+        float rotationZ = direction == Vector2Int.up ? 90f :
+                          direction == Vector2Int.left ? 180f :
+                          direction == Vector2Int.down ? 270f : 0f;
 
-    private void SetDirection(Vector2Int newDirection)
-    {
-        if (newDirection != -direction) // Prevent reversing direction
-        {
-            input = newDirection;
-        }
-    }
-
-    private void RotateHead()
-    {
-        float rotationZ = 0f;
-
-        if (direction == Vector2Int.right)
-        {
-            rotationZ = 0f;
-        }
-        else if (direction == Vector2Int.up)
-        {
-            rotationZ = 90f;
-        }
-        else if (direction == Vector2Int.left)
-        {
-            rotationZ = 180f;
-        }
-        else if (direction == Vector2Int.down)
-        {
-            rotationZ = 270f;
-        }
         snakeHead.rotation = Quaternion.Euler(0f, 0f, rotationZ);
-    }
-
-    public void Grow()
-    {
-        Transform segment = Instantiate(segmentPrefab);
-        segment.position = segments[segments.Count - 1].position;
-        segments.Add(segment);
-    }
-   
-    public void ResetState()
-    {
-        direction = Vector2Int.right;
-        RotateHead();
-        SetDirection(direction);
-        transform.position = Vector3.zero;
-
-        for (int i = 1; i < segments.Count; i++)
-        {
-            Destroy(segments[i].gameObject);
-        }
-
-        segments.Clear();
-        segments.Add(transform);
-
-        for (int i = 0; i < initialSize - 1; i++)
-        {
-            Grow();
-        }
-    }
-
-    public bool Occupies(int x, int y)
-    {
-        foreach (Transform segment in segments)
-        {
-            if (Mathf.RoundToInt(segment.position.x) == x &&
-                Mathf.RoundToInt(segment.position.y) == y)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private bool CheckSelfCollision()
@@ -215,18 +139,47 @@ public class SnakeController : MonoBehaviour
         return false;
     }
 
+    public void Grow()
+    {
+        Transform newSegment = Instantiate(segmentPrefab);
+        newSegment.position = segments[segments.Count - 1].position;
+        segments.Add(newSegment);
+    }
+
+    public void ResetState()
+    {
+        direction = Vector2Int.right;
+        input = direction;
+        RotateSnakeHead();
+        transform.position = Vector3.zero;
+
+        for (int i = 1; i < segments.Count; i++)
+        {
+            Destroy(segments[i].gameObject);
+        }
+        segments.Clear();
+        segments.Add(transform);
+
+        for (int i = 1; i < initialSize; i++)
+        {
+            Grow();
+        }
+    }
+
+    private void SetDirection(Vector2Int newDirection)
+    {
+        if (newDirection != -direction)
+        {
+            input = newDirection;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Obstacle"))
-        {
-            gm.LoseLife();
-            ResetState();
-        }
-        else if (other.gameObject.CompareTag("Wall"))
+        if (other.CompareTag("Obstacle") || other.CompareTag("Wall"))
         {
             gm.LoseLife();
             ResetState();
         }
     }
 }
-

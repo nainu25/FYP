@@ -4,17 +4,33 @@ public class LetterTile : MonoBehaviour
 {
     public string letter;
     private LetterPronunciationManager manager;
-    GameManager gm;
-    int errorCount = 0;
+    private GameManager gm;
+    private int errorCount = 0;
 
+    /// <summary>
+    /// Initializes the letter tile with a specific letter and pronunciation manager.
+    /// </summary>
+    /// <param name="letter">The letter represented by this tile.</param>
+    /// <param name="manager">The pronunciation manager instance.</param>
     public void Setup(string letter, LetterPronunciationManager manager)
     {
         this.letter = letter;
         this.manager = manager;
     }
+
     private void Start()
     {
         gm = FindObjectOfType<GameManager>();
+
+        if (gm == null)
+        {
+            Debug.LogError("GameManager not found in the scene.");
+        }
+
+        if (manager == null)
+        {
+            Debug.LogError("LetterPronunciationManager not set. Did you forget to call Setup?");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -23,39 +39,41 @@ public class LetterTile : MonoBehaviour
         {
             if (letter != manager.CurrentLetter)
             {
-                Debug.Log($"Incorrect selection: {letter}. Expected: {manager.CurrentLetter}");
-                errorCount++;
-                Debug.Log(errorCount);
-                if(gm.level==1)
-                {
-                    PlayerPrefs.SetInt("Error Count Lv 1", errorCount);
-                    PlayerPrefs.Save();
-                }
-                else if (gm.level == 2)
-                {
-                    PlayerPrefs.SetInt("Error Count Lv 2", errorCount);
-                    PlayerPrefs.Save();
-                }
-                else if (gm.level == 3)
-                {
-                    PlayerPrefs.SetInt("Error Count Lv 3", errorCount);
-                    PlayerPrefs.Save();
-                }
-                else if (gm.level == 4)
-                {
-                    PlayerPrefs.SetInt("Error Count Lv 4", errorCount);
-                    PlayerPrefs.Save();
-                }
-                else if (gm.level == 5)
-                {
-                    PlayerPrefs.SetInt("Error Count Lv 5", errorCount);
-                    PlayerPrefs.Save();
-                }
+                HandleIncorrectSelection();
             }
             else
             {
                 manager.CorrectSelection();
             }
         }
+    }
+
+    /// <summary>
+    /// Handles logic for an incorrect letter selection.
+    /// </summary>
+    private void HandleIncorrectSelection()
+    {
+        Debug.Log($"Incorrect selection: {letter}. Expected: {manager.CurrentLetter}");
+
+        errorCount++;
+        Debug.Log($"Error Count: {errorCount}");
+
+        if (gm != null)
+        {
+            SaveErrorCount(gm.level);
+        }
+    }
+
+    /// <summary>
+    /// Saves the error count for the current level to PlayerPrefs.
+    /// </summary>
+    /// <param name="level">The current game level.</param>
+    private void SaveErrorCount(int level)
+    {
+        string key = $"Error Count Lv {level}";
+        PlayerPrefs.SetInt(key, errorCount);
+        PlayerPrefs.Save();
+
+        Debug.Log($"Error count for level {level} saved as {errorCount}.");
     }
 }

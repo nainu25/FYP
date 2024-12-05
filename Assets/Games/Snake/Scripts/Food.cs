@@ -2,37 +2,60 @@ using UnityEngine;
 
 public class Food : MonoBehaviour
 {
-    private LetterTile lt;
+    private LetterTile letterTile;
     private LetterPronunciationManager pronunciationManager;
 
     void Start()
     {
-        if (lt == null)
+        // Initialize references
+        letterTile = GetComponent<LetterTile>();
+        pronunciationManager = FindObjectOfType<LetterPronunciationManager>();
+
+        if (letterTile == null)
         {
-            lt = GetComponent<LetterTile>();
+            Debug.LogWarning($"LetterTile component is missing on {gameObject.name}");
         }
 
         if (pronunciationManager == null)
         {
-            pronunciationManager = FindObjectOfType<LetterPronunciationManager>();
+            Debug.LogError("LetterPronunciationManager not found in the scene.");
         }
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Check if the collision is with the snake's head
         if (collision.gameObject.name == "SnakeHead")
         {
-            collision.GetComponentInParent<SnakeController>().Grow();
-            if (lt.letter == pronunciationManager.CurrentLetter)
+            SnakeController snakeController = collision.GetComponentInParent<SnakeController>();
+            if (snakeController != null)
             {
-                Destroy(gameObject);
-                pronunciationManager.CorrectSelection();
+                snakeController.Grow();
             }
             else
             {
-                Destroy(gameObject);
+                Debug.LogWarning("SnakeController not found on parent object.");
+            }
+
+            HandleCollision();
+        }
+    }
+
+    private void HandleCollision()
+    {
+        if (pronunciationManager != null && letterTile != null)
+        {
+            if (letterTile.letter == pronunciationManager.CurrentLetter)
+            {
+                pronunciationManager.CorrectSelection();
             }
         }
+        else
+        {
+            Debug.LogWarning("Unable to process collision due to missing components.");
+        }
+
+        // Destroy the food object regardless of correctness
+        Destroy(gameObject);
     }
 }
