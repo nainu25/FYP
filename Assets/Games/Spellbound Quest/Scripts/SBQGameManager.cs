@@ -139,7 +139,7 @@ public class SBQGameManager : MonoBehaviour
         {
             LoadScene("Game Selector");
         }
-        else if (level >= 0 && level < 5) // Ensure valid level range
+        else if (level >= 0 && level < 5)
         {
             LoadScene($"SBQ Level {level + 1}");
         }

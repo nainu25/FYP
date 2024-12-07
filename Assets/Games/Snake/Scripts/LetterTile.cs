@@ -5,13 +5,7 @@ public class LetterTile : MonoBehaviour
     public string letter;
     private LetterPronunciationManager manager;
     private GameManager gm;
-    private int errorCount = 0;
 
-    /// <summary>
-    /// Initializes the letter tile with a specific letter and pronunciation manager.
-    /// </summary>
-    /// <param name="letter">The letter represented by this tile.</param>
-    /// <param name="manager">The pronunciation manager instance.</param>
     public void Setup(string letter, LetterPronunciationManager manager)
     {
         this.letter = letter;
@@ -35,7 +29,7 @@ public class LetterTile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject.name == "SnakeHead")
         {
             if (letter != manager.CurrentLetter)
             {
@@ -44,31 +38,31 @@ public class LetterTile : MonoBehaviour
             else
             {
                 manager.CorrectSelection();
+                Debug.Log("Correct selection detected.");
             }
         }
     }
 
-    /// <summary>
-    /// Handles logic for an incorrect letter selection.
-    /// </summary>
     private void HandleIncorrectSelection()
     {
+        int errorCount = GetErrorCount(gm.level);
+
         Debug.Log($"Incorrect selection: {letter}. Expected: {manager.CurrentLetter}");
 
+        // Increment and save the error count
         errorCount++;
-        Debug.Log($"Error Count: {errorCount}");
+        SaveErrorCount(gm.level, errorCount);
 
-        if (gm != null)
-        {
-            SaveErrorCount(gm.level);
-        }
+        Debug.Log($"Error Count updated to: {errorCount}");
     }
 
-    /// <summary>
-    /// Saves the error count for the current level to PlayerPrefs.
-    /// </summary>
-    /// <param name="level">The current game level.</param>
-    private void SaveErrorCount(int level)
+    private int GetErrorCount(int level)
+    {
+        string key = $"Error Count Lv {level}";
+        return PlayerPrefs.GetInt(key, 0); // Default to 0 if key does not exist
+    }
+
+    public void SaveErrorCount(int level, int errorCount)
     {
         string key = $"Error Count Lv {level}";
         PlayerPrefs.SetInt(key, errorCount);

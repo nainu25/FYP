@@ -231,8 +231,9 @@ public class LetterPronunciationManager : MonoBehaviour
         // Check if all letters are completed
         if (currentPronunciationIndex >= letterAudioClips.Length)
         {
-            Debug.Log("All letters completed!");
-            LoadNextScene();
+            Time.timeScale = 0;
+            gm.ToggleEndPanel();
+            gm.UpdateEndPanelScore();
         }
     }
 
@@ -256,17 +257,21 @@ public class LetterPronunciationManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    private void LoadNextScene()
+    public void LoadNextScene()
     {
-        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+        if (gm.level == 5)
         {
-            SceneManager.LoadScene(nextSceneIndex);
+            LoadScene("Game Selector");
         }
-        else
+        else if (gm.level >= 0 && gm.level < 5)
         {
-            Debug.Log("No more scenes to load. Game complete!");
+            LoadScene($"Snake Game Lv {gm.level + 1}");
         }
+    }
+
+    private void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 
 

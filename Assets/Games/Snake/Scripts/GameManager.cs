@@ -1,21 +1,27 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Game Settings")]
     public float gameDuration = 10f;
     public int initialLives = 5;
-    
+
     [Header("UI References")]
     public TMP_Text timerText;
     public TMP_Text livesText;
     public TMP_Text scoreText;
 
+    [Header("End Panel")]
+    public GameObject endPanel;
+    public TMP_Text endScoreText;
+
     private float timeRemaining;
     private bool timerRunning = false;
     private bool gameEnded = false;
 
+    private LetterTile lt;
     private int lives;
     public int score;
     public int level;
@@ -23,6 +29,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         InitializeGame();
+
     }
 
     private void Update()
@@ -43,10 +50,14 @@ public class GameManager : MonoBehaviour
         UpdateLivesUI();
         UpdateScoreText();
         ResetTimer();
+        ToggleEndPanel();
 
         // Resume game
         gameEnded = false;
         Time.timeScale = 1f;
+
+        lt = new LetterTile();
+        lt.SaveErrorCount(level, 0);
     }
 
     public void StartTimer()
@@ -100,6 +111,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void UpdateEndPanelScore()
+    {
+        if (endScoreText != null)
+        {
+            endScoreText.text = score.ToString();
+        }
+    }
+
+    public void ToggleEndPanel()
+    {
+        if (endPanel != null)
+        {
+            endPanel.SetActive(!endPanel.activeSelf);
+        }
+    }
+
+
     public void LoseLife()
     {
         lives--;
@@ -115,10 +143,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void Retry()
+    {
+        SceneManager.LoadScene($"Snake Game Lv {level}");
+    }
+
+    public void Home()
+    {
+        SceneManager.LoadScene("Game Selector");
+    }
+
     public void EndGame()
     {
         gameEnded = true;
         timerRunning = false;
+
+        ToggleEndPanel();
+        UpdateEndPanelScore();
 
         Debug.Log("Game Over!");
         Time.timeScale = 0f;

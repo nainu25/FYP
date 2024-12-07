@@ -1,7 +1,6 @@
-using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class SpellBookManager : MonoBehaviour
 {
@@ -14,15 +13,8 @@ public class SpellBookManager : MonoBehaviour
     public Button[] optionButtons;
 
     [Header("Round Data")]
-    private readonly string[][] roundOptions =
-    {
-        new string[] { "Cat", "Kat", "Cet" },
-        new string[] { "Son", "Sun", "San" },
-        new string[] { "Red", "Reb", "Rad" }
-    };
-
-    private readonly int[] correctOptionIndices = { 0, 1, 0 }; // Correct answers for rounds
-
+    private string[][] roundOptions; // Dynamic options
+    private int[] correctOptionIndices; // Dynamic correct answers
     private int correctOptionIndex;
 
     private void Start()
@@ -34,6 +26,7 @@ public class SpellBookManager : MonoBehaviour
         if (sbqGameManager != null)
         {
             sbqGameManager.round = 1;
+            SetOptionsForLevel(sbqGameManager.level); // Set options based on the current level
             DisplayQuestionForCurrentRound();
         }
 
@@ -58,6 +51,68 @@ public class SpellBookManager : MonoBehaviour
         if (playerController != null)
         {
             playerController.OnAttackCompleted -= HandlePlayerAttackCompleted;
+        }
+    }
+
+    private void SetOptionsForLevel(int level)
+    {
+        switch (level)
+        {
+            case 1:
+                roundOptions = new string[][]
+                {
+                    new string[] { "Cat", "Kat", "Cet" },
+                    new string[] { "Son", "Sun", "San" },
+                    new string[] { "Red", "Reb", "Rad" }
+                };
+                correctOptionIndices = new int[] { 0, 1, 0 };
+                break;
+
+            case 2:
+                roundOptions = new string[][]
+                {
+                    new string[] { "Moon", "Moun", "Muun" },
+                    new string[] { "Grwen", "Green", "Grean" },
+                    new string[] { "Ster", "Star", "Stir" }
+                };
+                correctOptionIndices = new int[] { 0, 1, 1 };
+                break;
+
+            case 3:
+                roundOptions = new string[][]
+                {
+                    new string[] { "Flame", "Flaem", "Fleam" },
+                    new string[] { "Stoen", "Stoan", "Stone" },
+                    new string[] { "Bright", "Bryght", "Brigth" }
+                };
+                correctOptionIndices = new int[] { 0, 2, 0 };
+                break;
+
+            case 4:
+                roundOptions = new string[][]
+                {
+                    new string[] { "Castle", "Castel", "Castal" },
+                    new string[] { "Shadow", "Sahdow", "Shedow" },
+                    new string[] { "Ghsot", "Gohst", "Ghost" }
+                };
+                correctOptionIndices = new int[] { 0, 0, 2 };
+                break;
+
+            case 5:
+                roundOptions = new string[][]
+                {
+                    new string[] { "Crysal", "Crystel", "Crystle" },
+                    new string[] { "Twinkle", "Twinkel", "Twincle" },
+                    new string[] { "Dungoen", "Dungeon", "Dungion" }
+                };
+                correctOptionIndices = new int[] { 0, 0, 1 };
+                break;
+
+            default:
+                Debug.LogError("Invalid level! Defaulting to level 1 setup.");
+                roundOptions = new string[][] { };
+                correctOptionIndices = new int[] { };
+                break;
         }
     }
 
@@ -129,7 +184,6 @@ public class SpellBookManager : MonoBehaviour
         if (sbqGameManager.round <= images.Length)
         {
             DisplayQuestionForCurrentRound();
-            //sbqGameManager.OpenBook();
         }
         else
         {
