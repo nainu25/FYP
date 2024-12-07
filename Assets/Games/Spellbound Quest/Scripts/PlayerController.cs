@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isJumping = false;
             animator.SetTrigger("Jump");
-            ac.PlayJumpAudio();
+            ac.PlayAudio("Jump");
         }
     }
 
@@ -205,13 +205,13 @@ public class PlayerController : MonoBehaviour
         {
             if (isPunching)
             {
-                ac.PlayKillAudio();
+                ac.PlayAudio("Kill");
                 Destroy(collision.gameObject);
             }
         }
         if (collision.gameObject.CompareTag("Coin"))
         {
-            ac.PlayCoinAudio();
+            ac.PlayAudio("Coin");
             SBQGm.coins++;
             SBQGm.UpdateCoinsText();
             Destroy(collision.gameObject);

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,12 +17,14 @@ public class GameManager : MonoBehaviour
     [Header("End Panel")]
     public GameObject endPanel;
     public TMP_Text endScoreText;
+    public Button nextbutton;
 
     private float timeRemaining;
     private bool timerRunning = false;
     private bool gameEnded = false;
 
     private LetterTile lt;
+    public AudioController ac;
     private int lives;
     public int score;
     public int level;
@@ -45,6 +48,7 @@ public class GameManager : MonoBehaviour
         // Initialize lives and score
         lives = initialLives;
         score = PlayerPrefs.GetInt("Score", 0);
+        ac = FindObjectOfType<AudioController>();
 
         // Update UI
         UpdateLivesUI();
@@ -124,6 +128,14 @@ public class GameManager : MonoBehaviour
         if (endPanel != null)
         {
             endPanel.SetActive(!endPanel.activeSelf);
+            if(lives>0)
+            {
+                nextbutton.gameObject.SetActive(true);
+            }
+            else
+            {
+                nextbutton.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -136,6 +148,7 @@ public class GameManager : MonoBehaviour
         if (lives <= 0)
         {
             EndGame();
+            ac.PlayAudio("Game Over");
         }
         else
         {

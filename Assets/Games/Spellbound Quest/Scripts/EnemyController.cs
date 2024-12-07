@@ -50,6 +50,7 @@ public class EnemyController : MonoBehaviour
         {
             inRange = false;
             Debug.Log("Player exited detection range.");
+            sBQGm.CloseBook();
             bookOpened = false;
         }
     }

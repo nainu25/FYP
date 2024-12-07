@@ -7,6 +7,7 @@ public class SpellBookManager : MonoBehaviour
     private SBQGameManager sbqGameManager;
     private EnemyController enemyController;
     private PlayerController playerController;
+    private AudioController audioController;
 
     [Header("UI Elements")]
     public GameObject[] images;
@@ -22,6 +23,7 @@ public class SpellBookManager : MonoBehaviour
         sbqGameManager = GetComponent<SBQGameManager>();
         enemyController = FindObjectOfType<EnemyController>();
         playerController = FindObjectOfType<PlayerController>();
+        audioController = FindObjectOfType<AudioController>();
 
         if (sbqGameManager != null)
         {
@@ -189,6 +191,7 @@ public class SpellBookManager : MonoBehaviour
         {
             Debug.Log("All rounds completed. Ending the game.");
             sbqGameManager.EndGame();
+            audioController.PlayAudio("Level Complete");
         }
     }
 }

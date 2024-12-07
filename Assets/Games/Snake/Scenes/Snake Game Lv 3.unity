@@ -157,6 +157,7 @@ MonoBehaviour:
   scoreText: {fileID: 1949964863}
   endPanel: {fileID: 1764504184}
   endScoreText: {fileID: 333243781}
+  nextbutton: {fileID: 1695849340}
   score: 0
   level: 3
 --- !u!4 &30461324
@@ -215,7 +216,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4b55f9ba2d6830e4980a146adf7a9d6a, type: 3}
   m_Resource: {fileID: 8300000, guid: 4b55f9ba2d6830e4980a146adf7a9d6a, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

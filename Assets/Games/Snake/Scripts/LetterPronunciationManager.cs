@@ -45,6 +45,7 @@ public class LetterPronunciationManager : MonoBehaviour
         }
 
         Debug.Log("All pronunciations completed!");
+        gm.ac.PlayAudio("Level Complete");
         Time.timeScale = 0;
     }
 

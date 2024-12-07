@@ -7,6 +7,7 @@ public class PlayerProjectile : MonoBehaviour
     public float lifetime = 2f;
 
     private EnemyController enemyController;
+    AudioController ac;
 
     private void Start()
     {
@@ -15,6 +16,7 @@ public class PlayerProjectile : MonoBehaviour
 
         // Attempt to find the EnemyController in the scene
         enemyController = FindObjectOfType<EnemyController>();
+        ac = FindObjectOfType<AudioController>();
 
         if (enemyController == null)
         {
@@ -56,6 +58,7 @@ public class PlayerProjectile : MonoBehaviour
         if (enemyController.enemyLives <= 0)
         {
             Destroy(enemy);
+            ac.PlayAudio("Kill");
             Debug.Log("Enemy destroyed.");
         }
     }

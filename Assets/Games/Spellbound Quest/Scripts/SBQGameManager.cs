@@ -13,6 +13,7 @@ public class SBQGameManager : MonoBehaviour
     public GameObject bookPanel;
     public GameObject pausePanel;
     public GameObject endPanel;
+    public Button nextButton;
 
     [Header("Timer")]
     public TMP_Text timerText;
@@ -33,11 +34,12 @@ public class SBQGameManager : MonoBehaviour
     public int level;
     public TMP_Text scoreText;
 
-    private SpellBookManager sbm;
+    private AudioController audioController;
+
 
     private void Start()
     {
-        sbm = GetComponent<SpellBookManager>();
+        audioController = FindObjectOfType<AudioController>();
         InitializeGame();
     }
 
@@ -191,7 +193,14 @@ public class SBQGameManager : MonoBehaviour
 
         Debug.Log("Game Over!");
         SetPanelActive(endPanel, true);
-
+        if(lives > 0 )
+        {
+            nextButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            nextButton.gameObject.SetActive(false);
+        }
         SavePlayerPrefs();
         DisplayScore();
     }

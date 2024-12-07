@@ -5,6 +5,7 @@ public class LetterTile : MonoBehaviour
     public string letter;
     private LetterPronunciationManager manager;
     private GameManager gm;
+    private AudioController audioController;
 
     public void Setup(string letter, LetterPronunciationManager manager)
     {
@@ -15,6 +16,7 @@ public class LetterTile : MonoBehaviour
     private void Start()
     {
         gm = FindObjectOfType<GameManager>();
+        audioController = FindObjectOfType<AudioController>();
 
         if (gm == null)
         {
@@ -38,6 +40,7 @@ public class LetterTile : MonoBehaviour
             else
             {
                 manager.CorrectSelection();
+                audioController.PlayAudio("Eat");
                 Debug.Log("Correct selection detected.");
             }
         }
@@ -45,6 +48,7 @@ public class LetterTile : MonoBehaviour
 
     private void HandleIncorrectSelection()
     {
+        audioController.PlayAudio("Wrong Letter");
         int errorCount = GetErrorCount(gm.level);
 
         Debug.Log($"Incorrect selection: {letter}. Expected: {manager.CurrentLetter}");
