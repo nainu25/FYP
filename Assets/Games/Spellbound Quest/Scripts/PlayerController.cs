@@ -27,12 +27,15 @@ public class PlayerController : MonoBehaviour
     Vector3 initialPosition;
     bool isPunching;
 
+    AudioController ac;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         SBQGm = FindObjectOfType<SBQGameManager>();
+        ac = FindObjectOfType<AudioController>();
         SBQGm.coins = 0;
         initialPosition = gameObject.transform.position;
         isPunching = false;
@@ -93,6 +96,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isJumping = false;
             animator.SetTrigger("Jump");
+            ac.PlayJumpAudio();
         }
     }
 
@@ -201,11 +205,13 @@ public class PlayerController : MonoBehaviour
         {
             if (isPunching)
             {
+                ac.PlayKillAudio();
                 Destroy(collision.gameObject);
             }
         }
         if (collision.gameObject.CompareTag("Coin"))
         {
+            ac.PlayCoinAudio();
             SBQGm.coins++;
             SBQGm.UpdateCoinsText();
             Destroy(collision.gameObject);
