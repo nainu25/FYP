@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "firebase_url": "null",
+    "project_number": "501213320904",
+    "project_id": "dysquest-fyp",
+    "storage_bucket": "dysquest-fyp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501213320904:android:70e31bd68daae3a9f4f7fd",
+        "android_client_info": {
+          "package_name": "com.ENFYP.DysQuest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeXmzD-RgSWud7Vm_HwSFImNgcl986_Ak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -38,7 +38,15 @@ public class SceneController : MonoBehaviour
 
     public void Back()
     {
-        SceneManager.LoadScene("Main Menu");
+        if(SceneManager.GetActiveScene().name == "Sign In" || SceneManager.GetActiveScene().name == "Sign Up") 
+        { 
+            SceneManager.LoadScene("Select Login");
+        }
+        else
+        {
+            SceneManager.LoadScene("Main Menu");
+        }
+        
     }
 
     public void SignIn()
