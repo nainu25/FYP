@@ -22,14 +22,6 @@ public class AudioController : MonoBehaviour
         DontDestroyOnLoad(gameObject); // Make this object persistent across scenes
     }
 
-    private void Update()
-    {
-        if(SceneManager.GetActiveScene().name == "Snake Game Lv 1" || SceneManager.GetActiveScene().name == "Snake Game Lv 2" || SceneManager.GetActiveScene().name == "Snake Game Lv 3" || SceneManager.GetActiveScene().name == "Snake Game Lv 4" || SceneManager.GetActiveScene().name == "Snake Game Lv 5")
-        {
-            bgSource.volume = 0.1f;
-        }
-    }
-
     public void PlayAudio(string clipName)
     {
         if (audioSource == null || audioClips == null || audioClips.Length == 0)

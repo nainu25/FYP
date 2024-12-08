@@ -19,7 +19,7 @@ public class SceneController : MonoBehaviour
     IEnumerator EndSplashScreen()
     {
         yield return new WaitForSeconds(1.9f);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Select Login");
     }
 
     public void Quit()
@@ -33,12 +33,21 @@ public class SceneController : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("Game Selector");
     }
 
     public void Back()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Main Menu");
     }
 
+    public void SignIn()
+    {
+        SceneManager.LoadScene("Sign In");
+    }
+
+    public void SignUp()
+    {
+        SceneManager.LoadScene("Sign Up");
+    }
 }
