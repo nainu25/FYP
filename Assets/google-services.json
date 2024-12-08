@@ -1,7 +1,7 @@
 {
   "project_info": {
-    "firebase_url": "null",
     "project_number": "501213320904",
+    "firebase_url": "https://dysquest-fyp-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "dysquest-fyp",
     "storage_bucket": "dysquest-fyp.firebasestorage.app"
   },

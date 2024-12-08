@@ -5,4 +5,6 @@ using UnityEngine;
 public class References : MonoBehaviour
 {
     public static string userName = "";
+    public static string userID = "";
+    public static string age = "";
 }

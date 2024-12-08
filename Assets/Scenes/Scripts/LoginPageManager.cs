@@ -7,6 +7,7 @@ public class LoginPageManager : MonoBehaviour
     public GameObject selectLogin;
     public GameObject loginPanel;
     public GameObject signUpPanel;
+    public GameObject forgotPasswordPanel;
 
     private void Awake()
     {
@@ -18,7 +19,8 @@ public class LoginPageManager : MonoBehaviour
     {
         selectLogin.SetActive(false);
         loginPanel.SetActive(false);
-        signUpPanel.SetActive(false);   
+        signUpPanel.SetActive(false); 
+        forgotPasswordPanel.SetActive(false);
     }
 
     public void LoginPanel()
@@ -31,6 +33,12 @@ public class LoginPageManager : MonoBehaviour
     {
         CloseAllPanels();
         signUpPanel.SetActive(true);
+    }
+
+    public void ForgotPasswordPanel()
+    {
+        CloseAllPanels();
+        forgotPasswordPanel.SetActive(true);    
     }
 
     public void Back()

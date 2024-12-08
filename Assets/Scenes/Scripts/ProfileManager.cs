@@ -4,6 +4,8 @@ using Firebase.Auth;
 using Firebase;
 using System.Collections;
 using TMPro;
+using Firebase.Extensions;
+using System;
 
 public class ProfileManager : MonoBehaviour
 {
@@ -11,7 +13,6 @@ public class ProfileManager : MonoBehaviour
     public DependencyStatus dependencyStatus;
     public FirebaseAuth auth;
     public FirebaseUser user;
-
 
     [Space]
     [Header("Login Variables")]
@@ -24,12 +25,36 @@ public class ProfileManager : MonoBehaviour
     public TMPro.TMP_InputField SignUpNameField;
     public TMPro.TMP_InputField SignUpEmailField;
     public TMPro.TMP_InputField SignUpPasswordField;
+    public TMPro.TMP_InputField ageField;
     public TMP_Text signUpWarningText;
 
+    [Space]
+    [Header("Forgot Password")]
+    public TMPro.TMP_InputField forgotMailField;
+    public TMP_Text forgotPText;
+
+    public static ProfileManager instance;
+
+    private void Awake()
+    {
+        // Singleton pattern to ensure a single instance of AudioController
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); // Destroy duplicate instances
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject); // Make this object persistent across scenes
+    }
 
     private void Start()
     {
         StartCoroutine(CheckAndFixDependenciesAsync());
+        if(LoginPageManager.instance == null)
+        {
+            LoginPageManager.instance = FindFirstObjectByType<LoginPageManager>();
+        }
     }
 
     private IEnumerator CheckAndFixDependenciesAsync()
@@ -94,13 +119,24 @@ public class ProfileManager : MonoBehaviour
             if(!signedIn && user != null)
             {
                 Debug.Log("Signed out " + user.UserId);
+                SceneManager.LoadScene("Select Login");
             }
             user = auth.CurrentUser;
             if(signedIn)
             {
                 Debug.Log("Signed in " + user.UserId + user.DisplayName);
+                References.userID = user.UserId;
+                References.userName = user.DisplayName;
 
             }
+        }
+    }
+
+    public void SignOut()
+    {
+        if(auth !=null && user != null)
+        {
+            auth.SignOut();
         }
     }
 
@@ -214,6 +250,8 @@ public class ProfileManager : MonoBehaviour
             else
             {
                 user = signUpTask.Result.User;
+                References.age = ageField.text;
+                PlayerPrefs.SetInt("Age", int.Parse(References.age));
                 
                 UserProfile userProfile = new UserProfile{DisplayName = name};
                 var updateProfileTask = user.UpdateUserProfileAsync(userProfile);
@@ -251,6 +289,7 @@ public class ProfileManager : MonoBehaviour
                 }
                 else
                 {
+                    References.userName = user.DisplayName;
                     SceneManager.LoadScene("Main Menu");
                     
                 }
@@ -260,9 +299,46 @@ public class ProfileManager : MonoBehaviour
         
     }
 
-    public string GetUsername()
+
+    void ForgetPasswordSubmit(string email)
     {
-        return References.userName;
+        auth.SendPasswordResetEmailAsync(email).ContinueWithOnMainThread(task =>
+        {
+            if(task.IsCanceled)
+            {
+                Debug.Log("SendPasswordResetEmailAsync was cancelled");
+            }
+
+            if (task.IsFaulted)
+            {
+                foreach (Exception ex in task.Exception.Flatten().InnerExceptions)
+                {
+                    Firebase.FirebaseException firebaseException = ex as FirebaseException;
+                    if (firebaseException != null)
+                    {
+                        var error = (AuthError)firebaseException.ErrorCode;
+                        Debug.Log("Firebase error: " + error);
+                    }
+                }
+            }
+
+            forgotPText.color = Color.black;
+            forgotPText.text = "Reset mail sent";
+        });
+    }
+
+    public void ResetPassword()
+    {
+        if(string.IsNullOrEmpty(forgotMailField.text))
+        {
+            forgotPText.color = Color.red;
+            forgotPText.text = "Enter Mail";
+        }
+        else
+        {
+            ForgetPasswordSubmit(forgotMailField.text);
+        }   
+
     }
 
 }

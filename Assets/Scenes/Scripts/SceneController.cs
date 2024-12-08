@@ -7,9 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    int sceneIndex;
+    ProfileManager profileManager;
     void Start()
     {
+        profileManager = FindFirstObjectByType<ProfileManager>();
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             StartCoroutine(EndSplashScreen());
@@ -57,5 +58,10 @@ public class SceneController : MonoBehaviour
     public void SignUp()
     {
         SceneManager.LoadScene("Sign Up");
+    }
+
+    public void SignOut()
+    {
+        profileManager.SignOut();
     }
 }
