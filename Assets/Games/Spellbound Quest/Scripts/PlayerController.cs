@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
         SBQGm.coins = 0;
         initialPosition = gameObject.transform.position;
         isPunching = false;
+        Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
     }
 
     void Update()
@@ -64,8 +65,6 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(moveInput) > 0)
         {
             animator.SetBool("IsWalking", true);
-            
-
         }
         else
         {
@@ -77,7 +76,7 @@ public class PlayerController : MonoBehaviour
         else if (moveInput < 0)
             spriteRenderer.flipX = true;
 
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetKey(KeyCode.Space))
         {
             if(!isPunching)
             {
@@ -100,7 +99,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Punch()
+    public void Punch()
     {
         isPunching = true;
         animator.SetBool("IsPunching", true);

@@ -20,6 +20,7 @@ public class AudioController : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject); // Make this object persistent across scenes
+        Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
     }
 
     public void PlayAudio(string clipName)

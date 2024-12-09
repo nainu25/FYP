@@ -89,6 +89,8 @@ public class SnakeController : MonoBehaviour
         }
     }
 
+
+
     private void MoveSnake()
     {
         if (Time.time < nextUpdate) return;
@@ -105,7 +107,7 @@ public class SnakeController : MonoBehaviour
             segments[i].position = segments[i - 1].position;
         }
 
-        Vector2 newPosition = (Vector2)transform.position + (Vector2)direction;
+        Vector2 newPosition = (Vector2)transform.position + (Vector2)direction * segmentOffset;
         transform.position = newPosition;
 
         if (gm.level >= 3 && CheckSelfCollision())
