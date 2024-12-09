@@ -31,16 +31,27 @@ public class DataSaver : MonoBehaviour
     public string userId;
     DatabaseReference databaseReference;
 
+    private static DataSaver instance;
+
     private void Awake()
     {
+        // Singleton pattern to ensure a single instance of AudioController
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject); // Destroy duplicate instances
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject); // Make this object persistent across scenes
+
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         userId = References.userID;
-        AssignValues();
-        SaveData();
     }
 
     public void SaveData()
     {
+        AssignValues();
         string json = JsonUtility.ToJson(dts);
         databaseReference.Child("users").Child(userId).SetRawJsonValueAsync(json);
         Debug.Log("Data Saved");
