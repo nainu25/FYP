@@ -1,0 +1,832 @@
+fileFormatVersion: 2
+guid: d3c4b491fb0bb064290706230ad36b5a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2823211243130321003
+    second: Education_0
+  - first:
+      213: -3935789221230065773
+    second: Education_1
+  - first:
+      213: 1117448376607766999
+    second: Education_2
+  - first:
+      213: 1291352013589024393
+    second: Education_3
+  - first:
+      213: 8243143598093443144
+    second: Education_4
+  - first:
+      213: -7406940359330375946
+    second: Education_5
+  - first:
+      213: -305637331083116428
+    second: Education_6
+  - first:
+      213: 2370368290815024601
+    second: Education_7
+  - first:
+      213: -2530731510828091139
+    second: Education_8
+  - first:
+      213: 7022692682432385673
+    second: Education_9
+  - first:
+      213: 222851100200091067
+    second: Education_10
+  - first:
+      213: 3697893960938247664
+    second: Education_11
+  - first:
+      213: -678825892416745278
+    second: Education_12
+  - first:
+      213: 7258665530239810722
+    second: Education_13
+  - first:
+      213: 1691820050578994609
+    second: Education_14
+  - first:
+      213: 221536748461157237
+    second: Education_15
+  - first:
+      213: -4393246927746760973
+    second: Education_16
+  - first:
+      213: -2467564146944560665
+    second: Education_17
+  - first:
+      213: 2278734347605071280
+    second: Education_18
+  - first:
+      213: -4531696735510150756
+    second: Education_19
+  - first:
+      213: -1091502536876454754
+    second: Education_20
+  - first:
+      213: 5903966705014553556
+    second: Education_21
+  - first:
+      213: -4695098376269979318
+    second: Education_22
+  - first:
+      213: -811495967728826614
+    second: Education_23
+  - first:
+      213: -5763227787827187896
+    second: Education_24
+  - first:
+      213: -2461808286594459839
+    second: Education_25
+  - first:
+      213: -4125943362540876664
+    second: Education_26
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Education_0
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 468
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b68fba8eaaf0e2720800000000000000
+      internalID: 2823211243130321003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_1
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 447
+        width: 159
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39745c55e844169c0800000000000000
+      internalID: -3935789221230065773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_2
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 472
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d9fa86c069f18f00800000000000000
+      internalID: 1117448376607766999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_3
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 373
+        width: 74
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98e85f180ddcbe110800000000000000
+      internalID: 1291352013589024393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_4
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 357
+        width: 29
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84025ecad67856270800000000000000
+      internalID: 8243143598093443144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_5
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 0
+        width: 259
+        height: 432
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f6db91acf2453990800000000000000
+      internalID: -7406940359330375946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_6
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 396
+        width: 43
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47041ba777822cbf0800000000000000
+      internalID: -305637331083116428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_7
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 381
+        width: 70
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dd11e8d66d35e020800000000000000
+      internalID: 2370368290815024601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_8
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 358
+        width: 31
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df8343b691901ecd0800000000000000
+      internalID: -2530731510828091139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_9
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 371
+        width: 64
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9821e1f69cd957160800000000000000
+      internalID: 7022692682432385673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_10
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 337
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbd3b3915e9b71300800000000000000
+      internalID: 222851100200091067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_11
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 310
+        width: 54
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f559c617fe815330800000000000000
+      internalID: 3697893960938247664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_12
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 321
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c0992a82735496f0800000000000000
+      internalID: -678825892416745278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_13
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 263
+        width: 82
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2acf05977d5fbb460800000000000000
+      internalID: 7258665530239810722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_14
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 306
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b5f4a25f5d8a7710800000000000000
+      internalID: 1691820050578994609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_15
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 244
+        width: 61
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57be8bcbf7e031300800000000000000
+      internalID: 221536748461157237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_16
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 218
+        width: 77
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fef315123d0803c0800000000000000
+      internalID: -4393246927746760973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 162
+        width: 63
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e131e86b7371cdd0800000000000000
+      internalID: -2467564146944560665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_18
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 184
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b55b7ed0d0bf9f10800000000000000
+      internalID: 2278734347605071280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_19
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 186
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c91ce1a34dd2c11c0800000000000000
+      internalID: -4531696735510150756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_20
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 139
+        width: 63
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9c8a0ac9343ad0f0800000000000000
+      internalID: -1091502536876454754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_21
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 119
+        width: 45
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4db302a007a1fe150800000000000000
+      internalID: 5903966705014553556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_22
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 116
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a412ae807e8a7deb0800000000000000
+      internalID: -4695098376269979318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_23
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 78
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a078cd287bcfcb4f0800000000000000
+      internalID: -811495967728826614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_24
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 48
+        width: 65
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84f66e2acd6e400b0800000000000000
+      internalID: -5763227787827187896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_25
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 81
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1479c641866e5ddd0800000000000000
+      internalID: -2461808286594459839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Education_26
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 27
+        width: 91
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88cce583f54bdb6c0800000000000000
+      internalID: -4125943362540876664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Education_0: 2823211243130321003
+      Education_1: -3935789221230065773
+      Education_10: 222851100200091067
+      Education_11: 3697893960938247664
+      Education_12: -678825892416745278
+      Education_13: 7258665530239810722
+      Education_14: 1691820050578994609
+      Education_15: 221536748461157237
+      Education_16: -4393246927746760973
+      Education_17: -2467564146944560665
+      Education_18: 2278734347605071280
+      Education_19: -4531696735510150756
+      Education_2: 1117448376607766999
+      Education_20: -1091502536876454754
+      Education_21: 5903966705014553556
+      Education_22: -4695098376269979318
+      Education_23: -811495967728826614
+      Education_24: -5763227787827187896
+      Education_25: -2461808286594459839
+      Education_26: -4125943362540876664
+      Education_3: 1291352013589024393
+      Education_4: 8243143598093443144
+      Education_5: -7406940359330375946
+      Education_6: -305637331083116428
+      Education_7: 2370368290815024601
+      Education_8: -2530731510828091139
+      Education_9: 7022692682432385673
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

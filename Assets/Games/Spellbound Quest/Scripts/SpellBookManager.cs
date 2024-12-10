@@ -283,7 +283,7 @@ public class SpellBookManager : MonoBehaviour
                     case 4:
                         roundOptions.Add(new List<string> { "Tsunami", "Sunami", "Tsunamie" });
                         roundOptions.Add(new List<string> { "Government", "Governement", "Goverment" });
-                        roundOptions.Add(new List<string> { "Principle", "Principal", "Principel" });
+                        roundOptions.Add(new List<string> { "Principal", "Prencipal", "Principel" });
                         correctOptionIndices.AddRange(new[] { 0, 0, 0 });
                         break;
                     case 5:

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: de6a200f52bb3fe418910c4f44f99edf
+guid: b0744d18ecc2d464c93abc8113c558fa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7699978436774145253
-    second: Moon_0
+      213: -4863376513923204046
+    second: Caterpillar_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Moon_0
+      name: Caterpillar_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 512
-        height: 512
+        width: 513
+        height: 513
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5ec271e8791dbda60800000000000000
-      internalID: 7699978436774145253
+      spriteID: 23c31aee3d0d18cb0800000000000000
+      internalID: -4863376513923204046
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Caterpillar_0: -4863376513923204046
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

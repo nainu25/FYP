@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 86ae59223ecc4204985829efd2aadea7
+guid: e7de9211bda824a4d806af6e7a401320
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5199979006384268662
-    second: Star_0
+      213: 1265529135613233479
+    second: Autumn_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Star_0
+      name: Autumn_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 9
-        width: 512
-        height: 493
+        y: 0
+        width: 513
+        height: 513
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 675e50b0b590a2840800000000000000
-      internalID: 5199979006384268662
+      spriteID: 74942253b00109110800000000000000
+      internalID: 1265529135613233479
       vertices: []
       indices: 
       edges: []
