@@ -251,6 +251,7 @@ public class ProfileManager : MonoBehaviour
             {
                 user = signUpTask.Result.User;
                 References.age = ageField.text;
+                Debug.Log("Age: " + References.age);
                 PlayerPrefs.SetInt("Age", int.Parse(References.age));
                 
                 UserProfile userProfile = new UserProfile{DisplayName = name};

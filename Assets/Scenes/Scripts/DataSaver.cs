@@ -47,6 +47,8 @@ public class DataSaver : MonoBehaviour
 
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         userId = References.userID;
+
+        SaveData();
     }
 
     public void SaveData()

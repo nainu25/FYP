@@ -36,10 +36,14 @@ public class SBQGameManager : MonoBehaviour
 
     private AudioController audioController;
 
+    public int age;
+
+
 
     private void Start()
     {
         audioController = FindObjectOfType<AudioController>();
+        //age = PlayerPrefs.GetInt("Age");
         InitializeGame();
     }
 
