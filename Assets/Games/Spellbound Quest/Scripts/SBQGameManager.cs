@@ -34,7 +34,8 @@ public class SBQGameManager : MonoBehaviour
     public int level;
     public TMP_Text scoreText;
 
-    private AudioController audioController;
+
+    DataSaver dataSaver;
 
     public int age;
 
@@ -42,7 +43,7 @@ public class SBQGameManager : MonoBehaviour
 
     private void Start()
     {
-        audioController = FindObjectOfType<AudioController>();
+        dataSaver = FindFirstObjectByType<DataSaver>();
         age = PlayerPrefs.GetInt("Age");
         InitializeGame();
     }
@@ -206,6 +207,7 @@ public class SBQGameManager : MonoBehaviour
             nextButton.gameObject.SetActive(false);
         }
         SavePlayerPrefs();
+        dataSaver.SaveData();
         DisplayScore();
     }
 

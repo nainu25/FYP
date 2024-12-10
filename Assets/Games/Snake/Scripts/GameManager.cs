@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     public int score;
     public int level;
 
+    DataSaver dataSaver;
+
     private void Start()
     {
         InitializeGame();
@@ -48,7 +50,8 @@ public class GameManager : MonoBehaviour
         // Initialize lives and score
         lives = initialLives;
         score = PlayerPrefs.GetInt("Score", 0);
-        ac = FindObjectOfType<AudioController>();
+        ac = FindFirstObjectByType<AudioController>();
+        dataSaver = FindFirstObjectByType<DataSaver>();
 
         // Update UI
         UpdateLivesUI();
@@ -173,6 +176,7 @@ public class GameManager : MonoBehaviour
 
         ToggleEndPanel();
         UpdateEndPanelScore();
+        
 
         Debug.Log("Game Over!");
         Time.timeScale = 0f;

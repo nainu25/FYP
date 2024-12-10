@@ -1,7 +1,6 @@
 using Firebase.Database;
 using System;
 using System.Collections;
-using System.Data.Common;
 using UnityEngine;
 
 [Serializable]
@@ -25,17 +24,18 @@ public class DataToSave
     public int sbqL4Coins;
     public int sbqL5Coins;
 }
+
 public class DataSaver : MonoBehaviour
 {
     public DataToSave dts;
     public string userId;
-    DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
 
     private static DataSaver instance;
 
     private void Awake()
     {
-        // Singleton pattern to ensure a single instance of AudioController
+        // Singleton pattern to ensure a single instance of DataSaver
         if (instance != null && instance != this)
         {
             Destroy(gameObject); // Destroy duplicate instances
@@ -48,7 +48,8 @@ public class DataSaver : MonoBehaviour
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         userId = References.userID;
 
-        SaveData();
+        LoadData();
+        //Invoke("SaveData", 3f);
     }
 
     public void SaveData()
@@ -64,21 +65,59 @@ public class DataSaver : MonoBehaviour
         StartCoroutine(LoadDataEnum());
     }
 
-    IEnumerator LoadDataEnum()
+    private IEnumerator LoadDataEnum()
     {
+        Debug.Log("Starting data load...");
+
+        // Request data from Firebase
         var serverData = databaseReference.Child("users").Child(userId).GetValueAsync();
         yield return new WaitUntil(() => serverData.IsCompleted);
-        DataSnapshot snapshot = serverData.Result;
-        string json = snapshot.GetRawJsonValue();
-        if(json != null)
+
+        if (serverData.IsFaulted)
         {
-            dts = JsonUtility.FromJson<DataToSave>(json);
+            Debug.LogError("Error loading data from Firebase: " + serverData.Exception);
+            yield break;
+        }
+
+        if (!serverData.IsCompleted)
+        {
+            Debug.LogError("Data load not completed successfully.");
+            yield break;
+        }
+
+        DataSnapshot snapshot = serverData.Result;
+
+        if (snapshot.Exists)
+        {
+            string json = snapshot.GetRawJsonValue();
+            Debug.Log("Data loaded from Firebase: " + json);
+
+            if (!string.IsNullOrEmpty(json))
+            {
+                try
+                {
+                    dts = JsonUtility.FromJson<DataToSave>(json);
+                    Debug.Log("Data deserialized successfully.");
+
+                    // Save data to PlayerPrefs
+                    SaveToPlayerPrefs();
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError("Error deserializing JSON: " + ex.Message);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No data found in Firebase.");
+            }
         }
         else
         {
-            Debug.Log("No data found");
+            Debug.LogWarning("Snapshot does not exist for user ID: " + userId);
         }
     }
+
 
     public void AssignValues()
     {
@@ -88,6 +127,7 @@ public class DataSaver : MonoBehaviour
         dts.snakeL2Score = PlayerPrefs.GetInt("PlayerScore Lv2");
         dts.snakeL3Score = PlayerPrefs.GetInt("PlayerScore Lv3");
         dts.snakeL4Score = PlayerPrefs.GetInt("PlayerScore Lv4");
+        dts.snakeL5Score = PlayerPrefs.GetInt("PlayerScore Lv5");
         dts.snakeL1ErrorCount = PlayerPrefs.GetInt("Error Count Lv 1");
         dts.snakeL2ErrorCount = PlayerPrefs.GetInt("Error Count Lv 2");
         dts.snakeL3ErrorCount = PlayerPrefs.GetInt("Error Count Lv 3");
@@ -101,4 +141,26 @@ public class DataSaver : MonoBehaviour
         Debug.Log("Data Assigned");
     }
 
+    private void SaveToPlayerPrefs()
+    {
+        PlayerPrefs.SetString("username", dts.username);
+        PlayerPrefs.SetInt("Age", dts.age);
+        PlayerPrefs.SetInt("PlayerScore Lv1", dts.snakeL1Score);
+        PlayerPrefs.SetInt("PlayerScore Lv2", dts.snakeL2Score);
+        PlayerPrefs.SetInt("PlayerScore Lv3", dts.snakeL3Score);
+        PlayerPrefs.SetInt("PlayerScore Lv4", dts.snakeL4Score);
+        PlayerPrefs.SetInt("PlayerScore Lv5", dts.snakeL5Score);
+        PlayerPrefs.SetInt("Error Count Lv 1", dts.snakeL1ErrorCount);
+        PlayerPrefs.SetInt("Error Count Lv 2", dts.snakeL2ErrorCount);
+        PlayerPrefs.SetInt("Error Count Lv 3", dts.snakeL3ErrorCount);
+        PlayerPrefs.SetInt("Error Count Lv 4", dts.snakeL4ErrorCount);
+        PlayerPrefs.SetInt("Error Count Lv 5", dts.snakeL5ErrorCount);
+        PlayerPrefs.SetInt("SBQ Lv1 Coins", dts.sbqL1Coins);
+        PlayerPrefs.SetInt("SBQ Lv2 Coins", dts.sbqL2Coins);
+        PlayerPrefs.SetInt("SBQ Lv3 Coins", dts.sbqL3Coins);
+        PlayerPrefs.SetInt("SBQ Lv4 Coins", dts.sbqL4Coins);
+        PlayerPrefs.SetInt("SBQ Lv5 Coins", dts.sbqL5Coins);
+        PlayerPrefs.Save();
+        Debug.Log("Data saved to PlayerPrefs.");
+    }
 }

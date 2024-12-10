@@ -94,7 +94,7 @@ public class ProfileManager : MonoBehaviour
         }
         else
         {
-            LoginPageManager.instance.LoginPanel();
+            LoginPageManager.instance.SelectLoginPanel();
         }
     }
 
@@ -107,7 +107,7 @@ public class ProfileManager : MonoBehaviour
         }
         else
         {
-            LoginPageManager.instance.LoginPanel();
+            LoginPageManager.instance.SelectLoginPanel();
         }
     }
 
@@ -138,6 +138,7 @@ public class ProfileManager : MonoBehaviour
         {
             auth.SignOut();
             SceneManager.LoadScene("Splash Screen");
+            Destroy(gameObject);
         }
     }
 

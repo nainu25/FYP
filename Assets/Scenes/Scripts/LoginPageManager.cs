@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class LoginPageManager : MonoBehaviour
@@ -39,6 +40,12 @@ public class LoginPageManager : MonoBehaviour
     {
         CloseAllPanels();
         forgotPasswordPanel.SetActive(true);    
+    }
+
+    public void SelectLoginPanel()
+    {
+        CloseAllPanels();
+        selectLogin.SetActive(true);
     }
 
     public void Back()
