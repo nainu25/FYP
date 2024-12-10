@@ -137,6 +137,7 @@ public class ProfileManager : MonoBehaviour
         if(auth !=null && user != null)
         {
             auth.SignOut();
+            SceneManager.LoadScene("Splash Screen");
         }
     }
 

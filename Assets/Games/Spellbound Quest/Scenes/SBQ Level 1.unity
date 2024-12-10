@@ -1422,7 +1422,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 3569330103380755068, guid: a9b03818dbbf9d741b453b613b2f556f, type: 3}
   spawnPoints:
   - {fileID: 261839562}
-  respawnDelay: 5
+  respawnDelay: 2
 --- !u!4 &261839562
 Transform:
   m_ObjectHideFlags: 0
@@ -3317,7 +3317,7 @@ AudioSource:
   m_GameObject: {fileID: 563781334}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: d00866bc8e5c63d45b2c12eb6142f0fe, type: 2}
   m_audioClip: {fileID: 8300000, guid: 4b55f9ba2d6830e4980a146adf7a9d6a, type: 3}
   m_Resource: {fileID: 8300000, guid: 4b55f9ba2d6830e4980a146adf7a9d6a, type: 3}
   m_PlayOnAwake: 0
