@@ -18,11 +18,11 @@ public class DataToSave
     public int snakeL3ErrorCount;
     public int snakeL4ErrorCount;
     public int snakeL5ErrorCount;
-    public int sbqL1Coins;
-    public int sbqL2Coins;
-    public int sbqL3Coins;
-    public int sbqL4Coins;
-    public int sbqL5Coins;
+    public int sbqL1score;
+    public int sbqL2score;
+    public int sbqL3score;
+    public int sbqL4score;
+    public int sbqL5score;
 }
 
 public class DataSaver : MonoBehaviour
@@ -48,8 +48,8 @@ public class DataSaver : MonoBehaviour
         databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
         userId = References.userID;
 
+        SaveData();
         LoadData();
-        //Invoke("SaveData", 3f);
     }
 
     public void SaveData()
@@ -133,11 +133,11 @@ public class DataSaver : MonoBehaviour
         dts.snakeL3ErrorCount = PlayerPrefs.GetInt("Error Count Lv 3");
         dts.snakeL4ErrorCount = PlayerPrefs.GetInt("Error Count Lv 4");
         dts.snakeL5ErrorCount = PlayerPrefs.GetInt("Error Count Lv 5");
-        dts.sbqL1Coins = PlayerPrefs.GetInt("SBQ Lv1 Coins");
-        dts.sbqL2Coins = PlayerPrefs.GetInt("SBQ Lv2 Coins");
-        dts.sbqL3Coins = PlayerPrefs.GetInt("SBQ Lv3 Coins");
-        dts.sbqL4Coins = PlayerPrefs.GetInt("SBQ Lv4 Coins");
-        dts.sbqL5Coins = PlayerPrefs.GetInt("SBQ Lv5 Coins");
+        dts.sbqL1score = PlayerPrefs.GetInt("Score 1");
+        dts.sbqL2score = PlayerPrefs.GetInt("Score 2");
+        dts.sbqL3score = PlayerPrefs.GetInt("Score 3");
+        dts.sbqL4score = PlayerPrefs.GetInt("Score 4");
+        dts.sbqL5score = PlayerPrefs.GetInt("Score 5");
         Debug.Log("Data Assigned");
     }
 
@@ -155,11 +155,11 @@ public class DataSaver : MonoBehaviour
         PlayerPrefs.SetInt("Error Count Lv 3", dts.snakeL3ErrorCount);
         PlayerPrefs.SetInt("Error Count Lv 4", dts.snakeL4ErrorCount);
         PlayerPrefs.SetInt("Error Count Lv 5", dts.snakeL5ErrorCount);
-        PlayerPrefs.SetInt("SBQ Lv1 Coins", dts.sbqL1Coins);
-        PlayerPrefs.SetInt("SBQ Lv2 Coins", dts.sbqL2Coins);
-        PlayerPrefs.SetInt("SBQ Lv3 Coins", dts.sbqL3Coins);
-        PlayerPrefs.SetInt("SBQ Lv4 Coins", dts.sbqL4Coins);
-        PlayerPrefs.SetInt("SBQ Lv5 Coins", dts.sbqL5Coins);
+        PlayerPrefs.SetInt("Score 1", dts.sbqL1score);
+        PlayerPrefs.SetInt("Score 2", dts.sbqL2score);
+        PlayerPrefs.SetInt("Score 3", dts.sbqL3score);
+        PlayerPrefs.SetInt("Score 4", dts.sbqL4score);
+        PlayerPrefs.SetInt("Score 5", dts.sbqL5score);
         PlayerPrefs.Save();
         Debug.Log("Data saved to PlayerPrefs.");
     }

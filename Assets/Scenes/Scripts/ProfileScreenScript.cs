@@ -37,6 +37,8 @@ public class ProfileScreenScript : MonoBehaviour
     public TMP_Text sbqLevel4ScoreText;
     public TMP_Text sbqLevel5ScoreText;
 
+    DataSaver dataSaver;
+
 
     private void Start()
     {
@@ -44,6 +46,7 @@ public class ProfileScreenScript : MonoBehaviour
         mainPanel.SetActive(true);
         nameText.text = "Name: " + References.userName;
         ageText.text = "Age: " + PlayerPrefs.GetInt("Age").ToString();
+        dataSaver = FindFirstObjectByType<DataSaver>();
         
     }
 
@@ -65,6 +68,7 @@ public class ProfileScreenScript : MonoBehaviour
         CloseAllPanels();
         snakePanel.SetActive(true);
         UpdateSnakePanelScoreAndErrors();
+        //dataSaver.LoadData();
     }
 
     void UpdateSnakePanelScoreAndErrors()
@@ -91,11 +95,11 @@ public class ProfileScreenScript : MonoBehaviour
 
     void UpdateSBQCoins()
     {
-        sbqLevel1ScoreText.text = "Level 1 Score: " + (PlayerPrefs.GetInt("SBQ Lv1 Coins") * 100).ToString();
-        sbqLevel2ScoreText.text = "Level 2 Score: " + (PlayerPrefs.GetInt("SBQ Lv2 Coins") * 100).ToString();
-        sbqLevel3ScoreText.text = "Level 3 Score: " + (PlayerPrefs.GetInt("SBQ Lv3 Coins") * 100).ToString();
-        sbqLevel4ScoreText.text = "Level 4 Score: " + (PlayerPrefs.GetInt("SBQ Lv4 Coins") * 100).ToString();
-        sbqLevel5ScoreText.text = "Level 5 Score: " + (PlayerPrefs.GetInt("SBQ Lv5 Coins") * 100).ToString();
+        sbqLevel1ScoreText.text = "Level 1 Score: " + PlayerPrefs.GetInt("Score 1").ToString();
+        sbqLevel2ScoreText.text = "Level 2 Score: " + PlayerPrefs.GetInt("Score 2").ToString();
+        sbqLevel3ScoreText.text = "Level 3 Score: " + PlayerPrefs.GetInt("Score 3").ToString();
+        sbqLevel4ScoreText.text = "Level 4 Score: " + PlayerPrefs.GetInt("Score 4").ToString();
+        sbqLevel5ScoreText.text = "Level 5 Score: " + PlayerPrefs.GetInt("Score 5").ToString();
     }
 
 

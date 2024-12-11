@@ -3595,7 +3595,7 @@ MonoBehaviour:
   timerText: {fileID: 323684323}
   gameDuration: 100000
   livesText: {fileID: 1511673778}
-  lives: 1
+  lives: 3
   coinsText: {fileID: 1483539329}
   coins: 0
   round: 1
