@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
         else if (moveInput < 0)
             spriteRenderer.flipX = true;
 
-        if(Input.GetKey(KeyCode.Space))
+        if(Input.GetKey(KeyCode.P))
         {
             if(!isPunching)
             {
