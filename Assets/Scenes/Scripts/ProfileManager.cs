@@ -37,15 +37,14 @@ public class ProfileManager : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton pattern to ensure a single instance of AudioController
         if (instance != null && instance != this)
         {
-            Destroy(gameObject); // Destroy duplicate instances
+            Destroy(gameObject);
             return;
         }
 
         instance = this;
-        DontDestroyOnLoad(gameObject); // Make this object persistent across scenes
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
