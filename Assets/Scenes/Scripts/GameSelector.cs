@@ -59,7 +59,7 @@ public class GameSelector : MonoBehaviour
         }
         else if (index == 2)
         {
-            SceneManager.LoadScene("Game3");
+            SceneManager.LoadScene("Read and Climb");
         }
         else if (index == 3)
         {
