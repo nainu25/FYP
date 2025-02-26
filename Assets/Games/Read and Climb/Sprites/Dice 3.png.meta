@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 39e9c82600aa31e47884cc8d29077914
+guid: f71286ccbb806b948a774cf631ffd50f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7841750413799554831
-    second: Board_0
+      213: -1741959903755363780
+    second: Dice 3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Board_0
+      name: Dice 3_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 118
-        width: 1233
-        height: 998
+        y: 0
+        width: 224
+        height: 203
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f0f7bc7347e73dc60800000000000000
-      internalID: 7841750413799554831
+      spriteID: c3a10b362b053d7e0800000000000000
+      internalID: -1741959903755363780
       vertices: []
       indices: 
       edges: []
