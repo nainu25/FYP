@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem moveEffect;
 
     public int turns { get; set; }
+    public int tempTurn;
+
+    public GameObject gameWonPanel;
 
     public TMP_Text scoreText;
 
@@ -21,7 +24,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        gameWonPanel.SetActive(false);
         turns = 0;
+        tempTurn = 0;
         // Set initial position
         transform.position = boardPositions[currentPosition].position;
 
@@ -51,14 +56,21 @@ public class PlayerMovement : MonoBehaviour
         if (!isMoving)
         {
             turns++;
+            tempTurn = turns;
             StartCoroutine(MovePlayer(diceResult));
         }
     }
 
+
     IEnumerator MovePlayer(int steps)
     {
         int targetPosition = currentPosition + steps;
-        if (targetPosition >= boardPositions.Count) targetPosition = boardPositions.Count - 1;
+
+        // Ensure target doesn't exceed the last position (99)
+        if (targetPosition >= boardPositions.Count - 1)
+        {
+            targetPosition = boardPositions.Count - 1; // Set to last position
+        }
 
         for (int i = currentPosition + 1; i <= targetPosition; i++)
         {
@@ -66,8 +78,28 @@ public class PlayerMovement : MonoBehaviour
         }
 
         currentPosition = targetPosition;
+
+        // Check if the player is at the last position
+        if (currentPosition == boardPositions.Count - 1)
+        {
+            if (FindObjectOfType<SpeechRecognitionTest>().AllTasksCompleted()) // Check if tasks are done
+            {
+                Debug.Log("Congratulations! You have completed all tasks and won the game!");
+                gameWonPanel.SetActive(true);
+                // Trigger win UI or event here
+            }
+            else
+            {
+                Debug.Log("You have reached the last position, but you must complete all tasks first!");
+                FindObjectOfType<SpeechRecognitionTest>().ShowTaskPanel(); // Force task completion
+            }
+            yield break; // Stop further movement
+        }
+
         CheckForSnakesOrLadders();
     }
+
+
 
     IEnumerator SmoothMove(Vector3 target)
     {

@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using HuggingFace.API;
 using TMPro;
 using UnityEngine;
@@ -10,9 +13,32 @@ public class SpeechRecognitionTest : MonoBehaviour
     [SerializeField] private Button stopButton;
     [SerializeField] private TextMeshProUGUI text;
 
+    public PlayerMovement player;
+    public GameObject taskPanel; // Assign in Inspector
+    public TMP_Text taskText; // Assign in Inspector
+    public Button startTimer;
+    public Button completeTaskButton; // Assign in Inspector
+
+    private float taskStartTime;
+    public bool taskActive = false;
+    private int taskIndex = 1; // Task number counter
+    private string[] readingTasks =
+    {
+        "The quick brown fox jumps over the lazy dog.",
+        "Unity is a powerful game engine used by developers worldwide.",
+        "Reading speed helps measure comprehension and fluency."
+    };
+
     private AudioClip clip;
     private byte[] bytes;
     private bool recording;
+
+    private void Awake()
+    {
+        taskPanel.SetActive(false); // Hide at start
+        startTimer.onClick.AddListener(StartTimer);
+        //completeTaskButton.onClick.AddListener(CompleteTask);
+    }
 
     private void Start()
     {
@@ -27,11 +53,15 @@ public class SpeechRecognitionTest : MonoBehaviour
         {
             StopRecording();
         }
+        if (!taskActive && player.tempTurn > 0 && player.tempTurn % 3 == 0)
+        {
+            ShowTaskPanel();
+        }
     }
 
     private void StartRecording()
     {
-        text.color = Color.white;
+        text.color = Color.green;
         text.text = "Recording...";
         startButton.interactable = false;
         stopButton.interactable = true;
@@ -47,24 +77,72 @@ public class SpeechRecognitionTest : MonoBehaviour
         clip.GetData(samples, 0);
         bytes = EncodeAsWAV(samples, clip.frequency, clip.channels);
         recording = false;
+        StopTimer();
         SendRecording();
+        CompleteTask();
+
     }
+
+    private string recognizedText = ""; // Store speech-to-text response
 
     private void SendRecording()
     {
         text.color = Color.yellow;
         text.text = "Sending...";
         stopButton.interactable = false;
+
         HuggingFaceAPI.AutomaticSpeechRecognition(bytes, response => {
-            text.color = Color.white;
+            text.color = Color.green;
             text.text = response;
             startButton.interactable = true;
+
+            recognizedText = response; // Save recognized response
+            MeasureAccuracy(); // Call accuracy check
+
         }, error => {
             text.color = Color.red;
             text.text = error;
             startButton.interactable = true;
         });
     }
+
+    private void MeasureAccuracy()
+    {
+        string originalText = taskText.text.ToLower();
+        string spokenText = recognizedText.ToLower();
+
+        int originalWordCount = CountWords(originalText);
+        int matchedWords = CountMatchingWords(originalText, spokenText);
+
+        float accuracy = (float)matchedWords / originalWordCount * 100;
+
+        Debug.Log($"Accuracy: {accuracy:F2}%");
+    }
+
+    private int CountMatchingWords(string original, string spoken)
+    {
+        string[] originalWords = original.Split(' ');
+        string[] spokenWords = spoken.Split(' ');
+
+        int matchCount = 0;
+
+        foreach (string word in spokenWords)
+        {
+            if (originalWords.Contains(word)) // Check if word exists in the original text
+            {
+                matchCount++;
+            }
+        }
+
+        return matchCount;
+    }
+    public bool AllTasksCompleted()
+    {
+        return taskIndex > readingTasks.Length; // If taskIndex exceeds total tasks, all are completed
+    }
+
+
+
 
     private byte[] EncodeAsWAV(float[] samples, int frequency, int channels)
     {
@@ -94,4 +172,53 @@ public class SpeechRecognitionTest : MonoBehaviour
             return memoryStream.ToArray();
         }
     }
+
+    public void ShowTaskPanel()
+    {
+        taskPanel.SetActive(true);
+        string task = GetReadingTask();
+        taskText.text = task;
+        Time.timeScale = 0; // Pause game
+        taskActive = true;
+        Debug.Log(taskActive);
+    }
+
+    void StartTimer()
+    {
+        taskStartTime = Time.realtimeSinceStartup; // Start timer
+    }
+
+    void StopTimer()
+    {
+        float timeTaken = Time.realtimeSinceStartup - taskStartTime;
+        int wordCount = CountWords(taskText.text);
+        float wordsPerMinute = (wordCount / timeTaken) * 60;
+
+        Debug.Log($"Task {taskIndex} - Time Taken: {timeTaken:F2}s, Words: {wordCount}, WPM: {wordsPerMinute:F2}");
+    }
+
+    void CompleteTask()
+    {
+        // Hide panel & resume game
+        taskPanel.SetActive(false);
+        Time.timeScale = 1;
+        taskIndex++;
+
+        taskActive = false;
+
+        player.tempTurn++; // This ensures the next roll progresses correctly
+    }
+
+
+
+    string GetReadingTask()
+    {
+        return readingTasks[(taskIndex - 1) % readingTasks.Length]; // Cycle through tasks
+    }
+
+    int CountWords(string text)
+    {
+        return text.Split(' ').Length; // Count words in the task text
+    }
+
 }
