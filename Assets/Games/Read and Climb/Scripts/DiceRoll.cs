@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class DiceRoll : MonoBehaviour
 {
     public Image diceImage;
-    public Sprite[] diceFaces; // Assign 6 dice face sprites in Inspector
+    public Sprite[] diceFaces;
     public Button rollDiceButton;
-    public PlayerMovement player; // Reference to the movement script
+    public PlayerMovement player;
 
     private int diceResult;
 
@@ -18,13 +18,13 @@ public class DiceRoll : MonoBehaviour
 
     public void RollDice()
     {
-        rollDiceButton.interactable = false; // Disable button during roll
+        rollDiceButton.interactable = false;
         StartCoroutine(AnimateDiceRoll());
     }
 
     IEnumerator AnimateDiceRoll()
     {
-        int rollCount = Random.Range(8, 15); // Number of roll animations
+        int rollCount = Random.Range(8, 15);
 
         for (int i = 0; i < rollCount; i++)
         {
@@ -33,12 +33,11 @@ public class DiceRoll : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-        // Final dice result
         diceResult = Random.Range(1, 7);
-        diceImage.sprite = diceFaces[diceResult - 1]; // Update UI
+        diceImage.sprite = diceFaces[diceResult - 1]; 
 
         yield return new WaitForSeconds(0.5f);
-        player.RollDice(diceResult); // Call player movement
+        player.RollDice(diceResult); 
         rollDiceButton.interactable = true;
     }
 }

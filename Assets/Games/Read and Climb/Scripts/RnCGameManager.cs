@@ -5,14 +5,14 @@ using UnityEngine.UI;
 public class RnCGameManager : MonoBehaviour
 {
     public PlayerMovement player;
-    public GameObject taskPanel; // Assign in Inspector
-    public TMP_Text taskText; // Assign in Inspector
+    public GameObject taskPanel; 
+    public TMP_Text taskText; 
     public Button startTimer;
-    public Button completeTaskButton; // Assign in Inspector
+    public Button completeTaskButton; 
 
     private float taskStartTime;
     private bool taskActive = false;
-    private int taskIndex = 1; // Task number counter
+    private int taskIndex = 1; 
     private string[] readingTasks =
     {
         "The quick brown fox jumps over the lazy dog.",
@@ -23,14 +23,14 @@ public class RnCGameManager : MonoBehaviour
     private void Awake()
     {
         Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
-        taskPanel.SetActive(false); // Hide at start
+        taskPanel.SetActive(false); 
         startTimer.onClick.AddListener(StartTimer);
         completeTaskButton.onClick.AddListener(CompleteTask);
     }
 
     private void Update()
     {
-        if (!taskActive && player.turns > 0 && player.turns % 3 == 0) // Show every 3 turns
+        if (!taskActive && player.turns > 0 && player.turns % 3 == 0) 
         {
             ShowTaskPanel();
         }
@@ -41,24 +41,24 @@ public class RnCGameManager : MonoBehaviour
         taskPanel.SetActive(true);
         string task = GetReadingTask();
         taskText.text = task;
-        Time.timeScale = 0; // Pause game
+        Time.timeScale = 0; 
         taskActive = true;
     }
 
     void StartTimer()
     {
-        taskStartTime = Time.realtimeSinceStartup; // Start timer
+        taskStartTime = Time.realtimeSinceStartup; 
     }
 
     void CompleteTask()
     {
-        float timeTaken = Time.realtimeSinceStartup - taskStartTime; // Calculate time taken
-        int wordCount = CountWords(taskText.text); // Count words
-        float wordsPerMinute = (wordCount / timeTaken) * 60; // Calculate WPM
+        float timeTaken = Time.realtimeSinceStartup - taskStartTime; 
+        int wordCount = CountWords(taskText.text); 
+        float wordsPerMinute = (wordCount / timeTaken) * 60; 
 
         Debug.Log($"Task {taskIndex} - Time Taken: {timeTaken:F2}s, Words: {wordCount}, WPM: {wordsPerMinute:F2}");
 
-        // Hide panel & resume game
+        
         taskPanel.SetActive(false);
         Time.timeScale = 1;
         taskActive = false;
@@ -67,11 +67,11 @@ public class RnCGameManager : MonoBehaviour
 
     string GetReadingTask()
     {
-        return readingTasks[(taskIndex - 1) % readingTasks.Length]; // Cycle through tasks
+        return readingTasks[(taskIndex - 1) % readingTasks.Length]; 
     }
 
     int CountWords(string text)
     {
-        return text.Split(' ').Length; // Count words in the task text
+        return text.Split(' ').Length; 
     }
 }

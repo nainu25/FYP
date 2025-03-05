@@ -14,14 +14,14 @@ public class SpeechRecognitionTest : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
 
     public PlayerMovement player;
-    public GameObject taskPanel; // Assign in Inspector
-    public TMP_Text taskText; // Assign in Inspector
+    public GameObject taskPanel; 
+    public TMP_Text taskText; 
     public Button startTimer;
-    public Button completeTaskButton; // Assign in Inspector
+    public Button completeTaskButton; 
 
     private float taskStartTime;
     public bool taskActive = false;
-    private int taskIndex = 1; // Task number counter
+    private int taskIndex = 1;
     private string[] readingTasks =
     {
         "The quick brown fox jumps over the lazy dog.",
@@ -83,7 +83,7 @@ public class SpeechRecognitionTest : MonoBehaviour
 
     }
 
-    private string recognizedText = ""; // Store speech-to-text response
+    private string recognizedText = "";
 
     private void SendRecording()
     {
@@ -96,8 +96,8 @@ public class SpeechRecognitionTest : MonoBehaviour
             text.text = response;
             startButton.interactable = true;
 
-            recognizedText = response; // Save recognized response
-            MeasureAccuracy(); // Call accuracy check
+            recognizedText = response;
+            MeasureAccuracy(); 
 
         }, error => {
             text.color = Color.red;
@@ -128,7 +128,7 @@ public class SpeechRecognitionTest : MonoBehaviour
 
         foreach (string word in spokenWords)
         {
-            if (originalWords.Contains(word)) // Check if word exists in the original text
+            if (originalWords.Contains(word))
             {
                 matchCount++;
             }
@@ -138,7 +138,7 @@ public class SpeechRecognitionTest : MonoBehaviour
     }
     public bool AllTasksCompleted()
     {
-        return taskIndex > readingTasks.Length; // If taskIndex exceeds total tasks, all are completed
+        return taskIndex > readingTasks.Length;
     }
 
 
@@ -178,14 +178,14 @@ public class SpeechRecognitionTest : MonoBehaviour
         taskPanel.SetActive(true);
         string task = GetReadingTask();
         taskText.text = task;
-        Time.timeScale = 0; // Pause game
+        Time.timeScale = 0;
         taskActive = true;
         Debug.Log(taskActive);
     }
 
     void StartTimer()
     {
-        taskStartTime = Time.realtimeSinceStartup; // Start timer
+        taskStartTime = Time.realtimeSinceStartup;
     }
 
     void StopTimer()
@@ -199,26 +199,25 @@ public class SpeechRecognitionTest : MonoBehaviour
 
     void CompleteTask()
     {
-        // Hide panel & resume game
         taskPanel.SetActive(false);
         Time.timeScale = 1;
         taskIndex++;
 
         taskActive = false;
 
-        player.tempTurn++; // This ensures the next roll progresses correctly
+        player.tempTurn++;
     }
 
 
 
     string GetReadingTask()
     {
-        return readingTasks[(taskIndex - 1) % readingTasks.Length]; // Cycle through tasks
+        return readingTasks[(taskIndex - 1) % readingTasks.Length];
     }
 
     int CountWords(string text)
     {
-        return text.Split(' ').Length; // Count words in the task text
+        return text.Split(' ').Length;
     }
 
 }

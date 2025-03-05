@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public List<Transform> boardPositions; // Stores 100 positions
-    public int currentPosition = 0; // Player starts at position 0
-    public float moveSpeed = 5f; // Movement speed
+    public List<Transform> boardPositions; 
+    public int currentPosition = 0;
+    public float moveSpeed = 5f; 
     private bool isMoving = false;
     public ParticleSystem moveEffect;
 
@@ -18,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
 
     public TMP_Text scoreText;
 
-    // Dictionary for Snakes and Ladders
     private Dictionary<int, int> snakes = new Dictionary<int, int>();
     private Dictionary<int, int> ladders = new Dictionary<int, int>();
 
@@ -27,10 +26,9 @@ public class PlayerMovement : MonoBehaviour
         gameWonPanel.SetActive(false);
         turns = 0;
         tempTurn = 0;
-        // Set initial position
+       
         transform.position = boardPositions[currentPosition].position;
 
-        // Define Snakes (key = head, value = tail)
         snakes.Add(28, 8);
         snakes.Add(37, 14);
         snakes.Add(46, 4);
@@ -40,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
         snakes.Add(91, 69);
         snakes.Add(96, 24);
 
-        // Define Ladders (key = bottom, value = top)
         ladders.Add(1, 22);
         ladders.Add(7, 33);
         ladders.Add(19, 76);
@@ -66,10 +63,9 @@ public class PlayerMovement : MonoBehaviour
     {
         int targetPosition = currentPosition + steps;
 
-        // Ensure target doesn't exceed the last position (99)
         if (targetPosition >= boardPositions.Count - 1)
         {
-            targetPosition = boardPositions.Count - 1; // Set to last position
+            targetPosition = boardPositions.Count - 1;
         }
 
         for (int i = currentPosition + 1; i <= targetPosition; i++)
@@ -79,21 +75,19 @@ public class PlayerMovement : MonoBehaviour
 
         currentPosition = targetPosition;
 
-        // Check if the player is at the last position
         if (currentPosition == boardPositions.Count - 1)
         {
-            if (FindObjectOfType<SpeechRecognitionTest>().AllTasksCompleted()) // Check if tasks are done
+            if (FindObjectOfType<SpeechRecognitionTest>().AllTasksCompleted())
             {
                 Debug.Log("Congratulations! You have completed all tasks and won the game!");
                 gameWonPanel.SetActive(true);
-                // Trigger win UI or event here
             }
             else
             {
                 Debug.Log("You have reached the last position, but you must complete all tasks first!");
-                FindObjectOfType<SpeechRecognitionTest>().ShowTaskPanel(); // Force task completion
+                FindObjectOfType<SpeechRecognitionTest>().ShowTaskPanel();
             }
-            yield break; // Stop further movement
+            yield break;
         }
 
         CheckForSnakesOrLadders();
@@ -105,9 +99,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 start = transform.position;
         float elapsedTime = 0f;
-        float duration = 0.3f; // Time per step
+        float duration = 0.3f;
 
-        moveEffect.Play(); // Play effect at start
+        moveEffect.Play(); 
 
         while (elapsedTime < duration)
         {
@@ -117,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         transform.position = target;
-        moveEffect.Stop(); // Stop effect after reaching
+        moveEffect.Stop(); 
     }
 
 
