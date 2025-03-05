@@ -8108,7 +8108,7 @@ MonoBehaviour:
   - {fileID: 1581908373}
   - {fileID: 1091969006}
   - {fileID: 1836303813}
-  currentPosition: 98
+  currentPosition: 0
   moveSpeed: 2
   moveEffect: {fileID: 952554712}
   tempTurn: 0
