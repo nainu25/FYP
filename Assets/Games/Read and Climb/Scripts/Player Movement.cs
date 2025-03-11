@@ -5,111 +5,119 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public List<Transform> boardPositions; 
-    public int currentPosition = 0;
-    public float moveSpeed = 5f; 
-    private bool isMoving = false;
+    [Header("Board Settings")]
+    public List<Transform> boardPositions;
+    public float moveSpeed = 5f;
     public ParticleSystem moveEffect;
 
-    public int turns { get; set; }
-    public int tempTurn;
-
+    [Header("Game State")]
+    public int currentPosition = 0;
+    private bool isMoving = false;
+    public TMP_Text scoreText;
     public GameObject gameWonPanel;
 
-    public TMP_Text scoreText;
+    [Header("Turn Management")]
+    public int turns { get; private set; }
+    public int tempTurn;
 
     private Dictionary<int, int> snakes = new Dictionary<int, int>();
     private Dictionary<int, int> ladders = new Dictionary<int, int>();
+
+    private SpeechRecognitionTest speechRecognition;
+    private OpponentMovement opponent;
+    private DiceRoll diceRoll;
+    DataSaver dataSaver;
 
     void Start()
     {
         gameWonPanel.SetActive(false);
         turns = 0;
         tempTurn = 0;
-       
+
         transform.position = boardPositions[currentPosition].position;
 
-        snakes.Add(28, 8);
-        snakes.Add(37, 14);
-        snakes.Add(46, 4);
-        snakes.Add(52, 32);
-        snakes.Add(61, 36);
-        snakes.Add(85, 53);
-        snakes.Add(91, 69);
-        snakes.Add(96, 24);
+        InitializeBoard();
 
-        ladders.Add(1, 22);
-        ladders.Add(7, 33);
-        ladders.Add(19, 76);
-        ladders.Add(31, 67);
-        ladders.Add(40, 78);
-        ladders.Add(73, 87);
-        ladders.Add(81, 99);
-        ladders.Add(84, 94);
+        dataSaver = FindFirstObjectByType<DataSaver>();
+
+        // Cache references to avoid repeated FindObjectOfType calls
+        speechRecognition = FindObjectOfType<SpeechRecognitionTest>();
+        opponent = FindObjectOfType<OpponentMovement>();
+        diceRoll = FindObjectOfType<DiceRoll>();
+    }
+
+    private void InitializeBoard()
+    {
+        // Snakes - Key: Start position, Value: End position
+        snakes = new Dictionary<int, int>
+        {
+            { 28, 8 }, { 37, 14 }, { 46, 4 }, { 52, 32 },
+            { 61, 36 }, { 85, 53 }, { 91, 69 }, { 96, 24 }
+        };
+
+        // Ladders - Key: Start position, Value: End position
+        ladders = new Dictionary<int, int>
+        {
+            { 1, 22 }, { 7, 33 }, { 19, 76 }, { 31, 67 },
+            { 40, 78 }, { 73, 87 }, { 81, 99 }, { 84, 94 }
+        };
     }
 
     public void RollDice(int diceResult)
     {
-        if (!isMoving)
+        if (isMoving) return;
+
+        turns++;
+        tempTurn = turns;
+
+        if (speechRecognition.AllTasksCompleted())
         {
-            turns++;
-            tempTurn = turns;
-            if(FindObjectOfType<SpeechRecognitionTest>().AllTasksCompleted())
-            {
-                currentPosition = 99;
-            }
-            StartCoroutine(MovePlayer(diceResult));
+            currentPosition = 97; // Directly move to position 98 if tasks are completed
         }
+
+        StartCoroutine(MovePlayer(diceResult));
     }
 
-
-    IEnumerator MovePlayer(int steps)
+    private IEnumerator MovePlayer(int steps)
     {
-        int targetPosition = currentPosition + steps;
+        isMoving = true;
 
-        if (targetPosition >= boardPositions.Count - 1)
-        {
-            targetPosition = boardPositions.Count - 1;
-        }
+        int targetPosition = Mathf.Min(currentPosition + steps, boardPositions.Count - 1);
 
         for (int i = currentPosition + 1; i <= targetPosition; i++)
         {
-            yield return StartCoroutine(SmoothMove(boardPositions[i].position));
+            yield return MoveTo(boardPositions[i].position);
         }
 
         currentPosition = targetPosition;
+        scoreText.text = (currentPosition + 1).ToString();
 
         if (currentPosition == boardPositions.Count - 1)
         {
-            if (FindObjectOfType<SpeechRecognitionTest>().AllTasksCompleted())
-            {
-                Debug.Log("Congratulations! You have completed all tasks and won the game!");
-                gameWonPanel.SetActive(true);
-            }
-            else
-            {
-                Debug.Log("You have reached the last position, but you must complete all tasks first!");
-                FindObjectOfType<SpeechRecognitionTest>().ShowTaskPanel();
-            }
+            HandleGameCompletion();
             yield break;
         }
 
-        CheckForSnakesOrLadders();
-        // After player finishes their turn, opponent rolls the dice
-        yield return new WaitForSeconds(1f); // Short delay
-        FindObjectOfType<DiceRoll>().OppRollDice(); 
+        yield return CheckForSnakesOrLadders();
+
+        yield return new WaitForSeconds(1f);
+
+        // Let opponent roll the dice if they haven't won
+        if (opponent.GetCurrentPosition() != 99)
+        {
+            diceRoll.OppRollDice();
+        }
+
+        isMoving = false;
     }
 
-
-
-
-    IEnumerator SmoothMove(Vector3 target)
+    private IEnumerator MoveTo(Vector3 target)
     {
         Vector3 start = transform.position;
         float elapsedTime = 0f;
         float duration = 0.3f;
 
-        moveEffect.Play(); 
+        moveEffect.Play();
 
         while (elapsedTime < duration)
         {
@@ -119,40 +127,50 @@ public class PlayerMovement : MonoBehaviour
         }
 
         transform.position = target;
-        moveEffect.Stop(); 
+        moveEffect.Stop();
     }
 
-
-    void CheckForSnakesOrLadders()
+    private void HandleGameCompletion()
     {
-        if (snakes.ContainsKey(currentPosition))
+        if (speechRecognition.AllTasksCompleted())
         {
-            int newPos = snakes[currentPosition];
-            Debug.Log("Bitten by a snake! Moving down to " + newPos);
-            StartCoroutine(MoveToPosition(newPos));
+            Debug.Log("Congratulations! You have completed all tasks and won the game!");
+            gameWonPanel.SetActive(true);
+            dataSaver.SaveData();
         }
-        else if (ladders.ContainsKey(currentPosition))
+        else
         {
-            int newPos = ladders[currentPosition];
-            Debug.Log("Climbed a ladder! Moving up to " + newPos);
-            StartCoroutine(MoveToPosition(newPos));
+            Debug.Log("You have reached the last position, but you must complete all tasks first!");
+            speechRecognition.ShowTaskPanel();
         }
-        int tempPos = currentPosition + 1;
-        scoreText.text = tempPos.ToString();
     }
 
-    IEnumerator MoveToPosition(int newPos)
+    private IEnumerator CheckForSnakesOrLadders()
+    {
+        if (snakes.TryGetValue(currentPosition, out int snakeDest))
+        {
+            Debug.Log($"Bitten by a snake! Moving down to {snakeDest}");
+            yield return MoveToPosition(snakeDest);
+        }
+        else if (ladders.TryGetValue(currentPosition, out int ladderDest))
+        {
+            Debug.Log($"Climbed a ladder! Moving up to {ladderDest}");
+            yield return MoveToPosition(ladderDest);
+        }
+    }
+
+    private IEnumerator MoveToPosition(int newPos)
     {
         Vector3 targetPos = boardPositions[newPos].position;
+
         while (Vector3.Distance(transform.position, targetPos) > 0.01f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
             yield return null;
         }
+
         transform.position = targetPos;
         currentPosition = newPos;
-        int tempPos = currentPosition + 1;
-        scoreText.text = tempPos.ToString();
-
+        scoreText.text = (currentPosition + 1).ToString();
     }
 }

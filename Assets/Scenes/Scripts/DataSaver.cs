@@ -23,6 +23,13 @@ public class DataToSave
     public int sbqL3score;
     public int sbqL4score;
     public int sbqL5score;
+    public float RnCT1Score;
+    public float RnCT2Score;
+    public float RnCT3Score;
+    public float RnCT4Score;
+    public float RnCT5Score;
+    public float RnCT6Score;
+    public float RnCT7Score;
 }
 
 public class DataSaver : MonoBehaviour
@@ -138,6 +145,14 @@ public class DataSaver : MonoBehaviour
         dts.sbqL3score = PlayerPrefs.GetInt("Score 3");
         dts.sbqL4score = PlayerPrefs.GetInt("Score 4");
         dts.sbqL5score = PlayerPrefs.GetInt("Score 5");
+        dts.RnCT1Score = PlayerPrefs.GetFloat("Task1_Accuracy");
+        dts.RnCT2Score = PlayerPrefs.GetFloat("Task2_Accuracy");
+        dts.RnCT3Score = PlayerPrefs.GetFloat("Task3_Accuracy");
+        dts.RnCT4Score = PlayerPrefs.GetFloat("Task4_Accuracy");
+        dts.RnCT5Score = PlayerPrefs.GetFloat("Task5_Accuracy");
+        dts.RnCT6Score = PlayerPrefs.GetFloat("Task6_Accuracy");
+        dts.RnCT7Score = PlayerPrefs.GetFloat("Task7_Accuracy");
+
         Debug.Log("Data Assigned");
     }
 
@@ -155,11 +170,18 @@ public class DataSaver : MonoBehaviour
         PlayerPrefs.SetInt("Error Count Lv 3", dts.snakeL3ErrorCount);
         PlayerPrefs.SetInt("Error Count Lv 4", dts.snakeL4ErrorCount);
         PlayerPrefs.SetInt("Error Count Lv 5", dts.snakeL5ErrorCount);
-        PlayerPrefs.SetInt("Score 1", dts.sbqL1score);
-        PlayerPrefs.SetInt("Score 2", dts.sbqL2score);
-        PlayerPrefs.SetInt("Score 3", dts.sbqL3score);
-        PlayerPrefs.SetInt("Score 4", dts.sbqL4score);
-        PlayerPrefs.SetInt("Score 5", dts.sbqL5score);
+        PlayerPrefs.SetInt("SBQ Score 1", dts.sbqL1score);
+        PlayerPrefs.SetInt("SBQ Score 2", dts.sbqL2score);
+        PlayerPrefs.SetInt("SBQ Score 3", dts.sbqL3score);
+        PlayerPrefs.SetInt("SBQ Score 4", dts.sbqL4score);
+        PlayerPrefs.SetInt("SBQ Score 5", dts.sbqL5score);
+        PlayerPrefs.SetFloat("RnC Task 1", dts.RnCT1Score);
+        PlayerPrefs.SetFloat("RnC Task 2", dts.RnCT2Score);
+        PlayerPrefs.SetFloat("RnC Task 3", dts.RnCT3Score);
+        PlayerPrefs.SetFloat("RnC Task 4", dts.RnCT4Score);
+        PlayerPrefs.SetFloat("RnC Task 5", dts.RnCT5Score);
+        PlayerPrefs.SetFloat("RnC Task 6", dts.RnCT6Score);
+        PlayerPrefs.SetFloat("RnC Task 7", dts.RnCT7Score);
         PlayerPrefs.Save();
         Debug.Log("Data saved to PlayerPrefs.");
     }

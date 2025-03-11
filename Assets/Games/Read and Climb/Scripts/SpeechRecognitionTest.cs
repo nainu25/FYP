@@ -14,15 +14,16 @@ public class SpeechRecognitionTest : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
 
     public PlayerMovement player;
-    public GameObject taskPanel; 
-    public TMP_Text taskText; 
+    public GameObject taskPanel;
+    public TMP_Text taskText;
     public Button startTimer;
-    public Button completeTaskButton; 
+    public Button completeTaskButton;
 
+    int tempIndex = 0;
     private float taskStartTime;
     public bool taskActive = false;
     private int taskIndex = 1;
-    private string[] readingTasks =
+    private readonly string[] readingTasks =
     {
         "The saw was on the way, but was it raw? He saw the win in the big war. Why was the saw there?",
         "My home is my favorite place. It is very airy and beautiful. It has two bedrooms, one kitchen and a bathroom.",
@@ -30,8 +31,7 @@ public class SpeechRecognitionTest : MonoBehaviour
         "Dad had a bad bib and did bid to dip his bed, while Dab and Dob dibbed on a big pad.",
         "My name is Saad. I am a Pakistani. I am six years old. I live with my Parents.",
         "I eat my Lunch during the break after washing my hands with soap and water, I come back home at one o’clock.",
-        "I love to have dinner with my Family. Every night, my mother tells me a bedtime story. Then,I go back to sleep."
-
+        "I love to have dinner with my Family. Every night, my mother tells me a bedtime story. Then, I go back to sleep."
     };
 
     private AudioClip clip;
@@ -58,7 +58,7 @@ public class SpeechRecognitionTest : MonoBehaviour
         {
             StopRecording();
         }
-        if (!taskActive && player.tempTurn > 0 && player.tempTurn % 3 == 0)
+        if (!taskActive && player.tempTurn > 0 && player.tempTurn % 3 == 0 && !AllTasksCompleted())
         {
             ShowTaskPanel();
         }
@@ -96,17 +96,19 @@ public class SpeechRecognitionTest : MonoBehaviour
         text.text = "Sending...";
         stopButton.interactable = false;
 
-        HuggingFaceAPI.AutomaticSpeechRecognition(bytes, response => {
+        HuggingFaceAPI.AutomaticSpeechRecognition(bytes, response =>
+        {
             text.color = Color.green;
             text.text = response;
             startButton.interactable = true;
 
             recognizedText = response;
             Debug.Log("Voice Input: " + response);
-            MeasureAccuracy(); 
+            MeasureAccuracy();
 
 
-        }, error => {
+        }, error =>
+        {
             text.color = Color.red;
             text.text = error;
             startButton.interactable = true;
@@ -123,8 +125,24 @@ public class SpeechRecognitionTest : MonoBehaviour
 
         float accuracy = (float)matchedWords / originalWordCount * 100;
 
-        Debug.Log($"Accuracy: {accuracy:F2}%");
+
+        Debug.Log($"Task {tempIndex} Accuracy: {accuracy:F2}%");
+
+        // Store in PlayerPrefs
+        string key = $"Task{tempIndex}_Accuracy";
+        PlayerPrefs.SetFloat(key, accuracy);
+        PlayerPrefs.Save(); // Save PlayerPrefs
+
+        Debug.Log($"Saved {key} -> {accuracy:F2}%");
     }
+
+    private float GetTaskAccuracy(int taskNumber)
+    {
+        string key = $"Task{taskNumber}_Accuracy";
+        return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetFloat(key) : -1; // -1 if not found
+    }
+
+
 
     private int CountMatchingWords(string original, string spoken)
     {
@@ -201,6 +219,7 @@ public class SpeechRecognitionTest : MonoBehaviour
         int wordCount = CountWords(taskText.text);
         float wordsPerMinute = (wordCount / timeTaken) * 60;
 
+        tempIndex = taskIndex;
         Debug.Log($"Task {taskIndex} - Time Taken: {timeTaken:F2}s, Words: {wordCount}, WPM: {wordsPerMinute:F2}");
     }
 
@@ -214,8 +233,6 @@ public class SpeechRecognitionTest : MonoBehaviour
 
         player.tempTurn++;
     }
-
-
 
     string GetReadingTask()
     {

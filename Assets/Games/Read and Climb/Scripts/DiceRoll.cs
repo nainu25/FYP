@@ -14,47 +14,27 @@ public class DiceRoll : MonoBehaviour
 
     void Start()
     {
-        rollDiceButton.onClick.AddListener(RollDice);
-    }
-
-    public void RollDice()
-    {
-        rollDiceButton.interactable = false;
-        StartCoroutine(AnimateDiceRoll());
+        rollDiceButton.onClick.AddListener(() => StartDiceRoll(isOpponent: false));
     }
 
     public void OppRollDice()
     {
+        StartDiceRoll(isOpponent: true);
+    }
+
+    private void StartDiceRoll(bool isOpponent)
+    {
         rollDiceButton.interactable = false;
-        StartCoroutine(OpponentAnimateDiceRoll());
+        StartCoroutine(AnimateDiceRoll(isOpponent));
     }
 
-    IEnumerator AnimateDiceRoll()
+    private IEnumerator AnimateDiceRoll(bool isOpponent)
     {
         int rollCount = Random.Range(8, 15);
 
         for (int i = 0; i < rollCount; i++)
         {
-            int randomFace = Random.Range(0, 6);
-            diceImage.sprite = diceFaces[randomFace];
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        diceResult = Random.Range(1, 7);
-        diceImage.sprite = diceFaces[diceResult - 1]; 
-
-        yield return new WaitForSeconds(0.5f);
-        player.RollDice(diceResult); 
-        rollDiceButton.interactable = true;
-    }
-    IEnumerator OpponentAnimateDiceRoll()
-    {
-        int rollCount = Random.Range(8, 15);
-
-        for (int i = 0; i < rollCount; i++)
-        {
-            int randomFace = Random.Range(0, 6);
-            diceImage.sprite = diceFaces[randomFace];
+            diceImage.sprite = diceFaces[Random.Range(0, 6)];
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -62,7 +42,22 @@ public class DiceRoll : MonoBehaviour
         diceImage.sprite = diceFaces[diceResult - 1];
 
         yield return new WaitForSeconds(0.5f);
-        opp.TakeTurn(diceResult);
+
+        if (isOpponent)
+        {
+            if (opp.currentPosition <= 99 - diceResult)
+            {
+                opp.TakeTurn(diceResult);
+            }
+        }
+        else
+        {
+            if(player.currentPosition <= 99 - diceResult)
+            {
+                player.RollDice(diceResult);
+            }
+        }
+
         rollDiceButton.interactable = true;
     }
 }

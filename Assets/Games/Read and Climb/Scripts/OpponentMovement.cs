@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class OpponentMovement : MonoBehaviour
 {
@@ -10,30 +9,21 @@ public class OpponentMovement : MonoBehaviour
     public float moveSpeed = 5f;
     private bool isMoving = false;
 
-    private Dictionary<int, int> snakes = new Dictionary<int, int>();
-    private Dictionary<int, int> ladders = new Dictionary<int, int>();
+    private Dictionary<int, int> snakes = new Dictionary<int, int>
+    {
+        {28, 8}, {37, 14}, {46, 4}, {52, 32},
+        {61, 36}, {85, 53}, {91, 69}, {96, 24}
+    };
+
+    private Dictionary<int, int> ladders = new Dictionary<int, int>
+    {
+        {1, 22}, {7, 33}, {19, 76}, {31, 67},
+        {40, 78}, {73, 87}, {81, 99}, {84, 94}
+    };
 
     void Start()
     {
         transform.position = boardPositions[currentPosition].position;
-
-        snakes.Add(28, 8);
-        snakes.Add(37, 14);
-        snakes.Add(46, 4);
-        snakes.Add(52, 32);
-        snakes.Add(61, 36);
-        snakes.Add(85, 53);
-        snakes.Add(91, 69);
-        snakes.Add(96, 24);
-
-        ladders.Add(1, 22);
-        ladders.Add(7, 33);
-        ladders.Add(19, 76);
-        ladders.Add(31, 67);
-        ladders.Add(40, 78);
-        ladders.Add(73, 87);
-        ladders.Add(81, 99);
-        ladders.Add(84, 94);
     }
 
     public void TakeTurn(int diceResult)
@@ -45,13 +35,10 @@ public class OpponentMovement : MonoBehaviour
         }
     }
 
-    IEnumerator MoveOpponent(int steps)
+    private IEnumerator MoveOpponent(int steps)
     {
-        int targetPosition = currentPosition + steps;
-        if (targetPosition >= boardPositions.Count - 1)
-        {
-            targetPosition = boardPositions.Count - 1;
-        }
+        isMoving = true;
+        int targetPosition = Mathf.Min(currentPosition + steps, boardPositions.Count - 1);
 
         for (int i = currentPosition + 1; i <= targetPosition; i++)
         {
@@ -60,14 +47,14 @@ public class OpponentMovement : MonoBehaviour
 
         currentPosition = targetPosition;
         CheckForSnakesOrLadders();
+        isMoving = false;
     }
 
-    IEnumerator SmoothMove(Vector3 target)
+    private IEnumerator SmoothMove(Vector3 target)
     {
         Vector3 start = transform.position;
         float elapsedTime = 0f;
         float duration = 0.3f;
-
 
         while (elapsedTime < duration)
         {
@@ -79,33 +66,28 @@ public class OpponentMovement : MonoBehaviour
         transform.position = target;
     }
 
-    void CheckForSnakesOrLadders()
+    private void CheckForSnakesOrLadders()
     {
-        if (snakes.ContainsKey(currentPosition))
+        if (snakes.TryGetValue(currentPosition, out int snakeTarget))
         {
-            int newPos = snakes[currentPosition];
-            Debug.Log("Opponent bitten by a snake! Moving down to " + newPos);
-            StartCoroutine(MoveToPosition(newPos));
+            Debug.Log($"Opponent bitten by a snake! Moving down to {snakeTarget}");
+            StartCoroutine(MoveToPosition(snakeTarget));
         }
-        else if (ladders.ContainsKey(currentPosition))
+        else if (ladders.TryGetValue(currentPosition, out int ladderTarget))
         {
-            int newPos = ladders[currentPosition];
-            Debug.Log("Opponent climbed a ladder! Moving up to " + newPos);
-            StartCoroutine(MoveToPosition(newPos));
+            Debug.Log($"Opponent climbed a ladder! Moving up to {ladderTarget}");
+            StartCoroutine(MoveToPosition(ladderTarget));
         }
-        int tempPos = currentPosition + 1;
     }
 
-    IEnumerator MoveToPosition(int newPos)
+    private IEnumerator MoveToPosition(int newPos)
     {
-        Vector3 targetPos = boardPositions[newPos].position;
-        while (Vector3.Distance(transform.position, targetPos) > 0.01f)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
-            yield return null;
-        }
-        transform.position = targetPos;
+        yield return StartCoroutine(SmoothMove(boardPositions[newPos].position));
         currentPosition = newPos;
-        int tempPos = currentPosition + 1;
+    }
+
+    public int GetCurrentPosition()
+    {
+        return currentPosition;
     }
 }

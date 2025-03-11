@@ -1227,7 +1227,7 @@ MonoBehaviour:
   - {fileID: 1581908373}
   - {fileID: 1091969006}
   - {fileID: 1836303813}
-  currentPosition: 0
+  currentPosition: 90
   moveSpeed: 5
 --- !u!212 &455973622
 SpriteRenderer:
@@ -8036,12 +8036,12 @@ MonoBehaviour:
   - {fileID: 1581908373}
   - {fileID: 1091969006}
   - {fileID: 1836303813}
-  currentPosition: 0
   moveSpeed: 2
   moveEffect: {fileID: 952554712}
-  tempTurn: 0
-  gameWonPanel: {fileID: 1537103515}
+  currentPosition: 0
   scoreText: {fileID: 144346592}
+  gameWonPanel: {fileID: 1537103515}
+  tempTurn: 0
 --- !u!212 &1337294751
 SpriteRenderer:
   m_ObjectHideFlags: 0
