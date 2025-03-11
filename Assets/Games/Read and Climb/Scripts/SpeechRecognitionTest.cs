@@ -24,9 +24,14 @@ public class SpeechRecognitionTest : MonoBehaviour
     private int taskIndex = 1;
     private string[] readingTasks =
     {
-        "The quick brown fox jumps over the lazy dog.",
-        "Unity is a powerful game engine used by developers worldwide.",
-        "Reading speed helps measure comprehension and fluency."
+        "The saw was on the way, but was it raw? He saw the win in the big war. Why was the saw there?",
+        "My home is my favorite place. It is very airy and beautiful. It has two bedrooms, one kitchen and a bathroom.",
+        "My name is Banu. I live in a small house. I call it a ‘Happy Home’. I have one elder sister and a brother who is younger to me.",
+        "Dad had a bad bib and did bid to dip his bed, while Dab and Dob dibbed on a big pad.",
+        "My name is Saad. I am a Pakistani. I am six years old. I live with my Parents.",
+        "I eat my Lunch during the break after washing my hands with soap and water, I come back home at one o’clock.",
+        "I love to have dinner with my Family. Every night, my mother tells me a bedtime story. Then,I go back to sleep."
+
     };
 
     private AudioClip clip;
@@ -65,7 +70,7 @@ public class SpeechRecognitionTest : MonoBehaviour
         text.text = "Recording...";
         startButton.interactable = false;
         stopButton.interactable = true;
-        clip = Microphone.Start(null, false, 10, 44100);
+        clip = Microphone.Start(null, false, 20, 44100);
         recording = true;
     }
 
@@ -97,7 +102,9 @@ public class SpeechRecognitionTest : MonoBehaviour
             startButton.interactable = true;
 
             recognizedText = response;
+            Debug.Log("Voice Input: " + response);
             MeasureAccuracy(); 
+
 
         }, error => {
             text.color = Color.red;
