@@ -52,10 +52,11 @@ public class DiceRoll : MonoBehaviour
         }
         else
         {
-            if(player.currentPosition <= 99 - diceResult)
+            /*if (player.currentPosition <= 99 - diceResult)
             {
                 player.RollDice(diceResult);
-            }
+            }*/
+            player.RollDice(diceResult);
         }
 
         rollDiceButton.interactable = true;

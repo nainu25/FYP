@@ -1,77 +1,85 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class RnCGameManager : MonoBehaviour
 {
-    public PlayerMovement player;
-    public GameObject taskPanel; 
-    public TMP_Text taskText; 
-    public Button startTimer;
-    public Button completeTaskButton; 
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private SpeechRecognitionTest srt;
+    [SerializeField] private GameObject pausePanel;
 
-    private float taskStartTime;
-    private bool taskActive = false;
-    private int taskIndex = 1; 
-    private string[] readingTasks =
-    {
-        "The quick brown fox jumps over the lazy dog.",
-        "Unity is a powerful game engine used by developers worldwide.",
-        "Reading speed helps measure comprehension and fluency."
-    };
+    private float avgScore;
+    private float[] scores;
+    private const int taskCount = 7; // Define the total number of tasks
+    private bool isPaused = false;
 
     private void Awake()
     {
         Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
-        taskPanel.SetActive(false); 
-        startTimer.onClick.AddListener(StartTimer);
-        completeTaskButton.onClick.AddListener(CompleteTask);
+        avgScore = 0;
+        scores = new float[taskCount]; // Initialize array
+
+        if (pausePanel != null)
+            pausePanel.SetActive(false); // Ensure pause panel is hidden at start
     }
 
-    private void Update()
+    public void Continue() => LoadScene("Game Selector");
+
+    public void Home() => LoadScene("Main Menu");
+
+    private void LoadScene(string sceneName)
     {
-        if (!taskActive && player.turns > 0 && player.turns % 3 == 0) 
+        Time.timeScale = 1f; // Ensure time is reset when loading a new scene
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void CalculateScore()
+    {
+        float totalScore = 0;
+        int validScores = 0;
+
+        for (int i = 0; i < taskCount; i++)
         {
-            ShowTaskPanel();
+            string key = $"Task{i + 1}_Accuracy";
+
+            if (PlayerPrefs.HasKey(key))
+            {
+                scores[i] = PlayerPrefs.GetFloat(key);
+                totalScore += scores[i];
+                validScores++;
+            }
+            else
+            {
+                scores[i] = -1; // Indicates missing score
+                Debug.LogWarning($"Missing score for {key}");
+            }
+        }
+
+        avgScore = (validScores > 0) ? totalScore / validScores : 0;
+        scoreText.text = $"{avgScore:F2}%"; // Display with 2 decimal places
+    }
+
+    public void PauseGame()
+    {
+        if (!isPaused)
+        {
+            Time.timeScale = 0f; // Pause the game
+            isPaused = true;
+
+            if (pausePanel != null)
+                pausePanel.SetActive(true);
         }
     }
 
-    void ShowTaskPanel()
+    public void ResumeGame()
     {
-        taskPanel.SetActive(true);
-        string task = GetReadingTask();
-        taskText.text = task;
-        Time.timeScale = 0; 
-        taskActive = true;
-    }
+        if (isPaused)
+        {
+            Time.timeScale = 1f; // Resume the game
+            isPaused = false;
 
-    void StartTimer()
-    {
-        taskStartTime = Time.realtimeSinceStartup; 
-    }
-
-    void CompleteTask()
-    {
-        float timeTaken = Time.realtimeSinceStartup - taskStartTime; 
-        int wordCount = CountWords(taskText.text); 
-        float wordsPerMinute = (wordCount / timeTaken) * 60; 
-
-        Debug.Log($"Task {taskIndex} - Time Taken: {timeTaken:F2}s, Words: {wordCount}, WPM: {wordsPerMinute:F2}");
-
-        
-        taskPanel.SetActive(false);
-        Time.timeScale = 1;
-        taskActive = false;
-        taskIndex++;
-    }
-
-    string GetReadingTask()
-    {
-        return readingTasks[(taskIndex - 1) % readingTasks.Length]; 
-    }
-
-    int CountWords(string text)
-    {
-        return text.Split(' ').Length; 
+            if (pausePanel != null)
+                pausePanel.SetActive(false);
+        }
     }
 }

@@ -136,7 +136,7 @@ public class SpeechRecognitionTest : MonoBehaviour
         Debug.Log($"Saved {key} -> {accuracy:F2}%");
     }
 
-    private float GetTaskAccuracy(int taskNumber)
+    public float GetTaskAccuracy(int taskNumber)
     {
         string key = $"Task{taskNumber}_Accuracy";
         return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetFloat(key) : -1; // -1 if not found

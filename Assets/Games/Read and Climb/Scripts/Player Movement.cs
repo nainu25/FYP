@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private OpponentMovement opponent;
     private DiceRoll diceRoll;
     DataSaver dataSaver;
-
+    public RnCGameManager rNCGM;
     void Start()
     {
         gameWonPanel.SetActive(false);
@@ -39,6 +39,11 @@ public class PlayerMovement : MonoBehaviour
         InitializeBoard();
 
         dataSaver = FindFirstObjectByType<DataSaver>();
+
+        if(rNCGM !=null)
+        {
+            Debug.Log("rNCGM working");
+        }
 
         // Cache references to avoid repeated FindObjectOfType calls
         speechRecognition = FindObjectOfType<SpeechRecognitionTest>();
@@ -92,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         currentPosition = targetPosition;
         scoreText.text = (currentPosition + 1).ToString();
 
-        if (currentPosition == boardPositions.Count - 1)
+        if (currentPosition == 99)
         {
             HandleGameCompletion();
             yield break;
@@ -136,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Congratulations! You have completed all tasks and won the game!");
             gameWonPanel.SetActive(true);
+            rNCGM.CalculateScore();
             dataSaver.SaveData();
         }
         else
