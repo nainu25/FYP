@@ -183,6 +183,13 @@
 			"path" : "C:/Program Files/Unity/Hub/Editor/6000.0.28f1/Editor/Data/PlaybackEngines/AndroidPlayer/SDK/cmake/3.22.1/share/cmake-3.22/Modules/CMakeCommonLanguageInclude.cmake"
 		},
 		{
+			"path" : "GameActivity/CMakeLists.txt"
+		},
+		{
+			"isExternal" : true,
+			"path" : "D:/Unity/FYP/.utmp/RelWithDebInfo/482xv2r5/prefab/armeabi-v7a/prefab/lib/arm-linux-androideabi/cmake/game-activity/game-activityConfig.cmake"
+		},
+		{
 			"path" : "FramePacing/CMakeLists.txt"
 		},
 		{
