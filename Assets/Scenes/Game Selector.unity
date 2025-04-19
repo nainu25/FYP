@@ -722,12 +722,12 @@ GameObject:
   - component: {fileID: 657157141}
   - component: {fileID: 657157140}
   m_Layer: 5
-  m_Name: RnC
+  m_Name: Read and Climb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &657157140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -748,7 +748,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3123382702084992608, guid: a89bd1dbca5d5fc40ac401043d0e312a, type: 3}
+  m_Sprite: {fileID: -8479206209889877471, guid: 11c3e69c054694345a4f546f98035876, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1829,12 +1829,12 @@ GameObject:
   - component: {fileID: 1890250183}
   - component: {fileID: 1890250184}
   m_Layer: 5
-  m_Name: Game1
+  m_Name: SpellBound Quest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1890250181
 RectTransform:
   m_ObjectHideFlags: 0
