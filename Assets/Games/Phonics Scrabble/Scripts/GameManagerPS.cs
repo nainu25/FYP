@@ -17,7 +17,10 @@ public class GameManagerPS : MonoBehaviour
     private string currentWord;
     private int currentLetterIndex = 0;
 
+
     private List<GameObject> spawnedTiles = new List<GameObject>();
+    private List<int> wordGridPath = new List<int>();
+
 
     void Start()
     {
@@ -49,28 +52,47 @@ public class GameManagerPS : MonoBehaviour
         currentLetterIndex = 0;
 
         // Clear grid and tray
-        gridManager.ClearGrid();
+        //gridManager.ClearGrid();
+        wordGridPath = gridManager.GenerateValidPath(currentWord.Length);
+
         foreach (Transform child in letterTrayParent)
             Destroy(child.gameObject);
         spawnedTiles.Clear();
 
-        // Spawn letter tiles for each character in the word
-        foreach (char c in currentWord)
+        List<char> letterList = currentWord.ToCharArray().ToList();
+
+        // Add 2 random distractor letters (not in currentWord)
+        System.Random rand = new System.Random();
+        while (letterList.Count < currentWord.Length + 2)
+        {
+            char extraChar = (char)rand.Next('a', 'z' + 1);
+            if (!letterList.Contains(extraChar))
+            {
+                letterList.Add(extraChar);
+            }
+        }
+
+        // Shuffle the list
+        letterList = letterList.OrderBy(x => rand.Next()).ToList();
+
+        // Spawn tiles for all letters in the randomized list
+        foreach (char c in letterList)
         {
             GameObject tile = Instantiate(tilePrefab, letterTrayParent);
             if (tile == null)
             {
                 Debug.LogError("Failed to instantiate tilePrefab.");
             }
-            tile.GetComponent<SpriteRenderer>().sprite = GetSpriteForLetter(c);
+            tile.GetComponent<Image>().sprite = GetSpriteForLetter(c);
+
             Button btn = tile.GetComponent<Button>();
             char captured = c;
             btn.onClick.AddListener(() => OnTileClicked(captured));
 
             spawnedTiles.Add(tile);
         }
-
     }
+
 
 
 
@@ -89,10 +111,10 @@ public class GameManagerPS : MonoBehaviour
         char expected = currentWord[currentLetterIndex];
         if (letter == expected)
         {
-            gridManager.SetLetterInGrid(currentLetterIndex, letter.ToString());
+            int gridIndex = wordGridPath[currentLetterIndex];
+            gridManager.SetLetterAtIndex(gridIndex, letter);
             currentLetterIndex++;
 
-            // If word is complete, move to next word after a short delay
             if (currentLetterIndex >= currentWord.Length)
                 Invoke(nameof(NextWord), 1f);
         }
