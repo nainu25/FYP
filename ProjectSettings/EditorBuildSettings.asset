@@ -53,5 +53,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Games/Read and Climb/Scenes/Read and Climb.unity
     guid: 5d8fdf7ac82f83a43b3ebe6607b169d6
+  - enabled: 1
+    path: Assets/Games/Phonics Scrabble/Scenes/PS Level 1.unity
+    guid: 69aeddc12d266794a993a7100f1ad3b3
+  - enabled: 1
+    path: Assets/Games/Phonics Scrabble/Scenes/PS Level 2.unity
+    guid: 305cc56efe9b22f44a0932c0ad92f45d
+  - enabled: 1
+    path: Assets/Games/Phonics Scrabble/Scenes/PS Level 3.unity
+    guid: d90aa27597312714f808d268f76a675e
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

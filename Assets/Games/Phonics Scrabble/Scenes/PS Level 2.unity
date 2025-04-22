@@ -2083,7 +2083,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 62c121707acf89a40be2926f075efe1f, type: 3}
   - {fileID: 21300000, guid: c40040ce6469f674d84804084196153a, type: 3}
   - {fileID: 21300000, guid: 7e3269e3da49a084091e16d05e9a7c81, type: 3}
-  level: 1
+  level: 2
   words:
   - cats
   - dogs

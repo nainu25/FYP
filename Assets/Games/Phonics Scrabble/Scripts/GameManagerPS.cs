@@ -3,27 +3,38 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
+using System.Runtime.CompilerServices;
 
 public class GameManagerPS : MonoBehaviour
 {
-    public GridManager gridManager; // Reference to GridManager
+    public GridManager gridManager;
+    public Transform letterTrayParent;
+    public GameObject tilePrefab;
+    public Sprite[] letterSprites;
+    public int level;
 
-    public Transform letterTrayParent; // Parent to hold letter tiles
-    public GameObject tilePrefab; // Letter tile prefab
-    public Sprite[] letterSprites; // Array of letter sprites (a-z)
-
-    public string[] words; // Words to be formed (e.g. {"cat", "dog", "bat"})
+    public string[] words;
     private int currentWordIndex = 0;
     private string currentWord;
     private int currentLetterIndex = 0;
 
+    public TMP_Text scoreText;
+    private int score;
+
+    private int errors;
+
+    public GameObject pausePanel;
+
+    public GameObject levelCompPanel;
+    public TMP_Text endScore;
 
     private List<GameObject> spawnedTiles = new List<GameObject>();
     private List<int> wordGridPath = new List<int>();
 
-
     void Start()
     {
+        Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
         if (gridManager == null || letterSprites == null || letterSprites.Length == 0)
         {
             Debug.LogError("GameManagerPS has missing references!");
@@ -33,11 +44,13 @@ public class GameManagerPS : MonoBehaviour
             Debug.Log("All references are assigned properly.");
             LoadWord();
         }
+        score = 0;
+        errors = 0;
+        pausePanel.SetActive(false);
+        levelCompPanel.SetActive(false);
+
     }
 
-
-
-    // Load the current word and spawn corresponding tiles in the tray
     void LoadWord()
     {
         if (words == null || words.Length == 0)
@@ -51,9 +64,14 @@ public class GameManagerPS : MonoBehaviour
 
         currentLetterIndex = 0;
 
-        // Clear grid and tray
-        //gridManager.ClearGrid();
         wordGridPath = gridManager.GenerateValidPath(currentWord.Length);
+
+        // Check if the word path is valid
+        if (wordGridPath == null || wordGridPath.Count != currentWord.Length)
+        {
+            Debug.LogError($"Invalid grid path for word: {currentWord}. Expected length {currentWord.Length}, got {wordGridPath.Count}");
+            return; // Stop further execution if path is invalid
+        }
 
         foreach (Transform child in letterTrayParent)
             Destroy(child.gameObject);
@@ -94,19 +112,18 @@ public class GameManagerPS : MonoBehaviour
     }
 
 
-
-
-    // Function to get the correct sprite based on the letter
     private Sprite GetSpriteForLetter(char letter)
     {
         return letterSprites.FirstOrDefault(s => s.name.ToLower() == letter.ToString().ToLower());
     }
 
-    // When a tile is clicked, check if it matches the current letter in the word
     void OnTileClicked(char letter)
     {
-        if (currentLetterIndex >= currentWord.Length)
+        if (currentLetterIndex >= currentWord.Length || currentLetterIndex >= wordGridPath.Count)
+        {
+            Debug.LogWarning("Click ignored: index out of bounds.");
             return;
+        }
 
         char expected = currentWord[currentLetterIndex];
         if (letter == expected)
@@ -114,6 +131,8 @@ public class GameManagerPS : MonoBehaviour
             int gridIndex = wordGridPath[currentLetterIndex];
             gridManager.SetLetterAtIndex(gridIndex, letter);
             currentLetterIndex++;
+            score += 10;
+            scoreText.text = score.ToString();
 
             if (currentLetterIndex >= currentWord.Length)
                 Invoke(nameof(NextWord), 1f);
@@ -121,17 +140,74 @@ public class GameManagerPS : MonoBehaviour
         else
         {
             Debug.Log("Wrong letter selected.");
-            // Optional: You can add feedback like shaking the wrong tile or playing a wrong sound
+            errors += 1;
         }
     }
 
-    // Go to the next word or end the game if there are no more words
     void NextWord()
     {
         currentWordIndex++;
         if (currentWordIndex < words.Length)
             LoadWord();
         else
-            Debug.Log("Level complete!");
+        {
+            levelCompPanel.SetActive(true);
+            endScore.text = score.ToString();
+
+            switch(level)
+            {
+                case 1:
+                    PlayerPrefs.SetInt("PS L1", score);
+                    PlayerPrefs.SetInt("PS Err L1", errors);
+                    break;
+                case 2:
+                    PlayerPrefs.SetInt("PS L2", score);
+                    PlayerPrefs.SetInt("PS Err L2", errors);
+                    break;
+                case 3:
+                    PlayerPrefs.SetInt("PS L3", score);
+                    PlayerPrefs.SetInt("PS Err L3", errors);
+                    break;
+            }
+        }
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f; // Stop all game time-related activities
+        pausePanel.SetActive(true); // Show the pause menu
+    }
+
+    // Unpause the game
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f; // Resume game time
+        pausePanel.SetActive(false); // Hide the pause menu
+    }
+
+    public void QuitGame()
+    {
+        SceneManager.LoadScene("Game Selector");
+    }
+
+    public void NextLevel()
+    {
+        if(level == 1)
+        {
+            SceneManager.LoadScene("PS Level 2");
+        }
+        else if(level == 2)
+        {
+            SceneManager.LoadScene("PS Level 3");
+        }
+        else
+        {
+            Home();
+        }
+    }
+
+    public void Home()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 }

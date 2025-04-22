@@ -1,37 +1,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GridManager : MonoBehaviour
 {
-    public GameManagerPS gameManager; // Reference to GameManagerPS
-    public List<Transform> gridCells; // List of grid cell Transform references (16 cells for a 4x4 grid)
-    public GameObject gridLetterTilePrefab; // Optional: prefab for tiles in grid (same as tile prefab)
+    public GameManagerPS gameManager;
+    public List<Transform> gridCells;
+    public GameObject gridLetterTilePrefab;
 
-    private List<GameObject> placedLetters = new List<GameObject>(); // Track placed tiles
+    private List<GameObject> placedLetters = new List<GameObject>();
 
-    // Clear all placed letters in the grid
-    public void ClearGrid()
-    {
-        foreach (GameObject obj in placedLetters)
-            Destroy(obj);
-        placedLetters.Clear();
-    }
-
-    // Place a letter in the grid at the specified index
     public void SetLetterInGrid(int index, string letter)
     {
         if (index >= gridCells.Count) return;
 
-        // Instantiate a new letter tile in the specified grid cell
         GameObject newTile = Instantiate(gridLetterTilePrefab, gridCells[index]);
         newTile.GetComponent<SpriteRenderer>().sprite = GetSpriteForLetter(letter[0]);
 
         placedLetters.Add(newTile);
     }
 
-    // Function to get the correct sprite for a letter (used in both GridManager and GameManager)
     private Sprite GetSpriteForLetter(char letter)
     {
         return gameManager.letterSprites.FirstOrDefault(s => s.name.ToLower() == letter.ToString().ToLower());
@@ -53,37 +41,41 @@ public class GridManager : MonoBehaviour
             }
         }
 
+        int gridSize = 5; // Updated for 5x5 grid
+        int totalCells = gridSize * gridSize;
         int attempts = 0;
+
         while (!valid && attempts < 100) // Prevent infinite loop
         {
             int startIndex = rand.Next(0, gridCells.Count);
-            bool canPlaceHorizontal = (startIndex % 4) + wordLength <= 4;
-            bool canPlaceVertical = startIndex + (wordLength - 1) * 4 < 16;
+
+            // Check if horizontal placement is possible
+            bool canPlaceHorizontal = (startIndex % gridSize) + wordLength <= gridSize;
+            // Check if vertical placement is possible
+            bool canPlaceVertical = startIndex + (wordLength - 1) * gridSize < totalCells;
 
             indices.Clear();
 
-            if (canPlaceHorizontal && canPlaceVertical)
+            if (canPlaceHorizontal)
             {
-                bool horizontal = rand.Next(0, 2) == 0;
+                // Try horizontal placement
                 for (int i = 0; i < wordLength; i++)
                 {
-                    int index = horizontal ? startIndex + i : startIndex + i * 4;
-                    indices.Add(index);
+                    indices.Add(startIndex + i);
                 }
             }
-            else if (canPlaceHorizontal)
+
+            if (canPlaceVertical && indices.Count == 0) // Only try vertical if horizontal failed
             {
+                // Try vertical placement
                 for (int i = 0; i < wordLength; i++)
-                    indices.Add(startIndex + i);
-            }
-            else if (canPlaceVertical)
-            {
-                for (int i = 0; i < wordLength; i++)
-                    indices.Add(startIndex + i * 4);
+                {
+                    indices.Add(startIndex + i * gridSize);
+                }
             }
 
-            // Check if any of the selected cells are already occupied
-            if (indices.All(i => !occupiedIndices.Contains(i)))
+            // Ensure there is enough space and no overlap with occupied cells
+            if (indices.All(i => !occupiedIndices.Contains(i)) && indices.Count == wordLength)
             {
                 valid = true;
             }
@@ -91,10 +83,10 @@ public class GridManager : MonoBehaviour
             attempts++;
         }
 
-        if (!valid)
+        if (!valid || indices.Count != wordLength)
         {
-            Debug.LogWarning("Could not find valid placement path without overlap after 100 attempts.");
-            // Fallback: return empty list or allow overlap if necessary
+            Debug.LogError($"Failed to find a valid path after {attempts} attempts for word length {wordLength}.");
+            return new List<int>(); // Return empty list if no valid path found
         }
 
         return indices;
@@ -110,6 +102,4 @@ public class GridManager : MonoBehaviour
         newTile.GetComponent<SpriteRenderer>().sprite = GetSpriteForLetter(letter);
         placedLetters.Add(newTile);
     }
-
-
 }

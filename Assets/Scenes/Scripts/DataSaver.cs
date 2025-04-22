@@ -30,6 +30,12 @@ public class DataToSave
     public float RnCT5Score;
     public float RnCT6Score;
     public float RnCT7Score;
+    public int PSL1Score;
+    public int PSL2Score;
+    public int PSL3Score;
+    public int PSErrL1;
+    public int PSErrL2;
+    public int PSErrL3;
 }
 
 public class DataSaver : MonoBehaviour
@@ -152,6 +158,13 @@ public class DataSaver : MonoBehaviour
         dts.RnCT5Score = PlayerPrefs.GetFloat("Task5_Accuracy");
         dts.RnCT6Score = PlayerPrefs.GetFloat("Task6_Accuracy");
         dts.RnCT7Score = PlayerPrefs.GetFloat("Task7_Accuracy");
+        dts.PSL1Score = PlayerPrefs.GetInt("PS L1");
+        dts.PSL2Score = PlayerPrefs.GetInt("PS L2");
+        dts.PSL3Score = PlayerPrefs.GetInt("PS L3");
+        dts.PSErrL1 = PlayerPrefs.GetInt("PS Err L1");
+        dts.PSErrL2 = PlayerPrefs.GetInt("PS Err L2");
+        dts.PSErrL3 = PlayerPrefs.GetInt("PS Err L3");
+
 
         Debug.Log("Data Assigned");
     }
@@ -182,6 +195,13 @@ public class DataSaver : MonoBehaviour
         PlayerPrefs.SetFloat("RnC Task 5", dts.RnCT5Score);
         PlayerPrefs.SetFloat("RnC Task 6", dts.RnCT6Score);
         PlayerPrefs.SetFloat("RnC Task 7", dts.RnCT7Score);
+        PlayerPrefs.SetInt("PS L1 Score", dts.PSL1Score);
+        PlayerPrefs.SetInt("PS L2 Score", dts.PSL2Score);
+        PlayerPrefs.SetInt("PS L3 Score", dts.PSL3Score);
+        PlayerPrefs.SetInt("PS L1 Err", dts.PSErrL1);
+        PlayerPrefs.SetInt("PS L2 Err", dts.PSErrL2);
+        PlayerPrefs.SetInt("PS L3 Err", dts.PSErrL3);
+
         PlayerPrefs.Save();
         Debug.Log("Data saved to PlayerPrefs.");
     }
