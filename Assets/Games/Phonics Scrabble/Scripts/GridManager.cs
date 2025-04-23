@@ -7,8 +7,15 @@ public class GridManager : MonoBehaviour
     public GameManagerPS gameManager;
     public List<Transform> gridCells;
     public GameObject gridLetterTilePrefab;
+    private ParticleSystem partSys;
+
 
     private List<GameObject> placedLetters = new List<GameObject>();
+
+    private void Start()
+    {
+        partSys = gridLetterTilePrefab.GetComponentInChildren<ParticleSystem>();
+    }
 
     public void SetLetterInGrid(int index, string letter)
     {
@@ -100,6 +107,7 @@ public class GridManager : MonoBehaviour
 
         GameObject newTile = Instantiate(gridLetterTilePrefab, gridCells[gridIndex]);
         newTile.GetComponent<SpriteRenderer>().sprite = GetSpriteForLetter(letter);
+        partSys.Play();
         placedLetters.Add(newTile);
     }
 }

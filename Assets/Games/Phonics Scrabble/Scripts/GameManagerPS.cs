@@ -35,6 +35,11 @@ public class GameManagerPS : MonoBehaviour
     private const int ScoreIncrement = 10;
     private const int DistractorLettersCount = 2;
 
+    public AudioSource audioSource;
+    public AudioClip correctSound;
+    public AudioClip wrongSound;
+    public AudioClip levelCompleteSound;
+
     void Start()
     {
         InitializeGame();
@@ -168,10 +173,12 @@ public class GameManagerPS : MonoBehaviour
         if (letter == currentWord[currentLetterIndex])
         {
             ProcessCorrectLetter(letter);
+            audioSource.PlayOneShot(correctSound);
         }
         else
         {
             Debug.Log("Wrong letter selected.");
+            audioSource.PlayOneShot(wrongSound);
             errors++;
         }
     }
@@ -216,6 +223,7 @@ public class GameManagerPS : MonoBehaviour
     private void CompleteLevel()
     {
         levelCompPanel.SetActive(true);
+        audioSource.PlayOneShot(levelCompleteSound);
         endScore.text = score.ToString();
         SaveLevelProgress();
     }
