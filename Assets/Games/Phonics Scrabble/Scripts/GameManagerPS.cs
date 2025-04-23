@@ -4,7 +4,6 @@ using TMPro;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.SceneManagement;
-using System.Runtime.CompilerServices;
 
 public class GameManagerPS : MonoBehaviour
 {
@@ -25,30 +24,43 @@ public class GameManagerPS : MonoBehaviour
     private int errors;
 
     public GameObject pausePanel;
-
     public GameObject levelCompPanel;
     public TMP_Text endScore;
 
     private List<GameObject> spawnedTiles = new List<GameObject>();
     private List<int> wordGridPath = new List<int>();
 
+    private const int ScreenWidth = 1920;
+    private const int ScreenHeight = 1080;
+    private const int ScoreIncrement = 10;
+    private const int DistractorLettersCount = 2;
+
     void Start()
     {
-        Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
-        if (gridManager == null || letterSprites == null || letterSprites.Length == 0)
+        InitializeGame();
+    }
+
+    private void InitializeGame()
+    {
+        Screen.SetResolution(ScreenWidth, ScreenHeight, FullScreenMode.FullScreenWindow);
+
+        if (!ValidateReferences())
         {
             Debug.LogError("GameManagerPS has missing references!");
+            return;
         }
-        else
-        {
-            Debug.Log("All references are assigned properly.");
-            LoadWord();
-        }
+
+        Debug.Log("All references are assigned properly.");
         score = 0;
         errors = 0;
         pausePanel.SetActive(false);
         levelCompPanel.SetActive(false);
+        LoadWord();
+    }
 
+    private bool ValidateReferences()
+    {
+        return gridManager != null && letterSprites != null && letterSprites.Length > 0;
     }
 
     void LoadWord()
@@ -60,28 +72,64 @@ public class GameManagerPS : MonoBehaviour
         }
 
         currentWord = words[currentWordIndex];
-        Debug.Log("Loading word: " + currentWord);
+        Debug.Log($"Loading word: {currentWord}");
 
         currentLetterIndex = 0;
-
         wordGridPath = gridManager.GenerateValidPath(currentWord.Length);
 
-        // Check if the word path is valid
-        if (wordGridPath == null || wordGridPath.Count != currentWord.Length)
+        if (!IsValidWordPath())
         {
-            Debug.LogError($"Invalid grid path for word: {currentWord}. Expected length {currentWord.Length}, got {wordGridPath.Count}");
-            return; // Stop further execution if path is invalid
+            Debug.LogError($"Invalid grid path for word: {currentWord}. Expected length {currentWord.Length}, got {wordGridPath?.Count ?? 0}");
+            return;
         }
 
+        ClearLetterTray();
+        SpawnLetterTiles();
+    }
+
+    private bool IsValidWordPath()
+    {
+        return wordGridPath != null && wordGridPath.Count == currentWord.Length;
+    }
+
+    private void ClearLetterTray()
+    {
         foreach (Transform child in letterTrayParent)
+        {
             Destroy(child.gameObject);
+        }
         spawnedTiles.Clear();
+    }
 
+    private void SpawnLetterTiles()
+    {
+        List<char> letterList = GenerateLetterList();
+        foreach (char c in letterList)
+        {
+            GameObject tile = Instantiate(tilePrefab, letterTrayParent);
+            if (tile == null)
+            {
+                Debug.LogError("Failed to instantiate tilePrefab.");
+                continue;
+            }
+
+            tile.GetComponent<Image>().sprite = GetSpriteForLetter(c);
+            AddTileClickListener(tile, c);
+            spawnedTiles.Add(tile);
+        }
+    }
+
+    private List<char> GenerateLetterList()
+    {
         List<char> letterList = currentWord.ToCharArray().ToList();
+        AddDistractorLetters(letterList);
+        return ShuffleList(letterList);
+    }
 
-        // Add 2 random distractor letters (not in currentWord)
+    private void AddDistractorLetters(List<char> letterList)
+    {
         System.Random rand = new System.Random();
-        while (letterList.Count < currentWord.Length + 2)
+        while (letterList.Count < currentWord.Length + DistractorLettersCount)
         {
             char extraChar = (char)rand.Next('a', 'z' + 1);
             if (!letterList.Contains(extraChar))
@@ -89,100 +137,108 @@ public class GameManagerPS : MonoBehaviour
                 letterList.Add(extraChar);
             }
         }
-
-        // Shuffle the list
-        letterList = letterList.OrderBy(x => rand.Next()).ToList();
-
-        // Spawn tiles for all letters in the randomized list
-        foreach (char c in letterList)
-        {
-            GameObject tile = Instantiate(tilePrefab, letterTrayParent);
-            if (tile == null)
-            {
-                Debug.LogError("Failed to instantiate tilePrefab.");
-            }
-            tile.GetComponent<Image>().sprite = GetSpriteForLetter(c);
-
-            Button btn = tile.GetComponent<Button>();
-            char captured = c;
-            btn.onClick.AddListener(() => OnTileClicked(captured));
-
-            spawnedTiles.Add(tile);
-        }
     }
 
+    private List<char> ShuffleList(List<char> list)
+    {
+        System.Random rand = new System.Random();
+        return list.OrderBy(_ => rand.Next()).ToList();
+    }
+
+    private void AddTileClickListener(GameObject tile, char letter)
+    {
+        Button btn = tile.GetComponent<Button>();
+        btn.onClick.AddListener(() => OnTileClicked(letter));
+    }
 
     private Sprite GetSpriteForLetter(char letter)
     {
-        return letterSprites.FirstOrDefault(s => s.name.ToLower() == letter.ToString().ToLower());
+        string letterName = letter.ToString().ToLower();
+        return letterSprites.FirstOrDefault(s => s.name.ToLower() == letterName);
     }
 
     void OnTileClicked(char letter)
     {
-        if (currentLetterIndex >= currentWord.Length || currentLetterIndex >= wordGridPath.Count)
+        if (IsClickOutOfBounds())
         {
             Debug.LogWarning("Click ignored: index out of bounds.");
             return;
         }
 
-        char expected = currentWord[currentLetterIndex];
-        if (letter == expected)
+        if (letter == currentWord[currentLetterIndex])
         {
-            int gridIndex = wordGridPath[currentLetterIndex];
-            gridManager.SetLetterAtIndex(gridIndex, letter);
-            currentLetterIndex++;
-            score += 10;
-            scoreText.text = score.ToString();
-
-            if (currentLetterIndex >= currentWord.Length)
-                Invoke(nameof(NextWord), 1f);
+            ProcessCorrectLetter(letter);
         }
         else
         {
             Debug.Log("Wrong letter selected.");
-            errors += 1;
+            errors++;
         }
+    }
+
+    private bool IsClickOutOfBounds()
+    {
+        return currentLetterIndex >= currentWord.Length || currentLetterIndex >= wordGridPath.Count;
+    }
+
+    private void ProcessCorrectLetter(char letter)
+    {
+        int gridIndex = wordGridPath[currentLetterIndex];
+        gridManager.SetLetterAtIndex(gridIndex, letter);
+        currentLetterIndex++;
+        UpdateScore();
+
+        if (currentLetterIndex >= currentWord.Length)
+        {
+            Invoke(nameof(NextWord), 1f);
+        }
+    }
+
+    private void UpdateScore()
+    {
+        score += ScoreIncrement;
+        scoreText.text = score.ToString();
     }
 
     void NextWord()
     {
         currentWordIndex++;
         if (currentWordIndex < words.Length)
+        {
             LoadWord();
+        }
         else
         {
-            levelCompPanel.SetActive(true);
-            endScore.text = score.ToString();
-
-            switch(level)
-            {
-                case 1:
-                    PlayerPrefs.SetInt("PS L1", score);
-                    PlayerPrefs.SetInt("PS Err L1", errors);
-                    break;
-                case 2:
-                    PlayerPrefs.SetInt("PS L2", score);
-                    PlayerPrefs.SetInt("PS Err L2", errors);
-                    break;
-                case 3:
-                    PlayerPrefs.SetInt("PS L3", score);
-                    PlayerPrefs.SetInt("PS Err L3", errors);
-                    break;
-            }
+            CompleteLevel();
         }
+    }
+
+    private void CompleteLevel()
+    {
+        levelCompPanel.SetActive(true);
+        endScore.text = score.ToString();
+        SaveLevelProgress();
+    }
+
+    private void SaveLevelProgress()
+    {
+        string scoreKey = $"PS L{level}";
+        string errorKey = $"PS Err L{level}";
+
+        PlayerPrefs.SetInt(scoreKey, score);
+        PlayerPrefs.SetInt(errorKey, errors);
     }
 
     public void PauseGame()
     {
-        Time.timeScale = 0f; // Stop all game time-related activities
-        pausePanel.SetActive(true); // Show the pause menu
+        Time.timeScale = 0f;
+        pausePanel.SetActive(true);
     }
 
-    // Unpause the game
     public void ResumeGame()
     {
-        Time.timeScale = 1f; // Resume game time
-        pausePanel.SetActive(false); // Hide the pause menu
+        Time.timeScale = 1f;
+        pausePanel.SetActive(false);
     }
 
     public void QuitGame()
@@ -192,18 +248,14 @@ public class GameManagerPS : MonoBehaviour
 
     public void NextLevel()
     {
-        if(level == 1)
+        string nextScene = level switch
         {
-            SceneManager.LoadScene("PS Level 2");
-        }
-        else if(level == 2)
-        {
-            SceneManager.LoadScene("PS Level 3");
-        }
-        else
-        {
-            Home();
-        }
+            1 => "PS Level 2",
+            2 => "PS Level 3",
+            _ => "Main Menu"
+        };
+
+        SceneManager.LoadScene(nextScene);
     }
 
     public void Home()

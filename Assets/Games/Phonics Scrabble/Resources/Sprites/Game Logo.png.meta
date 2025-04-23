@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0e0f7c6a6537af04e8fcbc765e3942e2
+guid: c076d928c14f12e4daf751dbb5d8c74e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -467191380106684598
-    second: Grid 4x4_0
+      213: -1942645314456094108
+    second: Game Logo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Grid 4x4_0
+      name: Game Logo_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 4830
-        height: 4830
+        width: 1081
+        height: 1076
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a47dd924ae33489f0800000000000000
-      internalID: -467191380106684598
+      spriteID: 46a744b01665a05e0800000000000000
+      internalID: -1942645314456094108
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -147,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Grid 4x4_0: -467191380106684598
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

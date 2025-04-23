@@ -63,7 +63,7 @@ public class GameSelector : MonoBehaviour
         }
         else if (index == 3)
         {
-            SceneManager.LoadScene("Game4");
+            SceneManager.LoadScene("PS Level 1");
         }
     }
 }

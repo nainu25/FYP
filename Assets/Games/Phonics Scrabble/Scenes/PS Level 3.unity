@@ -1953,9 +1953,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7e3269e3da49a084091e16d05e9a7c81, type: 3}
   level: 3
   words:
-  - cats
-  - dogs
-  - suns
+  - knock
+  - write
+  - ghost
   scoreText: {fileID: 462075964}
   pausePanel: {fileID: 48055304}
   levelCompPanel: {fileID: 1216357701}
