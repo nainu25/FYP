@@ -3,12 +3,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+
+
+/// <summary>
+/// score is being stored OnOptionSelected method
+/// </summary>
 public class SpellBookManager : MonoBehaviour
 {
     private SBQGameManager sbqGameManager;
     private EnemyController enemyController;
     private PlayerController playerController;
     private AudioController audioController;
+    private int errors;
 
     [Header("UI Elements")]
     public List<GameObject> images; // Single list for all images
@@ -27,6 +33,7 @@ public class SpellBookManager : MonoBehaviour
         enemyController = FindObjectOfType<EnemyController>();
         playerController = FindObjectOfType<PlayerController>();
         audioController = FindObjectOfType<AudioController>();
+        errors = 0;
 
 
         if (sbqGameManager != null)
@@ -416,6 +423,31 @@ public class SpellBookManager : MonoBehaviour
         {
             Debug.Log($"Incorrect choice! Enemy attacks.");
             enemyController.Attack();
+            if (sbqGameManager.level == 1)
+            {
+                errors++;
+                PlayerPrefs.SetInt($"ErrorSBQ {sbqGameManager.level}", errors);
+            }
+            else if (sbqGameManager.level == 2)
+            {
+                errors++;
+                PlayerPrefs.SetInt($"ErrorSBQ {sbqGameManager.level}", errors);
+            }
+            else if (sbqGameManager.level == 3)
+            {
+                errors++;
+                PlayerPrefs.SetInt($"ErrorSBQ {sbqGameManager.level}", errors);
+            }
+            else if (sbqGameManager.level == 4)
+            {
+                errors++;
+                PlayerPrefs.SetInt($"ErrorSBQ {sbqGameManager.level}", errors);
+            }
+            else if (sbqGameManager.level == 5)
+            {
+                errors++;
+                PlayerPrefs.SetInt($"ErrorSBQ {sbqGameManager.level}", errors);
+            }
             optionButtons[chosenIndex].gameObject.SetActive(false);
         }
 

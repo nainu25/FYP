@@ -18,6 +18,11 @@ public class GameManagerPS : MonoBehaviour
     private string currentWord;
     private int currentLetterIndex = 0;
 
+    public AudioClip[] audioClips;
+
+    public Sprite[] wordImages;
+    public Image wordImageDisplay;
+
     public TMP_Text scoreText;
     private int score;
 
@@ -78,6 +83,9 @@ public class GameManagerPS : MonoBehaviour
 
         currentWord = words[currentWordIndex];
         Debug.Log($"Loading word: {currentWord}");
+        PlayWordAudio(currentWord);
+        DisplayWordImage(currentWord); // Show corresponding image
+
 
         currentLetterIndex = 0;
         wordGridPath = gridManager.GenerateValidPath(currentWord.Length);
@@ -90,7 +98,32 @@ public class GameManagerPS : MonoBehaviour
 
         ClearLetterTray();
         SpawnLetterTiles();
+        
     }
+
+    public void ReplayCurrentWordAudio()
+    {
+        PlayWordAudio(currentWord);
+    }
+
+    private void DisplayWordImage(string word)
+    {
+        string target = word.ToLower();
+        Sprite image = wordImages.FirstOrDefault(s => s != null && s.name.ToLower() == target);
+
+        if (image != null)
+        {
+            Debug.Log($"Displaying image for word: {word}");
+            wordImageDisplay.sprite = image;
+            wordImageDisplay.enabled = true;
+        }
+        else
+        {
+            Debug.LogWarning($"Image not found for word: {word}");
+            wordImageDisplay.enabled = false;
+        }
+    }
+
 
     private bool IsValidWordPath()
     {
@@ -155,6 +188,22 @@ public class GameManagerPS : MonoBehaviour
         Button btn = tile.GetComponent<Button>();
         btn.onClick.AddListener(() => OnTileClicked(letter));
     }
+
+    private void PlayWordAudio(string word)
+    {
+        string target = word.ToLower();
+        AudioClip clip = audioClips.FirstOrDefault(c => c != null && c.name.ToLower() == target);
+
+        if (clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.LogWarning($"Audio clip not found for word: {word}");
+        }
+    }
+
 
     private Sprite GetSpriteForLetter(char letter)
     {
