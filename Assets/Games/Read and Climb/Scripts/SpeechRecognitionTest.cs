@@ -220,7 +220,11 @@ public class SpeechRecognitionTest : MonoBehaviour
         float wordsPerMinute = (wordCount / timeTaken) * 60;
 
         tempIndex = taskIndex;
+        string key = $"Task{tempIndex} Time";
+        PlayerPrefs.SetFloat(key, timeTaken);
+        PlayerPrefs.Save(); // Save PlayerPrefs
         Debug.Log($"Task {taskIndex} - Time Taken: {timeTaken:F2}s, Words: {wordCount}, WPM: {wordsPerMinute:F2}");
+        
     }
 
     void CompleteTask()

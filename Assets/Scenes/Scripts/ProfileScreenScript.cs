@@ -41,6 +41,14 @@ public class ProfileScreenScript : MonoBehaviour
     public TMP_Text sbqLevel5ScoreText;
 
     [Space]
+    [Header("SBQ Levels Error Text")]
+    public TMP_Text sbqLevel1ErrorText;
+    public TMP_Text sbqLevel2ErrorText;
+    public TMP_Text sbqLevel3ErrorText;
+    public TMP_Text sbqLevel4ErrorText;
+    public TMP_Text sbqLevel5ErrorText;
+
+    [Space]
     [Header("RnC Tasks Accuracy")]
     public TMP_Text RnCT1Acc;
     public TMP_Text RnCT2Acc;
@@ -124,11 +132,18 @@ public class ProfileScreenScript : MonoBehaviour
 
     void UpdateSBQCoins()
     {
-        sbqLevel1ScoreText.text = "Level 1 Score: " + PlayerPrefs.GetInt("Score 1").ToString();
-        sbqLevel2ScoreText.text = "Level 2 Score: " + PlayerPrefs.GetInt("Score 2").ToString();
-        sbqLevel3ScoreText.text = "Level 3 Score: " + PlayerPrefs.GetInt("Score 3").ToString();
-        sbqLevel4ScoreText.text = "Level 4 Score: " + PlayerPrefs.GetInt("Score 4").ToString();
-        sbqLevel5ScoreText.text = "Level 5 Score: " + PlayerPrefs.GetInt("Score 5").ToString();
+        sbqLevel1ScoreText.text = "Level 1 Score: " + PlayerPrefs.GetInt("SBQ Score 1").ToString();
+        sbqLevel2ScoreText.text = "Level 2 Score: " + PlayerPrefs.GetInt("SBQ Score 2").ToString();
+        sbqLevel3ScoreText.text = "Level 3 Score: " + PlayerPrefs.GetInt("SBQ Score 3").ToString();
+        sbqLevel4ScoreText.text = "Level 4 Score: " + PlayerPrefs.GetInt("SBQ Score 4").ToString();
+        sbqLevel5ScoreText.text = "Level 5 Score: " + PlayerPrefs.GetInt("SBQ Score 5").ToString();
+
+        sbqLevel1ErrorText.text = "Level 1 Error: " + PlayerPrefs.GetInt("SBQ Error 1").ToString();
+        sbqLevel2ErrorText.text = "Level 2 Error: " + PlayerPrefs.GetInt("SBQ Error 2").ToString();
+        sbqLevel3ErrorText.text = "Level 3 Error: " + PlayerPrefs.GetInt("SBQ Error 3").ToString();
+        sbqLevel4ErrorText.text = "Level 4 Error: " + PlayerPrefs.GetInt("SBQ Error 4").ToString();
+        sbqLevel5ErrorText.text = "Level 5 Error: " + PlayerPrefs.GetInt("SBQ Error 5").ToString();
+
     }
 
     public void OpenRnCPanel()
@@ -161,6 +176,7 @@ public class ProfileScreenScript : MonoBehaviour
         psL1ScoreText.text = "Level 1 Score: " + PlayerPrefs.GetInt("PS L1 Score").ToString();
         psL2ScoreText.text = "Level 2 Score: " + PlayerPrefs.GetInt("PS L2 Score").ToString();
         psL3ScoreText.text = "Level 3 Score: " + PlayerPrefs.GetInt("PS L3 Score").ToString();
+
         psL1ErrorText.text = "Level 1 Error: " + PlayerPrefs.GetInt("PS L1 Err").ToString();
         psL2ErrorText.text = "Level 2 Error: " + PlayerPrefs.GetInt("PS L2 Err").ToString();
         psL3ErrorText.text = "Level 3 Error: " + PlayerPrefs.GetInt("PS L3 Err").ToString();

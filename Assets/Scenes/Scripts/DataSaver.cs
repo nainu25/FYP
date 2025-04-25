@@ -167,6 +167,12 @@ public class DataSaver : MonoBehaviour
         dts.sbqL4score = PlayerPrefs.GetInt("Score 4");
         dts.sbqL5score = PlayerPrefs.GetInt("Score 5");
 
+        dts.sbqL1Err = PlayerPrefs.GetInt("ErrorSBQ 1");
+        dts.sbqL2Err = PlayerPrefs.GetInt("ErrorSBQ 2");
+        dts.sbqL3Err = PlayerPrefs.GetInt("ErrorSBQ 3");
+        dts.sbqL4Err = PlayerPrefs.GetInt("ErrorSBQ 4");
+        dts.sbqL5Err = PlayerPrefs.GetInt("ErrorSBQ 5");
+
         dts.RnCT1Score = PlayerPrefs.GetFloat("Task1_Accuracy");
         dts.RnCT2Score = PlayerPrefs.GetFloat("Task2_Accuracy");
         dts.RnCT3Score = PlayerPrefs.GetFloat("Task3_Accuracy");
@@ -209,7 +215,13 @@ public class DataSaver : MonoBehaviour
         PlayerPrefs.SetInt("SBQ Score 3", dts.sbqL3score);
         PlayerPrefs.SetInt("SBQ Score 4", dts.sbqL4score);
         PlayerPrefs.SetInt("SBQ Score 5", dts.sbqL5score);
-        
+
+        PlayerPrefs.SetInt("SBQ Error 1", dts.sbqL1Err);
+        PlayerPrefs.SetInt("SBQ Error 2", dts.sbqL2Err);
+        PlayerPrefs.SetInt("SBQ Error 3", dts.sbqL3Err);
+        PlayerPrefs.SetInt("SBQ Error 4", dts.sbqL4Err);
+        PlayerPrefs.SetInt("SBQ Error 5", dts.sbqL5Err);
+
         PlayerPrefs.SetFloat("RnC Task 1", dts.RnCT1Score);
         PlayerPrefs.SetFloat("RnC Task 2", dts.RnCT2Score);
         PlayerPrefs.SetFloat("RnC Task 3", dts.RnCT3Score);
