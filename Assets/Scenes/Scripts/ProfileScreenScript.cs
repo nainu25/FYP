@@ -59,6 +59,16 @@ public class ProfileScreenScript : MonoBehaviour
     public TMP_Text RnCT7Acc;
 
     [Space]
+    [Header("RnC Taks Time")]
+    public TMP_Text RnCT1Time;
+    public TMP_Text RnCT2Time;
+    public TMP_Text RnCT3Time;
+    public TMP_Text RnCT4Time;
+    public TMP_Text RnCT5Time;
+    public TMP_Text RnCT6Time;
+    public TMP_Text RnCT7Time;
+
+    [Space]
     [Header("PS Levels Score Text")]
     public TMP_Text psL1ScoreText;
     public TMP_Text psL2ScoreText;
@@ -77,12 +87,12 @@ public class ProfileScreenScript : MonoBehaviour
     {
         CloseAllPanels();
         mainPanel.SetActive(true);
-        nameText.text = "Name: " + References.userName;
-        ageText.text = "Age: " + PlayerPrefs.GetInt("Age").ToString();
         dataSaver = FindFirstObjectByType<DataSaver>();
         dataSaver.SaveData();
         dataSaver.LoadData();
-        
+        nameText.text = "Name: " + dataSaver.dts.username;
+        ageText.text = "Age: " + PlayerPrefs.GetInt("Age").ToString();
+              
     }
 
     void CloseAllPanels()
@@ -162,6 +172,14 @@ public class ProfileScreenScript : MonoBehaviour
         RnCT5Acc.text = "Task 5 Accuracy: " + PlayerPrefs.GetFloat("RnC Task 5").ToString();
         RnCT6Acc.text = "Task 6 Accuracy: " + PlayerPrefs.GetFloat("RnC Task 6").ToString();
         RnCT7Acc.text = "Task 7 Accuracy: " + PlayerPrefs.GetFloat("RnC Task 7").ToString();
+
+        RnCT1Time.text = "Task 1 Time: " + PlayerPrefs.GetFloat("Task1 Time").ToString();
+        RnCT2Time.text = "Task 2 Time: " + PlayerPrefs.GetFloat("Task2 Time").ToString();
+        RnCT3Time.text = "Task 3 Time: " + PlayerPrefs.GetFloat("Task3 Time").ToString();
+        RnCT4Time.text = "Task 4 Time: " + PlayerPrefs.GetFloat("Task4 Time").ToString();
+        RnCT5Time.text = "Task 5 Time: " + PlayerPrefs.GetFloat("Task5 Time").ToString();
+        RnCT6Time.text = "Task 6 Time: " + PlayerPrefs.GetFloat("Task6 Time").ToString();
+        RnCT7Time.text = "Task 7 Time: " + PlayerPrefs.GetFloat("Task7 Time").ToString();
     }
 
     public void OpenPSPanel()

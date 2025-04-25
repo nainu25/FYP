@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/PlayerProfile.unity
     guid: 92b0c9fd57d96894e97f923934023bac
   - enabled: 1
+    path: Assets/Scenes/Report.unity
+    guid: c9fc01f87a9fdda4ba8c69d6555f4c34
+  - enabled: 1
     path: Assets/Scenes/Game Selector.unity
     guid: e93c420ef0464d946b32da5c7ad74e16
   - enabled: 1

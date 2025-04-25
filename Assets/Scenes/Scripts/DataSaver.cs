@@ -40,7 +40,15 @@ public class DataToSave
     public float RnCT5Score;
     public float RnCT6Score;
     public float RnCT7Score;
-    
+
+    public float RnCT1Time;
+    public float RnCT2Time;
+    public float RnCT3Time;
+    public float RnCT4Time;
+    public float RnCT5Time;
+    public float RnCT6Time;
+    public float RnCT7Time;
+
     public int PSL1Score;
     public int PSL2Score;
     public int PSL3Score;
@@ -180,7 +188,16 @@ public class DataSaver : MonoBehaviour
         dts.RnCT5Score = PlayerPrefs.GetFloat("Task5_Accuracy");
         dts.RnCT6Score = PlayerPrefs.GetFloat("Task6_Accuracy");
         dts.RnCT7Score = PlayerPrefs.GetFloat("Task7_Accuracy");
-       
+
+        dts.RnCT1Time = PlayerPrefs.GetFloat("Task1 Time");
+        dts.RnCT2Time = PlayerPrefs.GetFloat("Task2 Time");
+        dts.RnCT3Time = PlayerPrefs.GetFloat("Task3 Time");
+        dts.RnCT4Time = PlayerPrefs.GetFloat("Task4 Time");
+        dts.RnCT5Time = PlayerPrefs.GetFloat("Task5 Time");
+        dts.RnCT6Time = PlayerPrefs.GetFloat("Task6 Time");
+        dts.RnCT7Time = PlayerPrefs.GetFloat("Task7 Time");
+
+
         dts.PSL1Score = PlayerPrefs.GetInt("PS L1");
         dts.PSL2Score = PlayerPrefs.GetInt("PS L2");
         dts.PSL3Score = PlayerPrefs.GetInt("PS L3");
@@ -229,7 +246,15 @@ public class DataSaver : MonoBehaviour
         PlayerPrefs.SetFloat("RnC Task 5", dts.RnCT5Score);
         PlayerPrefs.SetFloat("RnC Task 6", dts.RnCT6Score);
         PlayerPrefs.SetFloat("RnC Task 7", dts.RnCT7Score);
-        
+
+        PlayerPrefs.SetFloat("RnC Task 1 Time", dts.RnCT1Time);
+        PlayerPrefs.SetFloat("RnC Task 2 Time", dts.RnCT2Time);
+        PlayerPrefs.SetFloat("RnC Task 3 Time", dts.RnCT3Time);
+        PlayerPrefs.SetFloat("RnC Task 4 Time", dts.RnCT4Time);
+        PlayerPrefs.SetFloat("RnC Task 5 Time", dts.RnCT5Time);
+        PlayerPrefs.SetFloat("RnC Task 6 Time", dts.RnCT6Time);
+        PlayerPrefs.SetFloat("RnC Task 7 Time", dts.RnCT7Time);
+
         PlayerPrefs.SetInt("PS L1 Score", dts.PSL1Score);
         PlayerPrefs.SetInt("PS L2 Score", dts.PSL2Score);
         PlayerPrefs.SetInt("PS L3 Score", dts.PSL3Score);

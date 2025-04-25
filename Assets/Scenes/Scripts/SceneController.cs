@@ -62,4 +62,10 @@ public class SceneController : MonoBehaviour
     {
         profileManager.SignOut();
     }
+
+    public void ReportScreen()
+    {
+        SceneManager.LoadScene("Report");
+    }
+
 }
