@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Letter Muncher_0: 3123382702084992608
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

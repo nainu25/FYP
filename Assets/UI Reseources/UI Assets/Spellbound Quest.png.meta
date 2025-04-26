@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Spellbound Quest_0: -3082216966112100836
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
