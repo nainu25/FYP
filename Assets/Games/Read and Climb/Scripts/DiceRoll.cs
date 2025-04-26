@@ -9,6 +9,7 @@ public class DiceRoll : MonoBehaviour
     public Button rollDiceButton;
     public PlayerMovement player;
     public OpponentMovement opp;
+    public AudioSource audioSource;
 
     private int diceResult;
 
@@ -31,6 +32,7 @@ public class DiceRoll : MonoBehaviour
     private IEnumerator AnimateDiceRoll(bool isOpponent)
     {
         int rollCount = Random.Range(8, 15);
+        audioSource.Play();
 
         for (int i = 0; i < rollCount; i++)
         {
@@ -52,10 +54,10 @@ public class DiceRoll : MonoBehaviour
         }
         else
         {
-            /*if (player.currentPosition <= 99 - diceResult)
-            {
-                player.RollDice(diceResult);
-            }*/
+            //if (player.currentPosition <= 99 - diceResult)
+            //{
+            //    player.RollDice(diceResult);
+            //}
             player.RollDice(diceResult);
         }
 

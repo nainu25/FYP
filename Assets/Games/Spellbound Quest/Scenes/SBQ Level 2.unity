@@ -798,7 +798,7 @@ MonoBehaviour:
     m_Bits: 8
   groundCheck: {fileID: 391003656}
   groundCheckRadius: 0.2
-  rockPrefab: {fileID: 2399130152338438731, guid: a3897be8ebde6484590b7316c1e7cd69, type: 3}
+  rockPrefab: {fileID: 2399130152338438731, guid: c2c28c060e67dd843a9dc26ac171ed40, type: 3}
   throwPoint: {fileID: 60279429}
   rockSpeed: 20
 --- !u!95 &179871289

@@ -20,6 +20,7 @@ public class SpeechRecognitionTest : MonoBehaviour
     public Button completeTaskButton;
 
     int tempIndex = 0;
+    public int taskGap;
     private float taskStartTime;
     public bool taskActive = false;
     private int taskIndex = 1;
@@ -58,7 +59,7 @@ public class SpeechRecognitionTest : MonoBehaviour
         {
             StopRecording();
         }
-        if (!taskActive && player.tempTurn > 0 && player.tempTurn % 3 == 0 && !AllTasksCompleted())
+        if (!taskActive && player.tempTurn > 0 && player.tempTurn % taskGap == 0 && !AllTasksCompleted())
         {
             ShowTaskPanel();
         }
@@ -206,6 +207,10 @@ public class SpeechRecognitionTest : MonoBehaviour
         Time.timeScale = 0;
         taskActive = true;
         Debug.Log(taskActive);
+        if(AllTasksCompleted())
+        {
+            player.HandleGameCompletion();
+        }
     }
 
     void StartTimer()

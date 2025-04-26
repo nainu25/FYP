@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     public int turns { get; private set; }
     public int tempTurn;
 
+    public AudioSource audioSource;
+
     private Dictionary<int, int> snakes = new Dictionary<int, int>();
     private Dictionary<int, int> ladders = new Dictionary<int, int>();
 
@@ -46,9 +48,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Cache references to avoid repeated FindObjectOfType calls
-        speechRecognition = FindObjectOfType<SpeechRecognitionTest>();
-        opponent = FindObjectOfType<OpponentMovement>();
-        diceRoll = FindObjectOfType<DiceRoll>();
+        speechRecognition = FindFirstObjectByType<SpeechRecognitionTest>();
+        opponent = FindFirstObjectByType<OpponentMovement>();
+        diceRoll = FindFirstObjectByType<DiceRoll>();
     }
 
     private void InitializeBoard()
@@ -104,8 +106,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         yield return CheckForSnakesOrLadders();
-
+        audioSource.Play();
         yield return new WaitForSeconds(1f);
+        
 
         // Let opponent roll the dice if they haven't won
         if (opponent.GetCurrentPosition() != 99)
@@ -135,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
         moveEffect.Stop();
     }
 
-    private void HandleGameCompletion()
+    public void HandleGameCompletion()
     {
         if (speechRecognition.AllTasksCompleted())
         {

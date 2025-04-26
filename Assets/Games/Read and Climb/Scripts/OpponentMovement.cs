@@ -8,6 +8,7 @@ public class OpponentMovement : MonoBehaviour
     public int currentPosition = 0;
     public float moveSpeed = 5f;
     private bool isMoving = false;
+    public AudioSource audioSource;
 
     private Dictionary<int, int> snakes = new Dictionary<int, int>
     {
@@ -47,6 +48,7 @@ public class OpponentMovement : MonoBehaviour
 
         currentPosition = targetPosition;
         CheckForSnakesOrLadders();
+        audioSource.Play();
         isMoving = false;
     }
 
