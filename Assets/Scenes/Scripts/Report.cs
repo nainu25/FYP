@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Report : MonoBehaviour
 {
@@ -249,5 +250,10 @@ public class Report : MonoBehaviour
             riskLevel.text = "sSignificant";
         }
 
+    }
+
+    public void Back()
+    {
+        SceneManager.LoadScene("PlayerProfile");
     }
 }

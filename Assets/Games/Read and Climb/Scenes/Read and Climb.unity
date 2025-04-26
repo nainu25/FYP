@@ -9106,7 +9106,6 @@ MonoBehaviour:
   gameWonPanel: {fileID: 1537103515}
   tempTurn: 0
   audioSource: {fileID: 1337294753}
-  levelComp: {fileID: 0}
   rNCGM: {fileID: 255147071}
 --- !u!212 &1337294751
 SpriteRenderer:

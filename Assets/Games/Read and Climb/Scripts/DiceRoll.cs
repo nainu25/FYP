@@ -54,11 +54,13 @@ public class DiceRoll : MonoBehaviour
         }
         else
         {
-            //if (player.currentPosition <= 99 - diceResult)
-            //{
-            //    player.RollDice(diceResult);
-            //}
             player.RollDice(diceResult);
+
+        }
+
+        if(player.currentPosition == 99)
+        {
+            player.HandleGameCompletion();
         }
 
         rollDiceButton.interactable = true;

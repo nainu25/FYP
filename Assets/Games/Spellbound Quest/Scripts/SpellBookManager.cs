@@ -247,7 +247,7 @@ public class SpellBookManager : MonoBehaviour
                         break;
                     case 3:
                         roundOptions.Add(new List<string> { "Recipie", "Resipe", "Recipe" });
-                        roundOptions.Add(new List<string> { "Caterpillar", "Caterpiller", "Caterpillar" });
+                        roundOptions.Add(new List<string> { "Caterpillar", "Catrpiller", "Catorpillar" });
                         roundOptions.Add(new List<string> { "Murning", "Morning", "Marning" });
                         correctOptionIndices.AddRange(new[] { 2, 0, 1 });
                         break;
@@ -326,7 +326,7 @@ public class SpellBookManager : MonoBehaviour
                         break;
                     case 3:
                         roundOptions.Add(new List<string> { "Tollerance", "Tolerence", "Tolerance" });
-                        roundOptions.Add(new List<string> { "Nutritional", "Nutritonal", "Nutritional" });
+                        roundOptions.Add(new List<string> { "Nutritional", "Nutritonal", "Nutrtional" });
                         roundOptions.Add(new List<string> { "Umbrela", "Umbralla", "Umbrella" });
                         correctOptionIndices.AddRange(new[] { 2, 0, 2 });
                         break;
