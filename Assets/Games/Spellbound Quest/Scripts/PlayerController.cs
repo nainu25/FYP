@@ -145,16 +145,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /*public void Attack()
-    {
-        GameObject rock = Instantiate(rockPrefab, throwPoint.position, Quaternion.identity);
-        Rigidbody2D rockRb = rock.GetComponent<Rigidbody2D>();
-        enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
-        Vector2 direction = (enemy.position - throwPoint.position).normalized;
-        rockRb.velocity = direction * rockSpeed;
-        StartCoroutine(AttackRoutine());
-    }*/
-
     public void Attack()
     {
         GameObject rock = Instantiate(rockPrefab, throwPoint.position, Quaternion.identity);
