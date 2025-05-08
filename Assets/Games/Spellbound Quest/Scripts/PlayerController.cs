@@ -25,7 +25,11 @@ public class PlayerController : MonoBehaviour
     public event Action OnAttackCompleted;
     private SBQGameManager SBQGm;
     Vector3 initialPosition;
-    bool isPunching;
+    public bool isPunching;
+
+    public PolygonCollider2D pcNormal;
+    public PolygonCollider2D pcFlip;
+
 
     AudioController ac;
 
@@ -40,6 +44,8 @@ public class PlayerController : MonoBehaviour
         initialPosition = gameObject.transform.position;
         isPunching = false;
         Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
+        pcFlip.enabled = false;
+        pcNormal.enabled = true;
     }
 
     void Update()
@@ -72,9 +78,17 @@ public class PlayerController : MonoBehaviour
         }
 
         if (moveInput > 0)
+        {
             spriteRenderer.flipX = false;
+            pcNormal.enabled = true;
+            pcFlip.enabled = false;
+        }
         else if (moveInput < 0)
+        {
             spriteRenderer.flipX = true;
+            pcNormal.enabled = false;
+            pcFlip.enabled = true;
+        }
 
         if(Input.GetKey(KeyCode.P))
         {
@@ -96,6 +110,8 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
             animator.SetTrigger("Jump");
             ac.PlayAudio("Jump");
+            pcNormal.enabled = false;
+            pcFlip.enabled = false;
         }
     }
 
